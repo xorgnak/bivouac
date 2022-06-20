@@ -1,2 +1,0 @@
-<label for='type_scan' class='material-icons'>qr_code_2</label>
-<input type='radio' name='config[entity][type]' value='scan'>

@@ -2,8 +2,15 @@ module Bivouac
   class Post
     def initialize path, request, params
       log "#{request.fullpath} #{params}", :Post
-      @path, @request, @params, @goto = path, request, params, request.fullpath
+      @request, @params = request, params
       @host = Host.new(@path)
+      if /\d+.\d+.\d+.\d+/.match(request.host) || request.host == 'localhost'
+        @path = 'localhost'
+        @goto = "http://#{@path}"
+      else
+        @path = request.host
+        @goto = "https://#{@path}"
+      end
       if @params.has_key? :entity
         @entity = @host[@params[:entity]]
       end

@@ -14,13 +14,6 @@ module Bivouac
       set :port, 4567
     end
     before do
-      if /\d+.\d+.\d+.\d+/.match(request.host) || request.host == 'localhost'
-        @path = 'localhost'
-        @url = "http://#{@path}"
-      else
-        @path = request.host
-        @url = "https://#{@path}"
-      end
       @host = Host.new(@path)
       if params.has_key? :e
         @entity = @host[params[:e]]
