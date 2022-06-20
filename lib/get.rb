@@ -1,8 +1,11 @@
 module Bivouac
   class Get
-    def initialize path, request, params
-      @path, @request, @params = path, request, params
-      log "#{params}", "GET.#{@path}"
+    def initialize request, params
+      @request, @params = request, params
+      log "#{params}", "Get.#{@path}"
+    end
+    def path
+      @request.host
     end
   end
 end
