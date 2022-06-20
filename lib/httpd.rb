@@ -23,7 +23,10 @@ module Bivouac
       end
       if request.request_method.upcase == 'GET'
         @app = Bivouac::Get.new(request, params);
+      else
+        @app = Bivouac::Post.new(request, params);
       end
+      @host = Bivouac[@app.path]
     end
     get('/') { erb :index }
     get('/favicon.ico') {}

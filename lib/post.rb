@@ -53,6 +53,9 @@ module Bivouac
         end
       end
     end
+    def path
+      @path
+    end
     def goto
       @goto
     end
