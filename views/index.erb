@@ -12,9 +12,5 @@
   <% else %>
     <h1 id='title-bar' style='width: 100%; text-align: center;'><span id='title'><%= @path %></span></h1>
   <% end %>
-  <script>
-  <%= erb :mqtt %>
-  <%= erb :scan %>
-  </script>
 <% end %>
 <fieldset><legend>logs</legend><div id='log'></div></fieldset>
