@@ -35,7 +35,7 @@ function tick() {
       var imageData = canvas.getImageData(0, 0, canvasElement.width, canvasElement.height);
       var code = jsQR(imageData.data, imageData.width, imageData.height, { inversionAttempts: 'dontInvert' });
       var onion = /.onion/g;
-      var dom = /<%= @host.path.gsub('://', ':\/\/') %>/g;
+      var dom = /<%= @host.id.gsub('://', ':\/\/') %>/g;
 	  if (code) {
 	      var valid = false
 	      if (onion.test(code.data)) { valid = true; }
