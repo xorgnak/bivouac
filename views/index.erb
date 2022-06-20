@@ -1,0 +1,20 @@
+<% if @host.env[:locked] != 'on' %>
+  <% if @host.env[:edit] == 'true' %>
+    <%= erb :index_config %>
+  <% else %>
+    <button form='post' name='on' value='edit'>EDIT</button>
+  <% end %>
+<% else %>
+  <canvas id='canvas'></canvas>
+  <% if @host.app.has_key?(:index) && "#{@host.app[:index]}".length > 0 %>
+    <%= erb @host.env[:type].to_sym %>
+    <%= erb @host.app[:index] %>
+  <% else %>
+    <h1 id='title-bar' style='width: 100%; text-align: center;'><span id='title'><%= @path %></span></h1>
+  <% end %>
+  <script>
+  <%= erb :mqtt %>
+  <%= erb :scan %>
+  </script>
+<% end %>
+<fieldset><legend>logs</legend><div id='log'></div></fieldset>

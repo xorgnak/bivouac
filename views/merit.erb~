@@ -1,0 +1,14 @@
+<h1>
+<span class='material-icons'>heart</span>
+<input type='range' name='merit[level]' min='1' value='3' max='5' step='1'>
+<span class='material-icons'>hearts</span>
+</h1>
+<h1>
+<select>
+<option selected disabled>why?</option>
+<% @host.badges.all.each_pair do |k,v| %>
+<option value='<%= k %>'><%= v %></option>
+<% end %>
+</select>
+</h1>
+<></textarea>

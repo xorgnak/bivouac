@@ -1,0 +1,52 @@
+var zaps = 0;
+
+function handler(scn) {
+    var h = {};
+    var o = scn.split('?');
+    var ho = o[0];
+    var kv = o[1].split('&');
+    var u;
+    kv.forEach(function(v, i, obj) {
+	var oo = v.split('=');
+	h[oo[0]] = oo[1]
+    });
+    log("<span class='material-icons'>crisis_alert</span>" + zaps + " <span>" + zap + "</span>");
+}
+
+var video = document.createElement("video");
+var canvasElement = document.getElementById("canvas");
+var canvas = canvasElement.getContext("2d");
+// Use facingMode: environment to attemt to get the front camera on phones
+if (navigator.getUserMedia) {
+navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } }).then(function(stream) {
+    video.srcObject = stream;
+    video.setAttribute("playsinline", true); // required to tell iOS safari we don't want fullscreen
+    video.play();
+    // log("<span class='material-icons'>qr_code_2</span> share.");
+    // log("<span class='material-icons'>settings</span> customize.");
+    requestAnimationFrame(tick);
+});
+}
+function tick() {
+  if (video.readyState === video.HAVE_ENOUGH_DATA) {
+      canvasElement.height = video.videoHeight;
+      canvasElement.width = video.videoWidth;
+      canvas.drawImage(video, 0, 0, canvasElement.width, canvasElement.height);
+      var imageData = canvas.getImageData(0, 0, canvasElement.width, canvasElement.height);
+      var code = jsQR(imageData.data, imageData.width, imageData.height, { inversionAttempts: 'dontInvert' });
+      var onion = /.onion/g;
+      var dom = /<%= @path.gsub('://', ':\/\/') %>/g;
+	  if (code) {
+	      var valid = false
+	      if (onion.test(code.data)) { valid = true; }
+	      if (dom.test(code.data)) { valid = true; }
+
+	      if (valid == true) {
+		  handler(code.data);
+	      } else {
+		  log("<a href='" + code.data + "'>" + code.data + "</a>");
+	      }
+	  }
+  }
+    requestAnimationFrame(tick);
+} 

@@ -1,0 +1,32 @@
+module Bivouac
+  class Post
+    def initialize path, request, params
+      log "#{request.fullpath} #{params}", :Post
+      @path, @request, @params, @goto = path, request, params, false
+      @host = Host.new(@path)
+      if @params.has_key? :on
+        @host.env[@params[:on].to_sym] = true
+        @goto = @request.fullpath
+      end
+      if @params.has_key? :off
+        @host.env[@params[:off].to_sym] = false
+        @goto = @request.fullpath
+      end
+      if @params.has_key? :config
+        config
+      end
+      if @params.has_key? :magic
+        magic
+      end
+    end
+    def config
+
+    end
+    def magic
+
+    end
+    def goto
+      @goto
+    end
+  end
+end

@@ -1,0 +1,49 @@
+$(function() {
+var client = new Paho.Client('<%= request.host %>', 1883, "<%= @id %>");
+
+// set callback handlers
+client.onConnectionLost = onConnectionLost;
+client.onMessageArrived = onMessageArrived;
+
+function connectMqtt() {
+// connect the client
+client.connect({
+onSuccess: onConnect,
+userName: '<%= @id %>',
+password: 'password',
+cleanSession: true
+<% if BOX == 'false' %>
+,useSSL: true
+<% end %>
+});
+log('broker started.');
+}
+
+// called when the client connects
+function onConnect() {
+    client.subscribe("<%= @id %>");
+    message = new Paho.Message("id: <%= @id %>");
+    message.destinationName = "<%= ENV['TAG'] %>";
+    client.send(message);
+    log('broker connected.');
+    $('#entity').val('<%= @id %>')
+}
+
+// called when the client loses its connection
+function onConnectionLost(responseObject) {
+    if (responseObject.errorCode !== 0) {
+       log('broker disconnected.');
+	console.log(responseObject);
+    }
+    //location.reload(true);
+    connectMqtt();
+}
+
+// called when a message arrives
+function onMessageArrived(message) {
+var j = JSON.parse(message.payloadString());
+log(j.payload);
+}
+
+connectMqtt();
+});

@@ -1,0 +1,15 @@
+#!/bin/bash
+
+trap 'rm bivouac.lock; exit 0;' EXIT INT TERM;
+
+cd "$(dirname "$(readlink -f "$0")")";
+
+source bivouac.conf
+
+for f in run/*.sh
+do
+   [ -e "$f" ] || continue
+   ./$f &
+done
+
+ruby exe/init.rb

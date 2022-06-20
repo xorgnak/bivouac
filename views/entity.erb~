@@ -1,0 +1,45 @@
+<style>
+#canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -10; }
+</style>
+<canvas id='canvas'></canvas>
+
+<div style='position: fixed; bottom: 0; width: 100%;'>
+<fieldset id='magic' class='foot' style='display: none;'><legend>magic</legend>
+<%= erb Bivouac.form(@host.app[:magic]) %>
+</fieldset>
+
+<fieldset id='info' class='foot'><legend>info</legend>
+<p style='width: 100%; text-align: center;'>
+<span style='padding: 0 2% 0 2%;'><span class='material-icons'>toll</span><span id='credits'>0</span></span>
+<span style='padding; 0 2% 0 2%;'><span class='material-icons'>emoji_events</span><span id='merits'>0</span></span>
+<span style='padding: 0 2% 0 2%;'><span class='material-icons'>leaderboard</span><span id='xp'>0</span></span>
+<span style='padding: 0 2% 0 2%;'><span class='material-icons'>military_tech</span><span id='level'>0</span></span>
+</p>
+<div id='log'>
+<p><span class='material-icons'>hiking</span>ready to go.</p>
+</div>
+</fieldset>
+
+<fieldset id='settings' class='foot' style='display: none;'><legend>settings</legend>
+<%= erb Bivouac.form(@host.app[:config]) %>
+</fieldset>
+
+<fieldset id='reports' class='foot' style='display: none;'><legend>reports</legend>
+<%= erb Bivouac.form(@host.app[:reports]) %>
+</fieldset>
+
+<fieldset id='badge' class='foot' style='display: none;'><legend>badge</legend>
+
+</fieldset>
+
+<h3 style='width: 100%; text-align: center; margin: 0;'>
+<button class='tog material-icons' value='info'>info</button>
+<button class='tog material-icons' value='settings'>settings</button>
+<button class='tog material-icons' value='reports'>report</button>
+<button class='tog material-icons' value='badge'>qr_code_2</button>
+</h3>
+</div>
+<script>
+<%= erb :scan %>
+<%= erb :mqtt %>
+</script>
