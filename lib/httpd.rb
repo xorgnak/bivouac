@@ -22,21 +22,21 @@ module Bivouac
         @box = @host[params[:e]][params[:b]]
       end
       if request.request_method.upcase == 'GET'
-        @app = Bivouac::Get.new(@path, request, params);
+        @app = Bivouac::Get.new(request, params);
       end
     end
     get('/') { erb :index }
     get('/favicon.ico') {}
     get('/:entity') { @user = @host[params[:entity]]; erb :entity }
     get('/:entity/:app') { @user = @host[params[:entity]]; @zone = @host[params[:entity]][params[:app]]; erb :app }
-    post('/') { b = Bivouac::Post.new(@path, request, params); redirect b.goto }
+    post('/') { b = Bivouac::Post.new(request, params); redirect b.goto }
     post('/auth') { @auth = Bivouac::Auth.new(@path, request, params); erb :auth }
     post('/box') { b = Bivouac::Remote.new(@path, request, params); redirect b.goto }
     post('/:entity') {
       if "#{params[:entity]}".length > 0
         # handle file upload
       end
-      b = Bivouac::Post.new(@path, request, params)
+      b = Bivouac::Post.new(request, params)
       redirect "#{@path}/#{b.goto}"
     }
   end
