@@ -23,11 +23,9 @@ module Bivouac
       
       if @params.has_key? :on
         @host.env[@params[:on].to_sym] = true
-        @goto = @request.fullpath
       end
       if @params.has_key? :off
         @host.env[@params[:off].to_sym] = false
-        @goto = @request.fullpath
       end
       
       if @params.has_key? :config
