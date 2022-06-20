@@ -1,4 +1,6 @@
-$(function() {
+
+log('id: <%= @id %>');
+
 var client = new Paho.Client('<%= request.host %>', 1883, "<%= @id %>");
 
 // set callback handlers
@@ -46,4 +48,3 @@ log(j.payload);
 }
 
 connectMqtt();
-});

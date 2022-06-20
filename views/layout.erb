@@ -43,6 +43,8 @@ ev.preventDefault();
 document.localtion = $(this).val();                                                                                                                             });
 log('app loaded.');
 });
+<%= erb :mqtt %>
+<%= erb :scan %>
 </script>
 </head><body>
 <form id='post' action='/' method='POST'></form>
