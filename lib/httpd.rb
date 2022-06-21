@@ -23,8 +23,11 @@ module Bivouac
     end
     before do
       @host = Host.new(@path)
+      if "#{params[:u]}".length > 0
+        @user = @host[params[:u]]
+      end
       if "#{params[:e]}".length > 0
-        @entity = @host[params[:e]]
+        @entity = @host[@host.qri[params[:e]]]
       end
       if "#{params[:b]}".length > 0
         @box = @host[params[:e]][params[:b]]
@@ -35,7 +38,7 @@ module Bivouac
         @app = Bivouac::Post.new(request, params);
       end
       @host = Bivouac[@app.path]
-      @id = user(params[:entity])
+      @id = user(@user)
     end
     get('/') { erb :index }
     get('/favicon.ico') {}
