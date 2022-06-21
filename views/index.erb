@@ -10,7 +10,7 @@
     <%= erb @host.env[:type].to_sym %>
     <%= erb @host.app[:index] %>
   <% else %>
-    <fieldset style='position: fixed; bottom: 0; width: 100%;'><legend id='title'><%= @host.id %></legend><div id='log'></div></fieldset>
+    <fieldset style='position: fixed; bottom: 0; width: 100%;' id='focus'><legend id='title'><%= @host.id %></legend><div id='log'></div></fieldset>
   <% end %>
 <% end %>
 <script>
