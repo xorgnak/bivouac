@@ -1,12 +1,13 @@
 <style>
+  fieldset { border-color: orange; color: white; }
 legend {
   position: absolute;
 bottom: 0;
-
   padding: 0;
-  background: rgba(255,255,255,0.3);
+background-color: black;
+color: orange;
 }
-.tog { margin: 0; padding: 0 } <!--  -->
+.tog { margin: 0; padding: 0; }
 </style>
 
 <% if @host.env[:locked] != 'on' %>
