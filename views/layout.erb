@@ -32,7 +32,8 @@ body { margin: 0; padding: 0; }
 <!-- <script src="https://cdn.plot.ly/plotly-2.8.3.min.js"></script> -->
 <!-- <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script> -->
 <script>
-function log(s) { console.log(s); $('#log').append('<p>' + s + '</p>') }
+  function log(s) { console.log(s); $('#log').append('<p>' + s + '</p>') }
+    <%= erb :mqtt %>                                                                                                                                                <%= erb :scan %>
 $(function() {
 $(document).on('click', '.tog', function(ev) {
 ev.preventDefault();
@@ -42,8 +43,6 @@ $('#' + $(this).val()).show();
 ev.preventDefault();
 document.localtion = $(this).val();                                                                                                                             });
 log('app loaded.');
-<%= erb :mqtt %>
-<%= erb :scan %>
 });
 </script>
 </head><body>
