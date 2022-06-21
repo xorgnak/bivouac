@@ -6,12 +6,12 @@ module Bivouac
     helpers do
       def user i
         if "#{@host[i].attr[:created]}".length > 0
-          r = i
+          @r = i
         else
           x = []; 16.times { x << rand(16).to_s(16) }
-          r = x.join('')
+          @r = x.join('')
         end
-        return r
+        return @r
       end
     end
     configure do
@@ -23,10 +23,10 @@ module Bivouac
     end
     before do
       @host = Host.new(@path)
-      if params.has_key? :e
+      if "#{params[:e]}".length > 0
         @entity = @host[params[:e]]
       end
-      if params.has_key? :b
+      if "#{params[:b]}".length > 0
         @box = @host[params[:e]][params[:b]]
       end
       if request.request_method.upcase == 'GET'
