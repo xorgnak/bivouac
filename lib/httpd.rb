@@ -5,7 +5,7 @@ module Bivouac
   class Httpd < Sinatra::Base
     helpers do
       def user i
-        if "#{@host[i].attr[:created]".length > 0
+        if "#{@host[i].attr[:created]}".length > 0
           r = i
         else
           x = []; 16.times { x << rand(16).to_s(16) }
