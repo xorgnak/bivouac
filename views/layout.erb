@@ -34,7 +34,7 @@ body { margin: 0; padding: 0; }
 <script>
   function log(s) { console.log(s); $('#log').append('<p>' + s + '</p>') }
   $(function() {
-    <%= erb :mqtt %>                                                                                                                                                <%= erb :scan %>
+    <%# erb :mqtt %>                                                                                                                                                <%= erb :scan %>
 $(document).on('click', '.tog', function(ev) {
 ev.preventDefault();
 $('.foot').hide();
