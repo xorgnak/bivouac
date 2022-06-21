@@ -26,7 +26,7 @@
 <% end %>
 <script>
 $(function() {
-$('#qrcode').qrcode('<%= @host.path %>/<%= @id %>');
+$('#qrcode').qrcode('<%= @host.id %>/<%= @id %>');
 setTimeout(function() { log('<em><%= @host.env[:title] %></em>'); }, 250);
 setTimeout(function() { log('<%= @host.env[:pitch] %>'); }, 500);
 });
