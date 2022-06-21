@@ -10,11 +10,23 @@
     <%= erb @host.env[:type].to_sym %>
     <%= erb @host.app[:index] %>
   <% else %>
-    <fieldset style='position: fixed; bottom: 0; width: 100%;' id='focus'><legend id='title'><%= @host.id %></legend><div id='log'></div></fieldset>
+
+  <fieldset style='position: fixed; bottom: 0; width: 100%; display: none;' id='settings'>
+    <legend><button class='tog' value='focus'>center_focus_weak</button></legend>
+  </fieldset>
+
+  <fieldset style='position: fixed; bottom: 0; width: 100%; display: none;' id='badge'><legend><button class='tog' value='focus'>center_focus_weak</button></legend>
+<div id='qrcode-wrap' style='width: 100%; text-align: center;'>
+<div id='qrcode' style='padding: 2%; border: thick solid black; background-color: white;'></div>
+</div>
+</fieldset>
+
+    <fieldset style='position: fixed; bottom: 0; width: 100%;' id='focus'><legend id='title'><button class='tog' value='badge' >qr_code_2</button><%= @host.id %></legend><div id='log'></div></fieldset>
   <% end %>
 <% end %>
 <script>
 $(function() {
+$('#qrcode').qrcode('<%= @host.path %>/<%= @id %>');
 setTimeout(function() { log('<em><%= @host.env[:title] %></em>'); }, 250);
 setTimeout(function() { log('<%= @host.env[:pitch] %>'); }, 500);
 });
