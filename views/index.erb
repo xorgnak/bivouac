@@ -10,7 +10,10 @@
     <%= erb @host.env[:type].to_sym %>
     <%= erb @host.app[:index] %>
   <% else %>
-    <h1 id='title-bar' style='width: 100%; text-align: center;'><span id='title'><%= @host.id %></span></h1>
+    <fieldset><legend id='title'><%= @host.id %></legend><div id='log'></div></fieldset>
   <% end %>
 <% end %>
-<fieldset><legend>logs</legend><div id='log'></div></fieldset>
+<script>
+setTimeout(function() { log('<em><%= @host.env[:title] %></em>'); }, 250);
+setTimeout(function() { log('<%= @host.env[:pitch] %>'); }, 500);
+</script>
