@@ -33,8 +33,8 @@ body { margin: 0; padding: 0; }
 <!-- <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script> -->
 <script>
   function log(s) { console.log(s); $('#log').append('<p>' + s + '</p>') }
+  $(function() {
     <%= erb :mqtt %>                                                                                                                                                <%= erb :scan %>
-$(function() {
 $(document).on('click', '.tog', function(ev) {
 ev.preventDefault();
 $('.foot').hide();
