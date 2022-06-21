@@ -38,6 +38,9 @@ module Bivouac
     end
     get('/') { erb :index }
     get('/favicon.ico') {}
+    get('/service-worker.js') {}
+    get('/manifest.webmanifest') {}
+    get('/robots.txt') {}
     get('/:entity') { @user = @host[params[:entity]]; erb :entity }
     get('/:entity/:app') { @user = @host[params[:entity]]; @zone = @host[params[:entity]][params[:app]]; erb :app }
     post('/') { b = Bivouac::Post.new(request, params); redirect b.goto }
