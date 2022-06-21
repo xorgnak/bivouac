@@ -10,7 +10,7 @@
     <%= erb @host.env[:type].to_sym %>
     <%= erb @host.app[:index] %>
   <% else %>
-    <h1 id='title-bar' style='width: 100%; text-align: center;'><span id='title'><%= @path %></span></h1>
+    <h1 id='title-bar' style='width: 100%; text-align: center;'><span id='title'><%= @host.id %></span></h1>
   <% end %>
 <% end %>
 <fieldset><legend>logs</legend><div id='log'></div></fieldset>

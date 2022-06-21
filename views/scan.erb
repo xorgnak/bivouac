@@ -1,5 +1,3 @@
-var zaps = 0;
-
 function handler(scn) {
     var h = {};
     var o = scn.split('?');
@@ -10,7 +8,7 @@ function handler(scn) {
 	var oo = v.split('=');
 	h[oo[0]] = oo[1]
     });
-    log("<span class='material-icons'>crisis_alert</span>" + zaps + " <span>" + zap + "</span>");
+    log("zap");
 }
 
 var video = document.createElement("video");

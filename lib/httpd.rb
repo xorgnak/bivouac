@@ -11,6 +11,7 @@ module Bivouac
           x = []; 16.times { x << rand(16).to_s(16) }
           r = x.join('')
         end
+        return r
       end
     end
     configure do
