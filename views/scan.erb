@@ -21,7 +21,7 @@ navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } }).th
     video.setAttribute("playsinline", true); // required to tell iOS safari we don't want fullscreen
     video.play();
     // log("<span class='material-icons'>qr_code_2</span> share.");
-    //    log("scanner started.");
+    log("scan targets to continue the adventure..");
     requestAnimationFrame(tick);
 });
 //}
@@ -36,7 +36,7 @@ function tick() {
       var dom = /<%= @host.id.gsub('://', ':\/\/') %>/g;
 	  if (code) {
 	      var valid = false
-	      if (onion.test(code.data)) { valid = true; }
+//	      if (onion.test(code.data)) { valid = true; }
 	      if (dom.test(code.data)) { valid = true; }
 
 	      if (valid == true) {
