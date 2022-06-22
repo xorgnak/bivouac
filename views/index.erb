@@ -7,8 +7,10 @@ bottom: 0;
 background-color: black;
 color: orange;
 }
-.foot { position: fixed; bottom: 0; width: 100%; background-color: white; color: black; }
-.tog { margin: 0; padding: 0; background-color: black; border-color: orange; }
+  .foot { position: fixed; bottom: 0; width: 100%; background-color: white; color: black; }
+  .foot > p { margin: 0; padding: 0; }
+  #log > p { margin: 0; padding: 0; }
+.tog { margin: 0; padding: 0; background-color: black; border-color: orange; color: grey; }
 </style>
 
 <% if @host.env[:locked] != 'on' %>
