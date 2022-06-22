@@ -7,8 +7,8 @@ bottom: 0;
 background-color: black;
 color: orange;
 }
-.foot { position: fixed; bottom: 0; width: 100%; }
-.tog { margin: 0; padding: 0; }
+.foot { position: fixed; bottom: 0; width: 100%; background-color: white; color: black; }
+.tog { margin: 0; padding: 0; background-color: black; border-color: orange; }
 </style>
 
 <% if @host.env[:locked] != 'on' %>
@@ -37,8 +37,8 @@ color: orange;
     <div id='log'></div>
   </div>
   
-<h1 style='width: 100%; text-align: center;'>
-  <button class='tog material-icons' value='focus'>center_focus_weak</button>
+<h1 style='width: 100%; text-align: center; margin: 0; padding: 0;'>
+  <button class='tog material-icons' value='focus' style='color: orange;'>center_focus_weak</button>
   <button class='tog material-icons' value='settings'>settings</button>
   <button class='tog material-icons' value='badge'>qr_code_2</button>
 </h1>
