@@ -36,13 +36,17 @@ body { margin: 0; padding: 0; }
   $(function() {
     <%# erb :mqtt %>                                                                                                                                                <%= erb :scan %>
 $(document).on('click', '.tog', function(ev) {
-ev.preventDefault();
-$('.foot').hide();
-$('#' + $(this).val()).show();
-});                                                                                                                                                             $(document).on('click', '.goto', function(ev) {
-ev.preventDefault();
-document.localtion = $(this).val();                                                                                                                             });
-log('app loaded.');
+    ev.preventDefault();
+    $('.foot').hide();
+    $('#' + $(this).val()).show();
+    $('.tog').css('color', 'black');
+    $(this).css('color', 'orange');
+});
+$(document).on('click', '.goto', function(ev) {
+    ev.preventDefault();
+    document.localtion = $(this).val();
+});
+//log('app loaded.');
 });
 </script>
 </head><body>

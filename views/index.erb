@@ -7,6 +7,7 @@ bottom: 0;
 background-color: black;
 color: orange;
 }
+.foot { position: fixed; bottom: 0; width: 100%; }
 .tog { margin: 0; padding: 0; }
 </style>
 
@@ -19,22 +20,29 @@ color: orange;
 <% else %>
   <canvas id='canvas'></canvas>
   <% if @host.app.has_key?(:index) && "#{@host.app[:index]}".length > 0 %>
-    <%= erb @host.env[:type].to_sym %>
     <%= erb @host.app[:index] %>
   <% else %>
 
-  <fieldset style='position: fixed; bottom: 0; width: 100%; display: none;' class='foot' id='settings'>
-    <legend><button class='tog material-icons' value='focus'>center_focus_weak</button></legend>
-  </fieldset>
+  <div style='display: none;' class='foot' id='settings'>
+    <%= erb :entity_config %>
+  </div>
 
-  <fieldset style='position: fixed; bottom: 0; width: 100%; display: none;' class='foot' id='badge'><legend><button class='tog material-icons' value='focus'>center_focus_weak</button></legend>
-<div id='qrcode-wrap' style='width: 100%; text-align: center;'>
-<div id='qrcode' style='padding: 2%; border: thick solid black; background-color: white;'></div>
-</div>
-</fieldset>
-
-    <fieldset style='position: fixed; bottom: 0; width: 100%;' class='foot' id='focus'><legend id='title'><button class='tog material-icons' value='badge' >qr_code_2</button><%= @host.id %></legend><div id='log'></div></fieldset>
-  <% end %>
+  <div class='foot' id='badge' style='display: none;'>
+    <div id='qrcode-wrap' style='width: 100%; text-align: center;'>
+      <div id='qrcode' style='padding: 2%; border: thick solid black; background-color: white;'></div>
+    </div>
+  </div>
+  
+  <div class='foot' id='focus'>
+    <div id='log'></div>
+  </div>
+  
+<h1 style='width: 100%; text-align: center;'>
+  <button class='tog material-icons' value='focus'>center_focus_weak</button>
+  <button class='tog material-icons' value='settings'>settings</button>
+  <button class='tog material-icons' value='badge'>qr_code_2</button>
+</h1>
+<% end %>
 <% end %>
 <script>
 $(function() {

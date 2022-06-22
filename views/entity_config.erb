@@ -1,0 +1,22 @@
+<p>
+  <input form='post' name='config[name]' placeholder='title' value='<%= @user.attr[:name] %>'>
+</p>
+
+<p>
+  <select form='post' name='config[box]'>
+    <option selected disabled>team</option>
+  </select>
+</p>
+
+<p>
+  <select form='post' name='config[contact]' style='width: min-content;'>
+    <option value='none' selected>none</option>
+    <option value='tel'>call</option>
+    <option value='sms'>text</option>
+  </select>
+  <input form='post' name='config[phone]' placeholder='phone' value='<%= @user.attr[:phone] %>'>
+</p>
+
+<p style='width: 100%; text-align: center;'>
+<button form='post' name='do' value='save'>SAVE</button>
+</p>
