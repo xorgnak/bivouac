@@ -39,10 +39,13 @@ color: orange;
     <div id='log'></div>
   </div>
   
-<h1 style='width: 100%; text-align: center; margin: 0; padding: 0;'>
+  <h1 style='width: 100%; text-align: center; margin: 0; padding: 0;'>
+    <nav style='float: right; vertical-align: middle;'>
   <button class='tog material-icons' value='focus' style='color: orange;'>center_focus_weak</button>
   <button class='tog material-icons' value='settings'>settings</button>
   <button class='tog material-icons' value='badge'>qr_code_2</button>
+    </nav>
+    <span><%= @host.id %></span>
 </h1>
 <% end %>
 <% end %>
