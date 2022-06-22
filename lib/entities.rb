@@ -49,6 +49,14 @@ module Bivouac
     hash_key :badges
     def initialize i
       @id = i
+      if /\d+.\d+.\d+.\d+/.match(i) || /.onion/.match(i) || i == 'localhost'
+        @pre = 'http'
+      else
+        @pre = 'https'
+      end
+    end
+    def url
+      return %[#{@pre}://#{@id}]
     end
     def rnd u, *x
       i, q = [], []
