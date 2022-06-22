@@ -23,21 +23,21 @@ module Bivouac
     end
     before do
       @host = Bivouac[request.host]
-      if "#{params[:u]}".length > 0
-        @user = @host[params[:u]]
-      end
       if "#{params[:e]}".length > 0
         @entity = @host[@host.qri[params[:e]]]
+        @id = user(@entity.id)
       end
       if "#{params[:b]}".length > 0
         @box = @host[params[:e]][params[:b]]
+        @id = user(@box.id)
       end
       if request.request_method.upcase == 'GET'
         @app = Bivouac::Get.new(request, params);
       else
         @app = Bivouac::Post.new(request, params);
-      end
-      @id = user(@user)
+      end    
+      @id = user(params[:u])
+      @user = @host[@id]
       @qr = Bivouac.qr(@host.id)
     end
     get('/') { erb :index }
