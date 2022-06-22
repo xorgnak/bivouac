@@ -62,8 +62,9 @@ module Bivouac
       i, q = [], []
       x.each {|e| i << e; q << e }
       (16 - i.length).times { i << rand(16).to_s(16); q << rand(16).to_s(16) }
-      self.ids[i.join('')] = u
-      self.qrs[q.join('')] = u
+      self.ids[u] = i.join('')
+      self.qri[q.join('')] = i.join('')
+      self.entity[i.join('')] = q.join('')
       n = User.new(u)
       n.attr[:id] = i.join('')
       n.attr[:qr] = q.join('')
