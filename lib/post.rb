@@ -3,11 +3,10 @@ module Bivouac
     def initialize request, params
       log "#{request.fullpath} #{params}", :Post
       @request, @params = request, params
+      @path = request.host
       if /\d+.\d+.\d+.\d+/.match(request.host) || request.host == 'localhost'
-        @path = 'localhost'
         @goto = "http://#{@path}"
       else
-        @path = request.host
         @goto = "https://#{@path}"
       end
       @host = Bivouac[@path]
