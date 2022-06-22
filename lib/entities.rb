@@ -77,7 +77,7 @@ module Bivouac
       User.new("#{self.ids[k]}@#{@id}")
     end
     def query k
-      User.new("#{self.qrs[k]}@#{@id}")
+      User.new("#{self.qri[k]}@#{@id}")
     end
     def [] b
       User.new("#{b}@#{@id}")
