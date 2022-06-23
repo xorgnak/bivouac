@@ -41,11 +41,13 @@ color: orange;
   
   <h1 style='width: 100%; text-align: center; margin: 0; padding: 0;'>
     <nav style='float: right; vertical-align: middle;'>
-    <% if @user.stat[:class].to_i >= 1 %>
+    <% if @entity.stat[:class].to_i >= 1 %>
   <button class='tog material-icons' value='focus' style='color: orange;'>center_focus_weak</button>
   <% end %>
+  <% if params.has_key? :entity %>
   <button class='tog material-icons' value='settings'>settings</button>
-  <% if @user.stat[:class].to_i >= 1 %>
+  <% end %>
+  <% if @entity.stat[:class].to_i >= 1 %>
   <button class='tog material-icons' value='badge'>qr_code_2</button>
   <% end %>
     </nav>
