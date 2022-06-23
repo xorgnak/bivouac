@@ -17,6 +17,23 @@
   <input form='post' name='config[phone]' placeholder='phone' value='<%= @user.attr[:phone] %>'>
 </p>
 
+<p>
+<% if @user.stat[:class].to_i >= 7 %>
+<datalist id='sponsors'>
+<% @user.boxes.members.each do |e| %>
+<option value='<%= e %>'>
+<% end %>
+</datalist>
+<input form='post'name='box' list='sponsors' placeholder='sponsor'>
+<% else %>
+<select form='post' name='box'>
+<% @user.boxes.members.each do |e| %>
+<option value='<%= e %>'><%= e %></option>
+<% end %>
+</select>
+<% end %>
+</p>
+
 <p style='width: 100%; text-align: center;'>
 <button form='post' name='do' value='save'>SAVE</button>
 </p>

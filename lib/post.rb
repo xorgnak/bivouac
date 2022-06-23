@@ -12,41 +12,37 @@ module Bivouac
       @host = Bivouac[@path]
       if @params.has_key? :entity
         @entity = @host[@params[:entity]]
-      end
-      if @params.has_key? :box
-        @box = @host[@entity][@params[:box]]
-      end
-      if @params.has_key? :target
-        @target = @host[@params[:target]]
+        if @params.has_key? :box
+          @entity[@params[:box]]
+          @entity.attr[:box] = @params[:box]
+          if @params.has_key? :admin
+            @params[:admin].each_pair {|k,v| @box.attr[k] = v }
+          end
+        end
       end
       
-      if @params.has_key? :on
-        @host.env[@params[:on].to_sym] = true
-      end
-      if @params.has_key? :off
-        @host.env[@params[:off].to_sym] = false
+      if @params.has_key? :target
+        @target = @host[@params[:target]]
+        if @params.has_key? :magic
+          @params[:magic].each_pair {|k,v| @target.attr[k] = v }
+        end
+        if @params.has_key? :xfer
+          if @params[:xfer][:amt].to_i > 0
+            Bivouac.bank.give user: @target.id, type: @params[:xfer][:type], amt: @params[:xfer][:amt]
+          else
+            Bivouac.bank.take user: @target.id, type: @params[:xfer][:type], amt: @params[:xfer][:amt]
+          end
+        end
       end
       
       if @params.has_key? :config
         @params[:config].each_pair {|k,v| @entity.attr[k] = v }
       end
-      if @params.has_key? :magic
-        @params[:magic].each_pair {|k,v| @target.attr[k] = v }
-      end
-      if @params.has_key? :xfer
-        if @params[:xfer][:amt].to_i > 0
-          Bivouac.bank.give user: @target.id, type: @params[:xfer][:type], amt: @params[:xfer][:amt]
-        else
-          Bivouac.bank.take user: @target.id, type: @params[:xfer][:type], amt: @params[:xfer][:amt]
-        end
-      end
-      if @params.has_key? :admin
-        @params[:admin].each_pair {|k,v| @box.attr[k] = v }
-      end
+      
       if @params.has_key? :do
         if @params[:do] == 'save'
-        @params[:app].each_pair {|k,v| @host.app[k] = v }
-        @params[:env].each_pair {|k,v| @host.env[k] = v }
+          @params[:app].each_pair {|k,v| @host.app[k] = v }
+          @params[:env].each_pair {|k,v| @host.env[k] = v }
         end
       end
     end

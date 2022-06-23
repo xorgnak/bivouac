@@ -3,14 +3,18 @@ form { background-color: white; color: black; }
 </style>
 
 <div id='index_config'>
-  <p><input form='post' name='env[title]' placeholder='title' value='<%= @host.env[:title] %>'></p>                                                               <p><input form='post' name='env[pitch]' placeholder='pitch' value='<%= @host.env[:pitch] %>'></p>
-<p><input form='post' id='has_members' type='checkbox' name='app[members]' checked><label for='has_members'><span class='material-icons'>people</span>do you need users?</label></p>
-<p><input form='post' id='has_merit' type='checkbox' name='app[merit]' checked><label for='type_scan'><span class='material-icons'>military_tech</span>can they earn levels and badges?</label></p>
+  <p><input form='post' name='env[title]' placeholder='title' value='<%= @host.env[:title] %>'></p>
+  <p><input form='post' name='env[pitch]' placeholder='pitch' value='<%= @host.env[:pitch] %>'></p>
+  <p><input form='post' name='env[intro]' placeholder='intro' value='<%= @host.env[:intro] %>'></p>
+  
+  <p><input form='post' id='has_members' type='checkbox' name='app[members]' checked><label for='has_members'><span class='material-icons'>people</span>do you need users?</label></p>
+<p><input form='post' id='has_merit' type='checkbox' name='app[merit]' checked><label for='type_scan'><span class='material-icons'>military_tech</span>can users earn levels and badges?</label></p>
 <p><input form='post' id='has_link' type='checkbox' name='app[link]' checked><label for='has_link'><span class='material-icons'>star</span>can they share their social media?</label></p>
-<p><input form='post' id='has_brand' type='checkbox' name='app[brand]' checked><label for='has_brand'><span class='material-icons'>follow_the_signs</span>shall we brand team apps?</label></p>
+  <p><input form='post' id='has_brand' type='checkbox' name='app[brand]' checked><label for='has_brand'><span class='material-icons'>follow_the_signs</span>shall we brand team apps?</label></p>
+  
 <textarea form='post' name='app[index]' placeholder='index html...' style='width: 100%; height: 50vh;'><%= @host.app[:index] %></textarea>
-<textarea form='post' name='app[entity]' placeholder='entity html...\n(user callback app)' style='width: 100%; height: 50vh;'><%= @host.app[:entity] %></textarea>
-<textarea form='post' name='app[box]' placeholder='box html...\nuser sponsor referral app)' style='width: 100%; height: 50vh;'><%= @host.app[:box] %></textarea>
+<textarea form='post' name='app[entity]' placeholder='user callback app html...' style='width: 100%; height: 50vh;'><%= @host.app[:entity] %></textarea>
+<textarea form='post' name='app[box]' placeholder='sponsor referral app html...' style='width: 100%; height: 50vh;'><%= @host.app[:box] %></textarea>
 </div>
 
 <!-- lock and save -->

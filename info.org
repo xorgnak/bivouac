@@ -1,0 +1,12 @@
+* classes
+| class      | scan | be scanned | refer | sponsor | create box |
+|------------+------+------------+-------+---------+------------|
+| visitor    |  X   |            |       |         |            |
+| user       |  X   |      X     |       |         |            |
+| influencer |  X   |      X     |   X   |         |            |
+| ambassador |  X   |      X     |   X   |         |            |
+| manager    |  X   |      X     |   X   |         |            |
+| owner      |  X   |      X     |   X   |    X    |            |
+| agent      |  X   |      X     |   X   |    X    |            |
+| operator   |  X   |      X     |   X   |    X    |     X      |
+| developer  |  X   |      X     |   X   |    X    |     X      |

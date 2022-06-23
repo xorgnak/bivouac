@@ -32,9 +32,10 @@ body { margin: 0; padding: 0; }
 <!-- <script src="https://cdn.plot.ly/plotly-2.8.3.min.js"></script> -->
 <!-- <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script> -->
 <script>
-  function log(s) { console.log(s); $('#log').append('<p>' + s + '</p>') }
+  function log(j) { console.log(j.message); $('#log').append('<p><span class="material-icons">' + j.icon + '</span>' + j.message + '</p>') }
   $(function() {
-    <%# erb :mqtt %>                                                                                                                                                <%= erb :scan %>
+	  <%# erb :mqtt %>
+          <%= erb :scan %>
 $(document).on('click', '.tog', function(ev) {
     ev.preventDefault();
     $('.foot').hide();

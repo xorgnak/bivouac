@@ -1,14 +1,14 @@
 function handler(scn) {
     var h = {};
     var o = scn.split('?');
-    var ho = o[0];
+    var ho = o[0].split('/');
+    var tgt = ho[-1];
     var kv = o[1].split('&');
-    var u;
     kv.forEach(function(v, i, obj) {
 	var oo = v.split('=');
 	h[oo[0]] = oo[1]
     });
-    log("zap");
+    log({ icon: 'qr_code_2', message: tgt });
 }
 
 var video = document.createElement("video");
@@ -20,8 +20,6 @@ navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } }).th
     video.srcObject = stream;
     video.setAttribute("playsinline", true); // required to tell iOS safari we don't want fullscreen
     video.play();
-    // log("<span class='material-icons'>qr_code_2</span> share.");
-    log("scan targets to continue the adventure..");
     requestAnimationFrame(tick);
 });
 //}

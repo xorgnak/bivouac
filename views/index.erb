@@ -41,9 +41,13 @@ color: orange;
   
   <h1 style='width: 100%; text-align: center; margin: 0; padding: 0;'>
     <nav style='float: right; vertical-align: middle;'>
+    <% if @user.stat[:class].to_i >= 1 %>
   <button class='tog material-icons' value='focus' style='color: orange;'>center_focus_weak</button>
+  <% end %>
   <button class='tog material-icons' value='settings'>settings</button>
+  <% if @user.stat[:class].to_i >= 1 %>
   <button class='tog material-icons' value='badge'>qr_code_2</button>
+  <% end %>
     </nav>
     <span style='color: white; text-align: left;'><%= @host.id %></span>
 </h1>
@@ -52,7 +56,10 @@ color: orange;
 <script>
 $(function() {
 $('#qrcode').qrcode('<%= @qr.badge(@id) %>');
-setTimeout(function() { log('<em><%= @host.env[:title] %></em>'); }, 250);
-setTimeout(function() { log('<%= @host.env[:pitch] %>'); }, 500);
+setTimeout(function() { log({ icon: 'follow_the_signs', message: '<em><%= @host.env[:title] %></em>' }); }, 250);
+setTimeout(function() { log({ icon: 'star', message: '<%= @host.env[:pitch] %>' }); }, 500);
+<% if @user.attr[:class].to_i < 1 %>
+setTimeout(function() { log({ icon: 'help', message: '<%= @host.env[:intro] %>' }); }, 750);
+<% end %>
 });
 </script>
