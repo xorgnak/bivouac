@@ -38,7 +38,6 @@ module Bivouac
       else
         @app = Bivouac::Post.new(request, params);
       end    
-      @user = @host[@id]
       @qr = Bivouac.qr(@host.id)
     end
     get('/') { erb :index }
