@@ -45,6 +45,7 @@ module Bivouac
     get('/service-worker.js') {}
     get('/manifest.webmanifest') {}
     get('/robots.txt') {}
+    get('/info') { erb :info }
     get('/:entity') { @user = @host[params[:entity]]; erb :entity }
     get('/:entity/:app') { @user = @host[params[:entity]]; @zone = @host[params[:entity]][params[:app]]; erb :app }
     post('/') { b = Bivouac::Post.new(request, params); redirect b.goto }
