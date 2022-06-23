@@ -1,5 +1,5 @@
 <p>
-  <input form='post' name='config[name]' placeholder='title' value='<%= @user.attr[:name] %>'>
+  <input form='post' name='config[name]' placeholder='title' value='<%= @entity.attr[:name] %>'>
 </p>
 
 <p>
@@ -14,20 +14,20 @@
     <option value='tel'>call</option>
     <option value='sms'>text</option>
   </select>
-  <input form='post' name='config[phone]' placeholder='phone' value='<%= @user.attr[:phone] %>'>
+  <input form='post' name='config[phone]' placeholder='phone' value='<%= @entity.attr[:phone] %>'>
 </p>
 
 <p>
-<% if @user.stat[:class].to_i >= 7 %>
+<% if @entity.stat[:class].to_i >= 7 %>
 <datalist id='sponsors'>
-<% @user.boxes.members.each do |e| %>
+<% @entity.boxes.members.each do |e| %>
 <option value='<%= e %>'>
 <% end %>
 </datalist>
 <input form='post'name='box' list='sponsors' placeholder='sponsor'>
 <% else %>
 <select form='post' name='box'>
-<% @user.boxes.members.each do |e| %>
+<% @entity.boxes.members.each do |e| %>
 <option value='<%= e %>'><%= e %></option>
 <% end %>
 </select>
