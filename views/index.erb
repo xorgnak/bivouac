@@ -58,9 +58,9 @@ color: orange;
 <script>
 $(function() {
 $('#qrcode').qrcode('<%= @qr.badge(@id) %>');
-log({ icon: 'memory', message: 'id: <%= @id %>' });
-log({ icon: 'memory', message: 'user: <%= @entity.id %>' });
-log({ icon: 'memory', message: 'entity: <%= params[:entity] %>' });
+//log({ icon: 'memory', message: 'id: <%= @id %>' });
+//log({ icon: 'memory', message: 'user: <%= @entity.id %>' });
+//log({ icon: 'memory', message: 'entity: <%= params[:entity] %>' });
 setTimeout(function() { log({ icon: 'follow_the_signs', message: '<%= @host.env[:title] %>' }); }, 250);
 setTimeout(function() { log({ icon: 'star', message: '<%= @host.env[:pitch] %>' }); }, 500);
 <% if @entity.attr[:class].to_i < 1 %>
