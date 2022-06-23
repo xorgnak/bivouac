@@ -3,12 +3,6 @@
 </p>
 
 <p>
-  <select form='post' name='config[box]'>
-    <option selected disabled>team</option>
-  </select>
-</p>
-
-<p>
   <select form='post' name='config[contact]' style='width: min-content;'>
     <option value='none' selected>none</option>
     <option value='tel'>call</option>
@@ -27,6 +21,7 @@
 <input form='post'name='box' list='sponsors' placeholder='sponsor'>
 <% else %>
 <select form='post' name='box'>
+  <option selected disabled>sponsor</option>
 <% @entity.boxes.members.each do |e| %>
 <option value='<%= e %>'><%= e %></option>
 <% end %>
