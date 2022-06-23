@@ -23,20 +23,21 @@ module Bivouac
     end
     before do
       @host = Bivouac[request.host]
-      if "#{params[:e]}".length > 0
-        @entity = @host[@host.qri[params[:e]]]
+      if params.has_key? :entity
+        @entity = @host[params[:entity]]
         @id = user(@entity.id)
-      end
-      if "#{params[:b]}".length > 0
-        @box = @host[params[:e]][params[:b]]
-        @id = user(@box.id)
+        if params.has_key? :app
+          @box = @host[params[:entity]][params[:app]]
+        end
+      else
+        @id = user(nil)
+        @entity = @host[@id]
       end
       if request.request_method.upcase == 'GET'
         @app = Bivouac::Get.new(request, params);
       else
         @app = Bivouac::Post.new(request, params);
       end    
-      @id = user(params[:u])
       @user = @host[@id]
       @qr = Bivouac.qr(@host.id)
     end
@@ -46,8 +47,8 @@ module Bivouac
     get('/manifest.webmanifest') {}
     get('/robots.txt') {}
     get('/info') { erb :info }
-    get('/:entity') { @user = @host[params[:entity]]; erb :entity }
-    get('/:entity/:app') { @user = @host[params[:entity]]; @zone = @host[params[:entity]][params[:app]]; erb :app }
+    get('/:qri') { @entity = @host[@host.qri[params[:entity]]]; erb :entity }
+    get('/:qri/:box') { @entity = @host[@host.qri[params[:qri]]]; @box = @host[@host.qri[params[:qri]]][params[:box]]; erb :app }
     post('/') { b = Bivouac::Post.new(request, params); redirect b.goto }
     post('/auth') { @auth = Bivouac::Auth.new(@path, request, params); erb :auth }
     post('/box') { b = Bivouac::Remote.new(@path, request, params); redirect b.goto }
