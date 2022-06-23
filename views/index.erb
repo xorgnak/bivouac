@@ -63,7 +63,7 @@ log({ icon: 'debug', message: 'user: <%= @entity.id %>' });
 log({ icon: 'debug', message: 'entity: <%= params[:entity] %>' });
 setTimeout(function() { log({ icon: 'follow_the_signs', message: '<em><%= @host.env[:title] %></em>' }); }, 250);
 setTimeout(function() { log({ icon: 'star', message: '<%= @host.env[:pitch] %>' }); }, 500);
-<% if @user.attr[:class].to_i < 1 %>
+<% if @entity.attr[:class].to_i < 1 %>
 setTimeout(function() { log({ icon: 'help', message: '<%= @host.env[:intro] %>' }); }, 750);
 <% end %>
 });
