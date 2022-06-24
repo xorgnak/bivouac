@@ -60,10 +60,8 @@ color: orange;
     <nav style='float: right; vertical-align: middle;'>
       <% if params.has_key? :entity %>
       <button class='tog material-icons' value='settings'>settings</button>
-      <% if @entity.stat[:class].to_i >= 1 %>
       <button class='tog material-icons' value='focus' style='color: orange;'>center_focus_weak</button>
       <button class='tog material-icons' value='badge'>qr_code_2</button>
-      <% end %>
       <% else %>
       <% if !params.has_key?(:cha) && !params.has_key?(:set) %>
       <button class='tog material-icons' value='login'>login</button>
