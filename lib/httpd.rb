@@ -50,14 +50,14 @@ module Bivouac
     get('/:qri') { @entity = @host[@host.qri[params[:entity]]]; erb :entity }
     get('/:qri/:box') { @entity = @host[@host.qri[params[:qri]]]; @box = @host[@host.qri[params[:qri]]][params[:box]]; erb :app }
     post('/') { b = Bivouac::Post.new(request, params); redirect b.goto }
-    post('/auth') { b = Bivouac::Auth.new(@path, request, params); redirect b.goto }
+    post('/auth') { b = Bivouac::Auth.new(request, params); redirect b.goto }
     post('/box') { b = Bivouac::Remote.new(@path, request, params); redirect b.goto }
     post('/:entity') {
       if "#{params[:entity]}".length > 0
         # handle file upload
       end
       b = Bivouac::Post.new(request, params)
-      redirect "#{@path}/#{b.goto}"
+      redirect b.goto
     }
   end
 end
