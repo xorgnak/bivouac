@@ -77,8 +77,8 @@ color: orange;
 <script>
   $(function() {
   log({ icon: 'memory', message: 'id: <%= @id %>' });
-log({ icon: 'memory', message: 'user: <%= @entity.id %>' });
-log({ icon: 'memory', message: 'entity: <%= params[:entity] %>' });
+  log({ icon: 'memory', message: 'user: <%= @entity.id %>' });
+  log({ icon: 'memory', message: 'entity: <%= params[:entity] %>' });
 
   <% if params.has_key?(:cha) || params.has_key?(:set) %>
   $('.foot').hide();
@@ -86,7 +86,7 @@ log({ icon: 'memory', message: 'entity: <%= params[:entity] %>' });
   <% end %>
 
   <% if params.has_key?(:entity) %>
-$('#qrcode').qrcode('<%= @qr.badge(params[:entity]) %>');
+$('#qrcode').qrcode('<%= @qr.badge(@entity.id) %>');
 
 setTimeout(function() { log({ icon: 'follow_the_signs', message: '<%= @host.env[:title] %>' }); }, 250);
 setTimeout(function() { log({ icon: 'star', message: '<%= @host.env[:pitch] %>' }); }, 500);
