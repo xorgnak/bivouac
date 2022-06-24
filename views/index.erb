@@ -86,7 +86,7 @@ log({ icon: 'memory', message: 'entity: <%= params[:entity] %>' });
   <% end %>
 
   <% if params.has_key?(:entity) %>
-$('#qrcode').qrcode('<%= @qr.badge(@id) %>');
+$('#qrcode').qrcode('<%= @qr.badge(params[:entity]) %>');
 
 setTimeout(function() { log({ icon: 'follow_the_signs', message: '<%= @host.env[:title] %>' }); }, 250);
 setTimeout(function() { log({ icon: 'star', message: '<%= @host.env[:pitch] %>' }); }, 500);
