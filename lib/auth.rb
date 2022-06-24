@@ -40,7 +40,7 @@ module Bivouac
     end
     def goto
       args = []; @args.each_pair { |k,v| args << %[#{k}=#{v}] }
-      %[#{request.scheme}://#{request.host}/?#{args.join('&')}]
+      %[#{@request.scheme}://#{@request.host}/?#{args.join('&')}]
     end
   end
 end
