@@ -13,9 +13,10 @@ module Bivouac
     def initialize request, params
       @auth = Auths.new(request.host)
       @request, @params, @args = request, params, {}
-      Redis.new.publish('Auth', %[#{@request} #{@params}])
+      Redis.new.publish('Auth', %[#{@params}])
       if @params.has_key?(:set)
         Bivouac[request.host][@params[:set]].attr[:pin] = @params[:pin]
+        @args[:entity] = @params[:set]
       end
       
       if "#{@params[:usr]}".length > 0
@@ -40,8 +41,12 @@ module Bivouac
       end
     end
     def goto
-      args = []; @args.each_pair { |k,v| args << %[#{k}=#{v}] }
-      %[https://#{@request.host}/?#{args.join('&')}]
+      if @args.keys.length > 0
+        args = []; @args.each_pair { |k,v| args << %[#{k}=#{v}] }
+        %[https://#{@request.host}/?#{args.join('&')}]
+      else
+        %[https://#{request.host}]
+      end
     end
   end
 end
