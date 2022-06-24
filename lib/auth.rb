@@ -13,7 +13,7 @@ module Bivouac
     def initialize request, params
       @auth = Auths.new(request.host)
       @request, @params, @args = request, params, {}
-
+      Redis.new.publish('Auth', %[#{@request} #{@params}])
       if @params.has_key?(:set)
           Bivouac[request.host][@params[:set]].attr[:pin] = @params[:pin]
       end
