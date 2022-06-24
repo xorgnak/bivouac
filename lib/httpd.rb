@@ -24,24 +24,14 @@ module Bivouac
     end
     before do
       @host = Bivouac[request.host]
-      if params.has_key? :entity
-        @entity = @host[params[:entity]]
-        @id = user(@entity.id)
-        if params.has_key? :app
-          @box = @host[params[:entity]][params[:app]]
-        end
-      else
-        @id = user(nil)
-        @entity = @host[@id]
-      end
-      if request.request_method.upcase == 'GET'
-        @app = Bivouac::Get.new(request, params);
-      else
-        @app = Bivouac::Post.new(request, params);
-      end    
-      @qr = Bivouac.qr(@host.id)
     end
-    get('/') { erb :index }
+    get('/') {
+      @app = Bivouac::Get.new(request, params);
+      @id = user(params[:entity])
+      @entity = @host[@id]
+      @qr = Bivouac.qr(@host.id)
+      erb :index
+    }
     get('/favicon.ico') {}
     get('/service-worker.js') {}
     get('/manifest.webmanifest') {}

@@ -86,7 +86,7 @@ color: orange;
   <% end %>
 
   <% if params.has_key?(:entity) %>
-$('#qrcode').qrcode('<%= @qr.badge(@entity.id) %>');
+$('#qrcode').qrcode('<%= @qr.badge(@id) %>');
 
 setTimeout(function() { log({ icon: 'follow_the_signs', message: '<%= @host.env[:title] %>' }); }, 250);
 setTimeout(function() { log({ icon: 'star', message: '<%= @host.env[:pitch] %>' }); }, 500);
