@@ -65,7 +65,9 @@ color: orange;
       <button class='tog material-icons' value='badge'>qr_code_2</button>
       <% end %>
       <% else %>
+      <% if !params.has_key?(:cha) && !params.has_key?(:set) %>
       <button class='tog material-icons' value='login'>login</button>
+      <% end %>
       <% end %>
     </nav>
     <span style='color: white; text-align: left;'><%= @host.id %></span>
@@ -73,7 +75,12 @@ color: orange;
 <% end %>
 <% end %>
 <script>
-$(function() {
+  $(function() {
+  <% if params.has_key?(:cha) || params.has_key?(:set) %>
+  $('.foot').hide();
+  $('#login').show();
+  <% end %>
+  <% if params.has_key?(:entity) %>
 $('#qrcode').qrcode('<%= @qr.badge(@id) %>');
 //log({ icon: 'memory', message: 'id: <%= @id %>' });
 //log({ icon: 'memory', message: 'user: <%= @entity.id %>' });
@@ -82,6 +89,7 @@ setTimeout(function() { log({ icon: 'follow_the_signs', message: '<%= @host.env[
 setTimeout(function() { log({ icon: 'star', message: '<%= @host.env[:pitch] %>' }); }, 500);
 <% if @entity.attr[:class].to_i < 1 %>
 setTimeout(function() { log({ icon: 'help', message: '<%= @host.env[:intro] %>' }); }, 750);
-<% end %>
+   <% end %>
+   <% end %>
 });
 </script>
