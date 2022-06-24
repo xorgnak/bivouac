@@ -4,14 +4,12 @@ function handler(scn) {
     var ho = o[0].split('://');
     var hos = ho[1].split('/');
     var qri = hos[1];
-    log({ icon: 'qr_code_2', message: qri });
-    var tgt = ho[];
     var kv = o[1].split('&');
     kv.forEach(function(v, i, obj) {
 	var oo = v.split('=');
 	h[oo[0]] = oo[1];
     });
-    log({ icon: 'tree', message: JSON.stringify(h) });
+    log({ icon: 'qr_code_2', message: qri });
 }
 
 var video = document.createElement("video");
