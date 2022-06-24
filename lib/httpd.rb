@@ -26,7 +26,6 @@ module Bivouac
       @host = Bivouac[request.host]
     end
     get('/') {
-      @app = Bivouac::Get.new(request, params);
       @id = user(params[:entity])
       @entity = @host[@id]
       @qr = Bivouac.qr(@host.id)
