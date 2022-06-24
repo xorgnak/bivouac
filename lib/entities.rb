@@ -86,15 +86,15 @@ module Bivouac
       return %[#{@pre}://#{@id}]
     end
     def rnd u, *x
-      n = User.new(u)
-      n.attr[:id] = i.join('')
-      n.attr[:qr] = q.join('')                                                                                                                              
+      n = User.new(u)                                                                                                                              
       i, q = [], []
       x.each {|e| i << e; q << e }
       (16 - i.length).times { i << rand(16).to_s(16); q << rand(16).to_s(16) }
       self.ids[n.id] = i.join('')
       self.qri[q.join('')] = i.join('')
       self.entity[i.join('')] = q.join('')
+      n.attr[:id] = i.join('')
+      n.attr[:qr] = q.join('')
     end
     def id; @id; end
     def tag t, *u
