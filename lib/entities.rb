@@ -107,10 +107,14 @@ module Bivouac
       User.new("#{self.qri[k]}@#{@id}")
     end
     def [] b
-      if !self.entity.has_key? b
+      if !self.entity.has_key?(b) && !/.*@.*/.match(b)
         rnd("#{b}@#{@id}")
       end
-      User.new("#{b}@#{@id}")
+      if /.*@.*/.match(b)
+        User.new(b)
+      else
+        User.new("#{b}@#{@id}")
+      end
     end
   end
   

@@ -8,7 +8,6 @@ module Bivouac
       def user i
         if i != nil
           @r = i
-
         elsif /.*@.*/.match(i)
           @r = i.split('@')[0]
         else
