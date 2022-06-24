@@ -36,11 +36,11 @@ color: orange;
   
   <div class='foot' id='badge' style='display: none;'>
     <h3 style='text-align: center; width: 100%;'>
-      <% if @host.env[:merit] == 'on' %>
+      <% if @host.app[:merit] == 'on' %>
       <span class='material-icons'><%= Bivouac.icons[@entity.stat[:class].to_i] %></span>
       <% end %>
       <span><%= @entity.attr[:title] || Bivouac.classes[@entity.stat[:class].to_i] %></span>
-      <% if @host.env[:merit] == 'on' %>
+      <% if @host.app[:merit] == 'on' %>
       <span class='material-icons'><%= Bivouac.icons[@entity.stat[:rank].to_i ] %></span>
       <% end %>
     </h3>
