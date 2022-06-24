@@ -1,0 +1,20 @@
+<input form='post' id='magic-target' type='hidden' name='target' value=''>
+
+
+
+<% if @entity.stat[:class].to_i >= 4 %>
+<p>
+<input form='post' name='box' value='<%= @entity.attr[:box] %>'>
+<label for='magic-box'><%= @entity.attr[:box] %></label>
+</p>
+<% end %>
+
+<% if @entity.stat[:class].to_i >= 2 %>
+<p style='text-align: center; width: 100%;'><span>promote</span></p>
+<p style='text-align: center; width: 100%;'>
+<input form='post' type='range' id='magic-class' name='admin[class]' step='1' min='0' max='<%= @entity.stat[:class].to_i - 1 %>'>
+</p>
+</p><span id='magic-class-icon' class='material-icons'>checkbox_outline_blank</span><span id='magic-class-name'>title...</span></p>
+<% end %>
+
+<button form='post' name='xfer'>toll</button>

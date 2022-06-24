@@ -14,25 +14,42 @@ color: orange;
 </style>
 
 <% if @host.env[:locked] != 'on' %>
-  <% if @host.env[:edit] == 'true' %>
     <%= erb :index_config %>
-  <% else %>
-    <button form='post' name='on' value='edit'>EDIT</button>
-  <% end %>
 <% else %>
-  <canvas id='canvas'></canvas>
+<canvas id='canvas'></canvas>
+
   <% if @host.app.has_key?(:index) && "#{@host.app[:index]}".length > 0 %>
     <%= erb @host.app[:index] %>
   <% else %>
+
+  <div style='display: none;' class='foot' id='magic'>
+    <%= erb :entity_magic %>
+  </div>
 
   <div style='display: none;' class='foot' id='settings'>
     <%= erb :entity_config %>
   </div>
 
+  <div style='display: none;' class='foot' id='login'>
+    <%= erb :entity_login %>
+  </div>
+  
   <div class='foot' id='badge' style='display: none;'>
+    <h3 style='text-align: center; width: 100%;'>
+      <% if @host.env[:merit] == 'true' %>
+      <span class='material-icons'><%= Bivouac.icons[@entity.stat[:class].to_i] %></span>
+      <% end %>
+      <span><%= @entity.attr[:title] || Bivouac.classes[@entity.stat[:class].to_i] %></span>
+      <% if @host.env[:merit] == 'true' %>
+      <span class='material-icons'><%= Bivouac.icons[@entity.stat[:rank].to_i ] %></span>
+      <% end %>
+    </h3>
     <div id='qrcode-wrap' style='width: 100%; text-align: center;'>
       <div id='qrcode' style='padding: 2%; border: thick solid black; background-color: white;'></div>
     </div>
+    <h3 style='text-align: center; width: 100%;'>
+      <span><%= @entity.attr[:box] %></span>
+    </h3>
   </div>
   
   <div class='foot' id='focus'>
@@ -41,15 +58,18 @@ color: orange;
   
   <h1 style='width: 100%; text-align: center; margin: 0; padding: 0;'>
     <nav style='float: right; vertical-align: middle;'>
-    <% if @entity.stat[:class].to_i >= 1 %>
+  <% if @entity.stat[:class].to_i >= 1 %>
   <button class='tog material-icons' value='focus' style='color: orange;'>center_focus_weak</button>
   <% end %>
+
   <% if params.has_key? :entity %>
   <button class='tog material-icons' value='settings'>settings</button>
   <% end %>
+
   <% if @entity.stat[:class].to_i >= 1 %>
   <button class='tog material-icons' value='badge'>qr_code_2</button>
   <% end %>
+  <button class='tog material-icons' value='login'>login</button>
     </nav>
     <span style='color: white; text-align: left;'><%= @host.id %></span>
 </h1>

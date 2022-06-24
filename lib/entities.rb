@@ -1,5 +1,32 @@
 
 module Bivouac
+  def self.classes
+    [
+      'visitor',
+      'member',
+      'influencer',
+      'ambassador',
+      'manager',
+      'owner',
+      'agent',
+      'operator',
+      'developer'
+    ]
+  end
+  def self.icons
+    [
+      'check_box_outline_blank', # visitor
+      'square',                  # member
+      'radio_botton_unchecked',  # influencer
+      'radio_button_checked',    # ambassador
+      'circle',                  # manager
+      'blue_circular',           # owner
+      'stars',                   # agent
+      'star_border',             # operator
+      'star'                     # developer
+    ]
+  end
+  
   ##
   # Bivouac: the host
   # user: the user
@@ -137,6 +164,8 @@ module Bivouac
     hash_key :desc
     # job
     set :jobs
+    # sponsor: amt
+    sorted_set :sponsorship
     # track: visits
     sorted_set :track
     # box: score

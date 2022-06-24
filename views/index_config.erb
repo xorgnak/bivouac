@@ -7,6 +7,16 @@ form { background-color: white; color: black; }
   <p><input form='post' name='env[pitch]' placeholder='pitch' value='<%= @host.env[:pitch] %>'></p>
   <p><input form='post' name='env[intro]' placeholder='intro' value='<%= @host.env[:intro] %>'></p>
   
+  <p>
+    <select form='post' name='env[font]'>
+      <option value='monospace' selected>monospace</option>
+      <option value='serif'>serif</option>
+      <option value='sans-serif'>sans-serif</option>
+      <option value='cursive'>cursive</option>
+      <option value='fantasy'>fantasy</option>
+    </select>
+  </p>
+  
   <p><input form='post' id='has_members' type='checkbox' name='app[members]' checked><label for='has_members'><span class='material-icons'>people</span>do you need users?</label></p>
 <p><input form='post' id='has_merit' type='checkbox' name='app[merit]' checked><label for='type_scan'><span class='material-icons'>military_tech</span>can users earn levels and badges?</label></p>
 <p><input form='post' id='has_link' type='checkbox' name='app[link]' checked><label for='has_link'><span class='material-icons'>star</span>can they share their social media?</label></p>
