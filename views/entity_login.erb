@@ -3,7 +3,7 @@
 <p><input form='auth' name='pin' type='password' placeholder='pin'></p>
 <p><button form='auth' type='submit'><span class='material-icons'>lock</span>unlock</button></p>
 <% elsif params.has_key? :set %>
-<input form='auth' type='hidden' name='set' value='<%= @id %>'>
+<input form='auth' type='hidden' name='set' value='<%= params[:set] %>'>
 <p><input form='auth' name='pin' type='password' placeholder='pin'></p>
 <p><button form='auth' type='submit'><span class='material-icons'>lock</span>lock</button></p>
 <% else %>

@@ -12,10 +12,11 @@ module Bivouac
   class Auth
     def initialize request, params
       @auth = Auths.new(request.host)
+      @host = Bivouac[request.host]
       @request, @params, @args = request, params, {}
       Redis.new.publish('Auth', %[#{@params}])
       if @params.has_key?(:set)
-        Bivouac[request.host][@params[:set]].attr[:pin] = @params[:pin]
+        @host[@params[:set]].attr[:pin] = @params[:pin]
         @args[:entity] = @params[:set]
       end
       
@@ -32,9 +33,9 @@ module Bivouac
           @auth.cha[cha.join('')] = @auth.ids[@params[:usr]]
         end
       end
-      if "#{@params[:cha]}".length > 0
+      if @params.has_key? :cha
         # auth challange response
-        if Bivouac[request.host][@auth.cha[@params[:cha]]].attr[:pin] == @params[:pin]
+        if @host[@auth.cha[@params[:cha]]].attr[:pin] == @params[:pin]
           @args[:entity] = @auth.cha[@params[:cha]]
           @auth.cha.delete(@params[:cha])
         end
@@ -45,7 +46,7 @@ module Bivouac
         args = []; @args.each_pair { |k,v| args << %[#{k}=#{v}] }
         %[https://#{@request.host}/?#{args.join('&')}]
       else
-        %[https://#{request.host}]
+        %[https://#{@request.host}]
       end
     end
   end
