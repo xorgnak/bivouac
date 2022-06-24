@@ -2,13 +2,14 @@ function handler(scn) {
     var h = {};
     var o = scn.split('?');
     var ho = o[0].split('/');
-    var tgt = ho[-1];
+    log({ icon: 'qr_code_2', message: ho });
+    var tgt = ho[];
     var kv = o[1].split('&');
     kv.forEach(function(v, i, obj) {
 	var oo = v.split('=');
 	h[oo[0]] = oo[1]
     });
-    log({ icon: 'qr_code_2', message: tgt });
+    log({ icon: 'tree', message: h });
 }
 
 var video = document.createElement("video");
