@@ -46,6 +46,13 @@ module Bivouac
           end
         end
       end
+      
+      if @params.has_key? :qri
+        @json[:target] = @host.qri[@params[:qri]]
+        [:name, :title].each { |e| @json[e] = @host[@target].attr[e] }
+        [:rank, :class].each { |e| @json[e] = @host[@target].stat[e].to_i }
+      end
+      
       if @params.has_key? :do
         if @params[:do] == 'save'
           @params[:app].each_pair {|k,v| @host.app[k] = v }
