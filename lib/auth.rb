@@ -28,7 +28,7 @@ module Bivouac
           # auth challange ask
           cha = []; 16.times { cha << rand(16).to_s(16) }
           @args[:cha] = cha.join('')
-          @auth.cha[cha.join('')] = @auth.ids[@params[:usr]]
+          @auth.cha[cha.join('')] = @params[:usr]
         end
       end
       if "#{@params[:cha]}".length > 0
