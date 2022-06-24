@@ -1,15 +1,17 @@
 function handler(scn) {
     var h = {};
     var o = scn.split('?');
-    var ho = o[0].split('/');
-    log({ icon: 'qr_code_2', message: ho });
+    var ho = o[0].split('://');
+    var hos = ho[1].split('/');
+    var qri = hos[1];
+    log({ icon: 'qr_code_2', message: qri });
     var tgt = ho[];
     var kv = o[1].split('&');
     kv.forEach(function(v, i, obj) {
 	var oo = v.split('=');
-	h[oo[0]] = oo[1]
+	h[oo[0]] = oo[1];
     });
-    log({ icon: 'tree', message: h });
+    log({ icon: 'tree', message: JSON.stringify(h) });
 }
 
 var video = document.createElement("video");
