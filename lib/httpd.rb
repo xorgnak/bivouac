@@ -52,12 +52,10 @@ module Bivouac
     post('/') { b = Bivouac::Post.new(request, params); redirect b.goto }
     post('/auth') { b = Bivouac::Auth.new(request, params); redirect b.goto }
     post('/box') { b = Bivouac::Remote.new(@path, request, params); redirect b.goto }
-    post('/:entity') {
-      if "#{params[:entity]}".length > 0
-        # handle file upload
-      end
+    post('/:qri') {
+      content_type 'application/json'
       b = Bivouac::Post.new(request, params)
-      redirect b.goto
+      return b.json
     }
   end
 end

@@ -4,6 +4,7 @@ module Bivouac
       log "#{request.fullpath} #{params}", :Post
       @request, @params = request, params
       @path = request.host
+      @json = {}
       if /\d+.\d+.\d+.\d+/.match(request.host) || request.host == 'localhost'
         @goto = "http://#{@path}"
       else
@@ -57,6 +58,9 @@ module Bivouac
     end
     def goto
       @goto
+    end
+    def json
+      JSON.generate(@json)
     end
   end
 end

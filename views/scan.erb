@@ -9,7 +9,12 @@ function handler(scn) {
 	var oo = v.split('=');
 	h[oo[0]] = oo[1];
     });
-    log({ icon: 'qr_code_2', message: qri });
+    var canvas = document.getElementById('canvas');
+    var dataURL = canvas.toDataURL();
+    h['pic'] = dataURL;
+    $.post('/' + qri, h, function(data) {
+      log({ icon: 'qr_code_2', message: data });
+    });
 }
 
 var video = document.createElement("video");
