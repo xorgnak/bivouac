@@ -1,5 +1,6 @@
 load 'lib/get.rb'
 load 'lib/post.rb'
+load 'lib/auth.rb'
 module Bivouac
   
   class Httpd < Sinatra::Base
