@@ -48,7 +48,7 @@ module Bivouac
       end
       
       if @params.has_key? :qri
-        @json[:target] = @host.qri[@params[:qri]]
+        @target = @json[:target] = @host.qri[@params[:qri]]
         [:name, :title].each { |e| @json[e] = @host[@target].attr[e] }
         [:rank, :class].each { |e| @json[e] = @host[@target].stat[e].to_i }
       end
