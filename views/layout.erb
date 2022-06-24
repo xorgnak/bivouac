@@ -54,7 +54,7 @@ body { margin: 0; padding: 0; font-family: '<%= @host.env[:font] || "monospace" 
 <form id='post' action='/' method='POST'></form>
 <form id='auth' action='/auth' method='POST'></form>
 <form id='form'>
-<input type='hidden' id='entity' name='entity' value='<%= @entity.id %>'>
+<input type='hidden' id='entity' name='entity' value='<%= params[:entity] || @entity.id %>'>
 <%= yield %>
 </form>
 </body></html>
