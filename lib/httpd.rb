@@ -8,7 +8,7 @@ module Bivouac
       def user i
         if i != nil
           @r = i
-        elsif /.*@.*/.match(i)
+        elsif /.+@.+/.match(i)
           @r = i.split('@')[0]
         else
           x = []; 16.times { x << rand(16).to_s(16) }
