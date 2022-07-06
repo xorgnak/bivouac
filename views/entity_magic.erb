@@ -27,12 +27,7 @@ rank: <span id='magic-rank'></span></span>
 </p>
 </div>
 
-<% if @entity.stat[:class].to_i >= 2 %>
-<p>
-  <input form='post' name='join' value='<%= @entity.attr[:box] %>'>
-  <label for='magic-box'><%= @entity.attr[:box] %></label>
-</p>
-<% elsif @entity.stat[:class] >= 7 %>
+<% if @entity.stat[:class] >= 7 %>
 <datalist id='boxes'>
 <% @entity.boxes.members.each do |e| %>
   <option value='<%= e %>'>
@@ -41,6 +36,10 @@ rank: <span id='magic-rank'></span></span>
 <p style='width: 100%; text-align: center;'>
 box: <input form='post' list='boxes' name='join' placeholder='new box...'>
 </p>
+<% elsif @entity.stat[:class] >= 2 %>
+<p style='width: 100%; text-align: center;'>
+  box: <input form='post' name='join' value='<%= @entity.attr[:box] %>'>
+  </p>
 <% end %>
 
 <% if @entity.stat[:class].to_i >= 5 %>
