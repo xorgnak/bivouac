@@ -66,9 +66,6 @@ color: orange;
   <h3 style='width: 100%; text-align: left; margin: 0; padding: 0;'>
     <nav style='float: right; vertical-align: middle;'>
     <% if params.has_key? :entity %>
-    <% if !params.has_key? :installed %>
-    <button id='install' class='material-icons' style='color: black; background-color: orange;'>add_to_home_screen</button>
-    <% end %>
       <button class='tog material-icons' value='settings'>settings</button>
       <button class='tog material-icons' value='focus' style='color: orange;'>center_focus_weak</button>
       <button class='tog material-icons' value='badge'>qr_code_2</button>
@@ -101,35 +98,9 @@ setTimeout(function() { log({ icon: 'star', message: '<%= @host.env[:pitch] %>' 
 setTimeout(function() { log({ icon: 'help', message: '<%= @host.env[:intro] %>' }); }, 750);
 <% end %>
   <% if !params.has_key? :installed %>
-  setTimeout(function() { log({ icon: 'add_to_home_screen', message: 'install!' }); }, 1000);
+  setTimeout(function() { log({ icon: 'add_to_home_screen', message: 'add to home screen' }); }, 1000);
   <% end %>
-   window.addEventListener('beforeinstallprompt', (e) => {
-     // Prevent the mini-infobar from appearing on mobile
-       e.preventDefault();
-       // Stash the event so it can be triggered later.
-       window.deferredPrompt = e;
-       // Update UI notify the user they can install the PWA
-       $('#install').show();
-       // Optionally, send analytics event that PWA install promo was shown
-   });
-      $('#install').addEventListener('click', async () => {
-	  console.log('👍', 'butInstall-clicked');
-	  const promptEvent = window.deferredPrompt;
-	  if (!promptEvent) {
-	      // The deferred prompt isn't available.
-	      return;
-	  }
-	  // Show the install prompt.
-	  promptEvent.prompt();
-	  // Log the result
-	  const result = await promptEvent.userChoice;
-	  console.log('👍', 'userChoice', result);
-	  // Reset the deferred prompt variable, since
-	  // prompt() can only be called once.
-	  window.deferredPrompt = null;
-	  // Hide the install button.
-	  $('#install').hide();
-      });
+   
    <%# erb :sw %>
    <% end %>
 });
