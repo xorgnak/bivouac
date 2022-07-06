@@ -15,11 +15,7 @@ body { margin: 0; padding: 0; font-family: '<%= @host.env[:font] || "monospace" 
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 <% if params.has_key?(:entity) %>
-  <% if params.has_key?(:box) %>
-<link rel="manifest" href="<%= @host.url %>/manifest.webmanifest?entity=<%= params[:entity] %>&box=<%= params[:box] %>&ts=<%= params[:ts] || @ts %>" crossorigin="use-credentials" />
-  <% else %>
 <link rel="manifest" href="<%= @host.url %>/manifest.webmanifest?entity=<%= params[:entity] %>" crossorigin="use-credentials" />
-  <% end %>
 <% end %>
 <!-- mqtt broker -->
 <script src='https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.1.0/paho-mqtt.js'></script>

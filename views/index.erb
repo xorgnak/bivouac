@@ -100,7 +100,7 @@ setTimeout(function() { log({ icon: 'help', message: '<%= @host.env[:intro] %>' 
    <% if !params.has_key? :installed %>
    setTimeout(function() { log({ icon: 'add', message: 'Add to homescreen!'}); }, 1000);
    <% end %>
-   <%= erb :sw %>
+   <%# erb :sw %>
    <% end %>
 });
 </script>
