@@ -1,6 +1,6 @@
 <input id='image' type='hidden' name='job[pic]'>
 <div style='width: 100%; text-algn: center;'>
-<img id='picture'>
+<canvas id='picture'></canvas>
 </div>
 <p style='width: 100%; text-align: center;'>
 <input form='post' name='job[title]' placeholder='job'>
