@@ -13,6 +13,13 @@ function handler(scn) {
     var dataURL = canvas.toDataURL();
     h['pic'] = dataURL;
     $.post('/' + qri, h, function(data) {
+      $('.foot').hide();
+      $('#magic').show();
+      $('#magic-target').val(data.target);
+      $('#magic-class').text(data.class);
+      $('#magic-rank').text(data.rank);
+      $('#magic-name').text(data.name);
+      $('#magic-title').text(data.title);
       log({ icon: 'qr_code_2', message: JSON.stringify(data) });
     });
 }
