@@ -19,22 +19,25 @@ rank: <span id='magic-rank'></span></span>
   <option value='<%= e %>'>
 <% end %>
 </datalist>
-<p>
-<input form='post' list='boxes' name='join'>
+<p style='width: 100%; text-align: center;'>
+<input form='post' list='boxes' name='join' placeholder='new box...'>
 </p>
 <% end %>
 
 <% if @entity.stat[:class].to_i >= 5 %>
 <p style='text-align: center; width: 100%;'>
-<span>sponsor:</span>$<input form='post' type='number' name='admin[sponsorship]' min='<%= @entity.attr[:asking].to_i || 100 %>' value='<%= @entity.attr[:asking] || 100 %>'><span>/month</span>
+<span>sponsor:</span>$<input form='post' type='number' name='admin[sponsorship]' min='<%= @entity.attr[:asking].to_i || 100 %>' value='<%= @entity.attr[:asking] || 100 %>' style='width: 30%;' maxlength='5'><span>/month</span>
+</p>
+<p style='text-align: center; width: 100%;'>
+<input form='post' name='admin[title]' paceholder='title...'>
 </p>
 <% end %>
 
-
 <% if @entity.stat[:class].to_i >= 4 %>
-<p style='text-align: center; width: 100%;'><span>promote</span></p>
 <p style='text-align: center; width: 100%;'>
-<input form='post' type='range' id='magic-class' name='admin[class]' step='1' min='0' max='<%= @entity.stat[:class].to_i - 1 %>'>
+<span class='material-icons'><%= Bivouac.icons[0] %></span>
+<input form='post' type='range' id='magic-class-slider' name='admin[class]' step='1' min='0' max='<%= @entity.stat[:class].to_i - 1 %>' style='width: 60%'>
+<span class='material-icons'><%= Bivouac.icons[@entity.stat[:class].to_i - 1] %></span>
 </p>
 </p><span id='magic-class-icon' class='material-icons'>checkbox_outline_blank</span><span id='magic-class-name'>title...</span></p>
 <% end %>
