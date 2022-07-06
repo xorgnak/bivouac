@@ -92,12 +92,15 @@ color: orange;
 
   <% if params.has_key?(:entity) %>
 $('#qrcode').qrcode('<%= @qr.badge(@entity.id) %>');
-
 setTimeout(function() { log({ icon: 'follow_the_signs', message: '<%= @host.env[:title] %>' }); }, 250);
 setTimeout(function() { log({ icon: 'star', message: '<%= @host.env[:pitch] %>' }); }, 500);
    <% if @entity.attr[:class].to_i < 1 %>
 setTimeout(function() { log({ icon: 'help', message: '<%= @host.env[:intro] %>' }); }, 750);
    <% end %>
+   <% if !params.has_key? :installed %>
+   setTimeout(function() { log({ icon: 'add', message: 'Add to homescreen!'}); }, 1000);
+   <% end %>
+   <%= erb :sw %>
    <% end %>
 });
 </script>

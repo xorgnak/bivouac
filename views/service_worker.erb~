@@ -1,0 +1,77 @@
+// Immediately take control of the page, see the 'Immediate Claim' recipe
+// for a detailed explanation of the implementation of the following two
+// event listeners.
+
+self.addEventListener('install', function(event) {
+    console.log(event);
+    event.waitUntil(self.skipWaiting());
+});
+
+self.addEventListener('activate', function(event) {
+    console.log(event);
+    event.waitUntil(self.clients.claim());
+});
+
+// Register event listener for the 'push' event.
+self.addEventListener('push', function(event) {
+    console.log(event);
+    const j = event.data ? JSON.parse(event.data.text()) : {};
+    event.waitUntil(
+	self.registration.showNotification( j.title || '<%= request.host %>', {
+	    tag: 'nomad',
+	    body: j.body || 'ping',
+	    icon: j.icon || 'favicon.ico',
+	    timestamp: j.timestamp,
+	    vibrate: j.vibrate || [500,100,500],
+	})
+    )
+});
+
+
+// Register event listener for the 'notificationclick' event.
+self.addEventListener('notificationclick', function(event) {
+    console.log(event);
+    var p;
+    if (event.action == 'mgt') {
+	p = "<%= @path %>/term?u=<%= @id %>" 
+    } else if (event.action == 'mgt') {
+	p = "<%= @path %>/adventures?u=<%= @id %>"
+    } else {
+	p = "<%= @path %>/<%= @id %>"
+    }
+    
+    event.waitUntil(
+    self.clients.matchAll().then(function(clientList) {
+	if (clientList.length > 0) {
+	    return clientList[0].focus();
+	}
+	return self.clients.openWindow(p);
+    })
+    )
+});
+
+//console.log('sw', otk, at);
+
+
+<% if params.has_key? :u %>
+<% @user = U.new(params[:u]) %>
+<% if ENV['BOX'] == 'true' %>
+<% @rhelm = %[#{@user.attr[:title]}@#{`hostname`.chomp}.#{ENV['CLUSTER']}/#{@user.attr[:sponsor]}] %>
+<% else %>
+<% @rhelm = %[#{@user.attr[:title]}@#{request.host}/#{@user.attr[:sponsor]}] %>
+<% end %>
+<% @time = %[at: #{Time.now.utc}] %>
+<% @body=[%[tokens: #{@user.coins.value}]];[:xp, :rank, :class].each {|e|@body << %[#{e}:#{@user.attr[e]}] } %>
+
+
+
+
+self.registration.showNotification( '<%= @rhelm %>', {
+    tag: 'nomad',
+    body: '<%= @time %>\n<%= @body.join('\n') %>',
+    icon: '/<%= request.host %>/favicon.ico',
+    badge: '/<%= request.host %>/favicon.ico',
+    vibrate: [500,100,500],
+//    timestamp: '<%= Time.now.to_i %>'
+});
+<% end %>
