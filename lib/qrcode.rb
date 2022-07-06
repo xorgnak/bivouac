@@ -6,7 +6,7 @@ module Bivouac
     def badge u, h={}
       @user = @host[u]
       opts = []; h.each_pair {|k,v| opts << "#{k}=#{v}" }
-      return %[#{@host.url}/#{@host.entity[@host.ids[@user.id]]}?at=#{Time.now.utc.to_i}&#{opts.join('&')}]
+      return %[#{@host.url}/#{@host.qro[@user.id]}?at=#{Time.now.utc.to_i}&#{opts.join('&')}]
     end
   end
   def self.qr h

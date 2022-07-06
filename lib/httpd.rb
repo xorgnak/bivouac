@@ -38,7 +38,7 @@ module Bivouac
     get('/manifest.webmanifest') {}
     get('/robots.txt') {}
     get('/info') { erb :info }
-    get('/:qri') { @entity = @host[@host.qri[params[:entity]]]; erb :entity }
+    get('/:qri') { @entity = @host[@host.qri[params[:qri]]]; erb :entity }
     get('/:qri/:box') { @entity = @host[@host.qri[params[:qri]]]; @box = @host[@host.qri[params[:qri]]][params[:box]]; erb :app }
     post('/') { b = Bivouac::Post.new(request, params); redirect b.goto }
     post('/auth') { b = Bivouac::Auth.new(request, params); redirect b.goto }

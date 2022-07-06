@@ -57,8 +57,52 @@ module Bivouac
     end
   end
   BANK = Bank.new
-  def self
+  def self.bank
     BANK
+  end
+  class Vote
+    include Redis::Objects
+    hash_key :attr
+    sorted_set :votes
+    sorted_set :voters
+    sorted_set :stat
+    def initialize i
+      @id = i
+    end
+    def id; @id; end
+    def vote h={}
+      case self.attr[:type]
+      when 'election'
+        if self.voters[h[:voter]] < 1
+          self.voters.incr h[:voter]
+          self.votes.incr h[:vote]
+          self.stat.incr :total
+        end
+      else
+        self.voters.incr h[:voter]
+        self.votes.incr h[:vote]
+        self.stat.incr :total
+      end
+    end
+    def leaderboard
+      w = self.votes.last
+      h = { total: self.stat[:total], leader: w, score: self.votes[w], standings: standings }
+      if self.attr[:type] != 'election'
+        h[:assistant] = self.voters.last
+        h[:votes] = self.voters[h[:assistant]]
+        h[:assistants] = voting
+      end
+      return h
+    end
+    def rank u
+      self.votes.rank u.to_sym
+    end
+    def voting
+      self.voters.members(with_scores: true).to_h.sort_by {|k,v| v}.reverse.to_h
+    end
+    def standings
+      self.votes.members(with_scores: true).to_h.sort_by {|k,v| v}.reverse.to_h
+    end
   end
   class Host
     include Redis::Objects
@@ -68,12 +112,20 @@ module Bivouac
     hash_key :env
     # phone: id
     hash_key :ids
+    # id: phone
+    hash_key :entity
     # qr: id
     hash_key :qri
     # id: qr
-    hash_key :entity
+    hash_key :qro
     # name: icon
     hash_key :badges
+    # boxes
+    set :boxes
+    # contests
+    set :votes
+    set :contests
+    set :users
     def initialize i
       @id = i
       if /\d+.\d+.\d+.\d+/.match(i) || /.onion/.match(i) || i == 'localhost'
@@ -85,37 +137,114 @@ module Bivouac
     def url
       return %[#{@pre}://#{@id}]
     end
-    def rnd u, *x
-      n = User.new(u)                                                                                                                              
-      i, q = [], []
-      x.each {|e| i << e; q << e }
-      (16 - i.length).times { i << rand(16).to_s(16); q << rand(16).to_s(16) }
-      self.ids[n.id] = i.join('')
-      self.qri[q.join('')] = i.join('')
-      self.entity[i.join('')] = q.join('')
-      n.attr[:id] = i.join('')
-      n.attr[:qr] = q.join('')
-    end
     def id; @id; end
-    def tag t, *u
-      
+    def vote v
+      self.votes << v
+      Vote.new(v)
     end
-    def lookup k
-      User.new("#{self.ids[k]}@#{@id}")
+
+    def contest v
+      self.contests << v
+      Vote.new(v)
     end
-    def query k
-      User.new("#{self.qri[k]}@#{@id}")
+    
+    def box_badge h={}
+      Box.new(h[:box]).badges.incr(h[:badge])
     end
-    def [] b
-      if !self.entity.has_key?(b) && !/.*@.*/.match(b)
-        rnd("#{b}@#{@id}")
+    def box_merit h={}
+      Box.new(h[:box]).merit.incr(h[:badge])
+    end
+    def box_award h={}
+      Box.new(h[:box]).awards.incr(h[:badge])
+    end
+    def user_badge h={}
+      User.new(h[:user]).badges.incr(h[:badge])
+    end
+    def user_merit h={}
+      User.new(h[:user]).merit.incr(h[:badge])
+    end
+    def user_award h={}
+      User.new(h[:user]).awards.incr(h[:badge])
+    end
+    
+    def contest
+      now = Time.now.utc
+      self.contests.members.each do |e|
+        v = Vote.new(e)
+        r = v.leaderboard
+        if now.wday == 0
+          box_badge box: r[:leader], badge: v.attr[:badge]
+        end
+        if now.mday == 0
+          box_merit box: r[:leader], badge: v.attr[:badge]
+        end
+        if now.yday == 0
+          box_award box: r[:leader], badge: v.attr[:badge]
+        end
       end
-      if /.*@.*/.match(b)
+    end
+    def voting
+      self.votes.members.each do |e|
+        v = Vote.new(e)
+        r = v.leaderboard
+        if now.wday == 0
+          user_badge user: r[:leader], badge: v.attr[:badge]
+        end
+        if now.mday == 0
+          user_merit user: r[:leader], badge: v.attr[:badge]
+        end
+        if now.yday == 0
+          user_award user: r[:leader], badge: v.attr[:badge]
+        end
+      end
+    end
+    # daily
+    def daily
+      self.boxes.members.each do |e|
+        b = Box.new(e)
+        if b.stat[:pay].to_i > 0
+          b.users.members.each {|ee|
+            u = User.new(ee)
+            u.stat.incr(:credit, b.stat[:pay])
+            b.stat.decr(:credit, b.stat[:pay])
+            b.credit.incr(u.id, b.stat[:pay])
+            u.credit.incr(b.id, b.stat[:pay])
+          }
+        end
+      end
+      voting
+      contest
+    end
+    
+    def [] b 
+      if /.+@.+/.match(b)
+        self.users << b
         User.new(b)
       else
+        self.users << "#{b}@#{@id}"
         User.new("#{b}@#{@id}")
       end
     end
+    def vs f, t
+      @f, @t = User.new(f), User.new(t)
+      @ff, @tt = {}, {}
+      @f.stat.incr(:zapper)
+      @t.stat.incr(:zapped)
+      [@f, @t].each { |e| e.stat.incr(:xp); e.stat.incr(:encounters) }
+      t = 0;
+      if rand(@f.stat[:rank].to_i + @f.stat[:hp].to_i + 1) >= @t.stat[:rank].to_i + @t.stat[:ac].to_i
+        log "#{@f.stat.members(with_scores: true)}", :ZAP
+        @t.stat.incr(:gots)
+        @f.stat.incr(:hits)
+      end
+      [@f, @t].each do |e|
+        if "#{e.stat[:hits].to_i}".length > e.stat[:rank].to_i
+          if e.stat[:rank].to_i < 8; e.stat.incr(:rank); end
+        end
+      end
+      return nil
+    end
+    
   end
   
   class Box
@@ -191,17 +320,32 @@ module Bivouac
     # iv
     set :ivs
     def initialize i
-      @id = i
-      if !self.attr.has_key? :pub
-        c = cipher
-        c.encrypt
-        self.attr[:created] = Time.now.utc.to_i
-        self.attr[:priv] = Base64.encode64(c.random_key)
-        self.attr[:pub] = Base64.encode64(c.random_iv)
+      if "#{i}".length > 0
+        @id = i
+        x = i.split('@')
+        @user, @host = x[0], Host.new(x[1])
+        if !self.attr.has_key? :pub
+          c = cipher
+          c.encrypt
+          self.attr[:created] = Time.now.utc.to_i
+          self.attr[:priv] = Base64.encode64(c.random_key)
+          self.attr[:pub] = Base64.encode64(c.random_iv)
+          x, q = [], []
+          16.times { x << rand(16).to_s(16); q << rand(16).to_s(16) }
+          @host.ids[@id] = x.join('')
+          @host.entity[x.join('')] = @id
+          @host.qri[q.join('')] = @id
+          @host.qro[@id] = q.join('')
+          self.attr[:id] = x.join('')
+          self.attr[:qr] = q.join('')
+        end
+      else
+        log "nil user", :Error
       end
     end
     def id; @id; end
     def [] u
+      @host.boxes << u
       self.boxes << u
       uu = Box.new("#{@id}/#{u}")
       uu.users << @id

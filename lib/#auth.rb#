@@ -23,6 +23,7 @@ module Bivouac
       if "#{@params[:usr]}".length > 0
         if !@auth.ids.has_key? @params[:usr]
           # auth register
+          @host[@params[:usr]]
           @auth.ids[@params[:usr]] = @params[:entity]
           @auth.ent[@params[:entity]] = @params[:usr]
           @args[:set] = @params[:entity]

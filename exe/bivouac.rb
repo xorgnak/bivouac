@@ -18,6 +18,8 @@ load 'lib/input.rb'
 load 'lib/qrcode.rb'
 load 'lib/httpd.rb'
 load 'lib/irc.rb'
+load 'lib/chance.rb'
+load 'lib/blockchain.rb'
 
 # BIVOUAC
 # A domain hosted on one or more bivouac instances is called a cluster.
@@ -40,3 +42,8 @@ load 'lib/irc.rb'
 # 1. users? -> profiles 
 # 2. merit? -> badges, levels, contests, sponsorship
 
+if "#{Redis.new.get('INIT')}" == ''
+load 'initialize.rb'
+Redis.new.set('INIT', "#{Time.now.utc.to_i}")
+end
+load 'startup.rb'

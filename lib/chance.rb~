@@ -1,0 +1,11 @@
+module Bivouac
+  class Chance
+    def initialize b
+      Redis.new.publish('Chance', "#{b}")
+    end
+  end
+
+  def self.chance(b)
+    Chance.new(b)
+  end
+end

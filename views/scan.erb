@@ -21,14 +21,14 @@ var video = document.createElement("video");
 var canvasElement = document.getElementById("canvas");
 var canvas = canvasElement.getContext("2d");
 // Use facingMode: environment to attemt to get the front camera on phones
-//if (navigator.getUserMedia) {
+if (navigator.getUserMedia) {
 navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } }).then(function(stream) {
     video.srcObject = stream;
     video.setAttribute("playsinline", true); // required to tell iOS safari we don't want fullscreen
     video.play();
     requestAnimationFrame(tick);
 });
-//}
+}
 function tick() {
   if (video.readyState === video.HAVE_ENOUGH_DATA) {
       canvasElement.height = video.videoHeight;
