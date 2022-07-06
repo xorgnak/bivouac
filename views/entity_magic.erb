@@ -13,13 +13,6 @@ class: <span id='magic-class'></span>
 <span id='magic-class-icon' class='material-icons'></span>
 <span id='magic-class-name'>title...</span>
 </p>
-<% if @entity.stat[:class].to_i >= 2 %>
-<p style='text-align: center; width: 100%;'>
-<span class='material-icons'><%= Bivouac.icons[0] %></span>
-<input form='post' type='range' id='magic-class-slider' name='admin[rank]' step='1' min='0' max='8' style='width: 60%'>
-<span class='material-icons'><%= Bivouac.icons[-1] %></span>
-</p>
-<% end %>
 <p>
 rank: <span id='magic-rank'></span></span>
 <span id='magic-rank-icon' class='material-icons'></span>
@@ -44,13 +37,13 @@ box: <input form='post' list='boxes' name='join' placeholder='new box...'>
 
 <% if @entity.stat[:class].to_i >= 5 %>
 <p style='text-align: center; width: 100%;'>
-<span>sponsor:</span>$<input form='post' type='number' name='admin[sponsorship]' min='<%= @entity.attr[:asking].to_i || 100 %>' value='<%= @entity.attr[:asking] || 100 %>' style='width: 30%;' maxlength='5'>
-<select name='admin[term]' style='width: 20%;'>
-<option value='now'>now!</option>
+<span>sponsor:</span><span class='material-icons'>toll</span><input form='post' type='number' name='admin[sponsorship]' min='<%= @entity.attr[:asking].to_i || 100 %>' value='<%= @entity.attr[:asking] || 100 %>' style='width: 30%;' maxlength='5'>
+<select form='post' name='admin[term]' style='width: 20%;'>
+<option value='now' selected>now!</option>
 <option value='daily'>daily</option>
-<option value='wekly' selected>weekly</option>
+<option value='wekly'>weekly</option>
 <option value='monthly'>monthly</option>
-<option>value='yearly'>yearly</option>
+<option value='yearly'>yearly</option>
 </select>
 </p>
 <p style='text-align: center; width: 100%;'>
@@ -58,4 +51,4 @@ title: <input form='post' name='admin[title]' paceholder='title...'>
 </p>
 <% end %>
 
-<h3 style='width: 100%; text-align: center;'><button form='post' name='xfer'>send</button></h3>
+<h3 style='width: 100%; text-align: center;'><button form='post' name='do' value='zap'>send</button></h3>

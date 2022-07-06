@@ -24,9 +24,9 @@ function handler(scn) {
       $('#magic-rank-slider').val(data.rank);
       $('#magic-rank-name').text(classes[data.rank]);
       $('#magic-rank-icon').text(icons[data.rank]);
-      $('#magic-name').text(data.name);
-      $('#magic-title').text(data.title);
-      log({ icon: 'qr_code_2', message: JSON.stringify(data) });
+      $('#magic-name').text(data.name || 'anonymous');
+      $('#magic-title').text(data.title || '<%= Bivouac.classes[@entity.stat[:class].to_i] %>');
+//      log({ icon: 'qr_code_2', message: JSON.stringify(data) });
     });
 }
 

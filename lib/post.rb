@@ -38,13 +38,13 @@ module Bivouac
         if @params.has_key? :magic
           @params[:magic].each_pair {|k,v| @target.attr[k] = v }
         end
-        if @params.has_key? :xfer
-          if @params[:xfer][:amt].to_i > 0
-            Bivouac.bank.give user: @target.id, type: @params[:xfer][:type], amt: @params[:xfer][:amt].to_i
-          else
-            Bivouac.bank.take user: @target.id, type: @params[:xfer][:type], amt: @params[:xfer][:amt].to_i
-          end
-        end
+#        if @params.has_key? :xfer
+#          if @params[:xfer][:amt].to_i > 0
+#            Bivouac.bank.give user: @target.id, type: @params[:xfer][:type], amt: @params[:xfer][:amt].to_i
+#          else
+#            Bivouac.bank.take user: @target.id, type: @params[:xfer][:type], amt: @params[:xfer][:amt].to_i
+#          end
+#        end
       end
       
       if @params.has_key? :qri
