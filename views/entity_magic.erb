@@ -1,5 +1,13 @@
 <input form='post' id='magic-target' type='hidden' name='target' value=''>
-
+<div style='width: 100%; text-align: center;'>
+<h3 style='width: 100%; text-align: center;'><span id='magic-name'></span></h3>
+<p>
+class: <span id='magic-class'></span>
+</p>
+<p>
+rank: <span id='magic-rank'></span></span>
+</p>
+</div>
 <% if @entity.stat[:class].to_i >= 2 %>
 <p>
   <input form='post' name='join' value='<%= @entity.attr[:box] %>'>
@@ -33,4 +41,4 @@
 
 
 
-<button form='post' name='xfer'>toll</button>
+<h3 style='width: 100%; text-align: center;'><button form='post' name='xfer'>send</button></h3>
