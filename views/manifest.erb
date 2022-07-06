@@ -4,7 +4,7 @@
     "background_color": "#f69435",
     "display": "fullscreen",
     "scope": "/",
-    "start_url": "<%= request.fullpath %>&installed=true",
+    "start_url": "<%= @host.url %>/?entity=<%= params[:entity] %>&installed=true",
     "short_name": "<%= @host.id %>",
     "description": "<%= @host.id %>",
     "name": "<%= @host.id %>",
