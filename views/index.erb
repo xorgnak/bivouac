@@ -53,21 +53,28 @@ color: orange;
   </div>
     <div id='job' class='foot' style='display: none;'>
     <%= erb :entity_job %>
-</div>
+    </div>
+    
+    <div class='foot' id='info'>
+    <p>
+    credits:<span id='mycredits'><%= @entity.stat[:credits] %></span>
+    </p>
+    <p>
+    class:<span id='myclass'><span class='material-icons'><%= Bivouac.icons[@entity.stat[:class].to_i] %></span><%= Bivouac.classes[@entity.stat[:class].to_i] %></span>
+    </p>
+    <p>
+    rank:<span id='myrank'><span class='material-icons'><%= Bivouac.icons[@entity.stat[:rank].to_i] %></span><%= Bivouac.classes[@entity.stat[:rank].to_i] %></span>
+    </p>
+    </div>
+    
   <div class='foot' id='focus'>
-  <% if params.has_key? :entity %>
-  <p style='width: 100%; text-align: center;'>
-<span style='padding: 0 2% 0 2%;'><span class='material-icons'>toll</span><span id='credits'><%= @entity.stat[:credits] %></span></span>
-<span style='padding: 0 2% 0 2%;'><span class='material-icons'>leaderboard</span><span id='xp'><%= @entity.stat[:class] %></span></span>
-<span style='padding: 0 2% 0 2%;'><span class='material-icons'>military_tech</span><span id='level'><%= @entity.stat[:rank] %></span></span>
-</p>
-<% end %>
     <div id='log'></div>
   </div>
   
   <h3 id='head' style='width: 100%; text-align: left; margin: 0; padding: 0;'>
     <nav style='float: right; vertical-align: middle;'>
     <% if params.has_key? :entity %>
+      <button class='tog material-icons' value='info'>info</button>
       <button class='tog material-icons' value='settings'>settings</button>
       <button class='tog material-icons' value='focus' style='color: orange;'>center_focus_weak</button>
     <button class='tog material-icons' value='badge'>qr_code_2</button>
