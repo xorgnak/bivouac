@@ -34,7 +34,7 @@ module Bivouac
       erb :index
     }
     get('/favicon.ico') {}
-    get('/service-worker.js') { erb :service_worker }
+    get('/service-worker.js') { @entity = @host[params[:entity]]; erb :service_worker }
     get('/manifest.webmanifest') { erb :manifest }
     get('/robots.txt') {}
     get('/info') { erb :info }
