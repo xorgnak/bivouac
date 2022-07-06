@@ -109,6 +109,9 @@ setTimeout(function() { log({ icon: 'help', message: '<%= @host.env[:intro] %>' 
   <% end %>
 	  $(document).on('click', '#pic', function(ev) {
 	      ev.preventDefault();
+	      $('#head').hide();
+	      $('.foot').hide();
+	      $('#job').show();
 	      var canvas = document.getElementById('canvas');
 	      var dataURL = canvas.toDataURL();
 	      var pic_canvas = document.getElementById('picture');
@@ -117,9 +120,8 @@ setTimeout(function() { log({ icon: 'help', message: '<%= @host.env[:intro] %>' 
 	      var image = new Image
 	      image.src = dataURL;
 	      image.onload = function(){
-		  pic_ctx.drawImage(image)
+		  pic_ctx.drawImage(image, 0, 0);
 	      }
-	      // set pic to #image
 	      $('#head').hide();
 	      $('.foot').hide();
 	      $('#job').show();
