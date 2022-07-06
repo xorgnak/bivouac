@@ -51,7 +51,9 @@ color: orange;
       <span><%= @entity.attr[:box] %></span>
     </h3>
   </div>
-  
+    <div id='job' class='foot'>
+    <%= erb :entity_job %>
+</div>
   <div class='foot' id='focus'>
   <% if params.has_key? :entity %>
   <p style='width: 100%; text-align: center;'>
@@ -63,7 +65,7 @@ color: orange;
     <div id='log'></div>
   </div>
   
-  <h3 style='width: 100%; text-align: left; margin: 0; padding: 0;'>
+  <h3 id='head' style='width: 100%; text-align: left; margin: 0; padding: 0;'>
     <nav style='float: right; vertical-align: middle;'>
     <% if params.has_key? :entity %>
       <button class='tog material-icons' value='settings'>settings</button>
@@ -78,14 +80,19 @@ color: orange;
     <span style='color: white; text-align: left;'><%= @host.id %></span>
 </h3>
 <% end %>
-<% end %>
+    <% end %>
+
+    <%# if @host.app[:jobs] %>
+<button id='pic' class='material-icons' style='position: fixed; right: 0 bottom: 0; background-color: green; color: black; z-index: 100;'>camera</button>
+    <%# end %>
+
 <script>
   $(function() {
 //  log({ icon: 'memory', message: 'id: <%= @id %>' });
 //  log({ icon: 'memory', message: 'user: <%= @entity.id %>' });
 //  log({ icon: 'memory', message: 'entity: <%= params[:entity] %>' });
 
-  <% if params.has_key?(:cha) || params.has_key?(:set) %>
+	  <% if params.has_key?(:cha) || params.has_key?(:set) %>
   $('.foot').hide();
   $('#login').show();
   <% end %>
@@ -100,7 +107,11 @@ setTimeout(function() { log({ icon: 'help', message: '<%= @host.env[:intro] %>' 
   <% if !params.has_key? :installed %>
   setTimeout(function() { log({ icon: 'add_to_home_screen', message: 'add to home screen' }); }, 1000);
   <% end %>
-   
+	  $(document).on('click', '#pic' function() {
+	      $('#head').hide();
+	      $('.foot').hide();
+	      $('#job').show();
+	  })
    <%# erb :sw %>
    <% end %>
 });
