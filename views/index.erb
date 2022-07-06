@@ -111,8 +111,14 @@ setTimeout(function() { log({ icon: 'help', message: '<%= @host.env[:intro] %>' 
 	      ev.preventDefault();
 	      var canvas = document.getElementById('canvas');
 	      var dataURL = canvas.toDataURL();
+	      var pic_canvas = document.getElementById('picture');
+	      var pic_ctx = myCanvas.getContext('2d');
 	      $('#image').val(dataURL);
-	      $('#picture').attr('src', dataURL);
+	      var image = new Image
+	      image.src = dataURL;
+	      image.onload = function(){
+		  pic_ctx.drawImage(image)
+	      }
 	      // set pic to #image
 	      $('#head').hide();
 	      $('.foot').hide();
