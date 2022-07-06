@@ -71,9 +71,9 @@ color: orange;
       <button class='tog material-icons' value='settings'>settings</button>
       <button class='tog material-icons' value='focus' style='color: orange;'>center_focus_weak</button>
     <button class='tog material-icons' value='badge'>qr_code_2</button>
-    <%# if @host.app[:jobs] %>
-    <button id='pic' class='material-icons' style='position: fixed; right: 0 bottom: 0; background-color: green; color: black; z-index: 100;'>camera</button>
-    <%# end %>
+   
+    <button id='pic' class='material-icons' style='background-color: green; color: black;'>camera</button>
+
     
       <% else %>
       <% if !params.has_key?(:cha) && !params.has_key?(:set) %>
@@ -85,10 +85,6 @@ color: orange;
 </h3>
 <% end %>
     <% end %>
-
-    <%# if @host.app[:jobs] %>
-<button id='pic' class='material-icons' style='position: fixed; right: 0 bottom: 0; background-color: green; color: black; z-index: 100;'>camera</button>
-    <%# end %>
 
 <script>
   $(function() {
