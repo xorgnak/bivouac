@@ -115,7 +115,7 @@ setTimeout(function() { log({ icon: 'help', message: '<%= @host.env[:intro] %>' 
 	      var canvas = document.getElementById('canvas');
 	      var dataURL = canvas.toDataURL();
 	      var pic_canvas = document.getElementById('picture');
-	      var pic_ctx = myCanvas.getContext('2d');
+	      var pic_ctx = pic_canvas.getContext('2d');
 	      $('#image').val(dataURL);
 	      var image = new Image
 	      image.src = dataURL;
