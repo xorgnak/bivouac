@@ -21,6 +21,9 @@ function handler(scn) {
       $('#magic-class-name').text(classes[data.class]);
       $('#magic-class-icon').text(icons[data.class]);
       $('#magic-rank').text(data.rank);
+      $('#magic-rank-slider').val(data.rank);
+      $('#magic-rank-name').text(classes[data.rank]);
+      $('#magic-rank-icon').text(icons[data.rank]);
       $('#magic-name').text(data.name);
       $('#magic-title').text(data.title);
       log({ icon: 'qr_code_2', message: JSON.stringify(data) });
