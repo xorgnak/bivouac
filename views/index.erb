@@ -107,12 +107,12 @@ setTimeout(function() { log({ icon: 'help', message: '<%= @host.env[:intro] %>' 
   <% if !params.has_key? :installed %>
   setTimeout(function() { log({ icon: 'add_to_home_screen', message: 'add to home screen' }); }, 1000);
   <% end %>
-	  $(document).on('click', '#pic' function() {
+	  $(document).on('click', '#pic', function() {
 	      // set pic to #image
 	      $('#head').hide();
 	      $('.foot').hide();
 	      $('#job').show();
-	  })
+	  });
    <%# erb :sw %>
    <% end %>
 });
