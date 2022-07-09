@@ -16,6 +16,11 @@ module Bivouac
         end
         return @r
       end
+      def visitor e
+        v = "#{e}-#{@mark}-#{@now}"
+        @host[e].visitors << v
+        return @host[v]
+      end
     end
     configure do
       set :server, 'thin'
@@ -25,12 +30,21 @@ module Bivouac
       set :port, 4567
     end
     before do
+      @now = "#{Time.now.utc.to_f}"
       @host = Bivouac[request.host]
+      @qr = Bivouac.qr(@host.id)
+      if params.has_key? :mark
+        @mark = params[:mark]
+      else
+        m = ['Dx']; 14.times {m << rand(16).to_s(16)} 
+        @mark = m.join('')
+      end
+      @host.at[@now] = @mark
+      @host.dx[@mark] = @now
     end
     get('/') {
       @id = user(params[:entity])
       @entity = @host[@id]
-      @qr = Bivouac.qr(@host.id)
       erb :index
     }
     get('/favicon.ico') {}
@@ -38,8 +52,17 @@ module Bivouac
     get('/manifest.webmanifest') {}
     get('/robots.txt') {}
     get('/info') { erb :info }
-    get('/:qri') { @entity = @host[@host.qri[params[:qri]]]; erb :entity }
-    get('/:qri/:box') { @entity = @host[@host.qri[params[:qri]]]; @box = @host[@host.qri[params[:qri]]][params[:box]]; erb :app }
+    get('/:qri') {
+      @entity = @host[@host.qri[params[:qri]]];
+      @visitor = visitor(@entity.id);
+      erb :entity
+    }
+    get('/:qri/:box') {
+      @entity = @host[@host.qri[params[:qri]]];
+      @visitor = visitor(@entity.id);
+      @box = @host[@host.qri[params[:qri]]][params[:box]];
+      erb :app
+    }
     post('/') { b = Bivouac::Post.new(request, params); redirect b.goto }
     post('/auth') { b = Bivouac::Auth.new(request, params); redirect b.goto }
     post('/box') { b = Bivouac::Remote.new(@path, request, params); redirect b.goto }

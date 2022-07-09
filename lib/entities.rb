@@ -120,6 +120,10 @@ module Bivouac
     hash_key :qro
     # name: icon
     hash_key :badges
+    # time: mark
+    hash_key :at
+    # mark: time
+    hash_key :dx
     # boxes
     set :boxes
     # contests
@@ -319,6 +323,8 @@ module Bivouac
     set :boxes
     # iv
     set :ivs
+    # visitors
+    set :visitors
     def initialize i
       if "#{i}".length > 0
         @id = i

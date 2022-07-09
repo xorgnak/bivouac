@@ -10,17 +10,25 @@
 </fieldset>
 
 <fieldset id='info' class='foot'><legend><%= @entity.attr[:name] || 'anonymous' %>@<%= @host.id %></legend>
+
+<div>
+<h3 style='width: 100%; text-align: center;'><span><%= @entity.attr[:contest] %></span></h3>
+<h3 style='width: 100%; text-align: center;'><button class='goto'>vote</button></h3>
+</div>
+
 <div id='log'></div>
+
 <div style='border: thin solid orange;'><h3 style='width: 100%; text-align: center; margin: 0;'><span>sponsors</span></h3>
 <ul id='boxes' style='text-align: left;'>
 <% @entity.boxes.members.each do |box| %>
 <% @box = @entity[box] %>
-<li>
+<p style='width: 100%; text-align: center;'>
 <span class='material-icons'><%= @box.attr[:icon] || 'box' %></span>
 <a href='<%= @host.url %>/<%= @entity.attr[:qr] %>/<%= @box.id %>'><%= @box.attr[:name] || 'private' %></a>
-</li>
+</p>
 <% end %>
 </ul>
+</div>
 </fieldset>
 
 <!--
@@ -40,11 +48,11 @@
 -->
 
 <fieldset id='badge' class='foot' style='display: none;'><legend>badge</legend>
-<% if @host.env[:merit] == 'true' %>
+<% if @host.env[:merit] == 'on' %>
 <%= erb :level %>
 <% end %>
 <div id='qrcode'></div>
-<% if @host.env[:merit] == 'true' %>
+<% if @host.env[:merit] == 'on' %>
 <%= erb :badges %>
 <% end %>
 </fieldset>
@@ -54,6 +62,14 @@
 <!-- <button class='tog material-icons' value='settings'>settings</button> -->
 <!-- <button class='tog material-icons' value='groups'>groups</button> -->
 <!-- <button class='tog material-icons' value='reports'>report</button> -->
+
+<% if @entity.attr[:contact] != 'none' %>
+<button class='goto material-icons' value='<%= @entity.attr[:contact] %>:<%= @entity.attr[:phone] %>'>call</button>
+<% end %>
+
 <button class='tog material-icons' value='badge'>qr_code_2</button>
 </h1>
 </div>
+<script>
+$('#qrcode').qrcode('<%= @qr.badge(@visitor.id) %>');
+</script>
