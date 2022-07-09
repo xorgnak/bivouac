@@ -1,0 +1,49 @@
+{
+    "gcm_sender_id": "1028653682510",
+    "theme_color": "#f69435",
+    "background_color": "#f69435",
+    "display": "fullscreen",
+    "scope": "/",
+    "start_url": "<%= @host.url %>/?entity=<%= params[:entity] %>&installed=true",
+    "short_name": "<%= @host.id %>",
+    "description": "<%= @host.id %>",
+    "name": "<%= @host.id %>",
+    "icons": [
+	{
+	    "src": "<%= @host.id %>/adroid-icon-36x36.png",
+	    "sizes": "36x36",
+	    "type": "image/png",
+	    "density": "0.75"
+	},
+	{
+	    "src": "<%= @host.id %>/android-icon-48x48.png",
+	    "sizes": "48x48",
+	    "type": "image/png",
+	    "density": "1.0"
+	},
+	{
+	    "src": "<%= @host.id %>/android-icon-72x72.png",
+	    "sizes": "72x72",
+	    "type": "image/png",
+	    "density": "1.5"
+	},
+	{
+	    "src": "<%= @host.id %>/favicon-96x96.png",
+	    "sizes": "96x96",
+	    "type": "image/png",
+	    "density": "2.0"
+	},
+	{
+	    "src": "<%= @host.id %>/ms-icon-144x144.png",
+	    "sizes": "144x144",
+	    "type": "image/png",
+	    "density": "3.0"
+	},
+	{
+	    "src": "<%= @host.id %>/android-icon-192x192.png",
+	    "sizes": "192x192",
+	    "type": "image/png",
+	    "density": "4.0"
+	}
+    ]
+}

@@ -1,0 +1,9 @@
+<input id='image' type='hidden' name='job[pic]'>
+<div style='width: 100%; text-algn: center;'>
+<canvas id='picture'></canvas>
+</div>
+<p style='width: 100%; text-align: center;'>
+<input form='post' name='job[title]' placeholder='job'>
+</p>
+<textarea style='width: 100%; height: 20%;' name='job[desc]' placeholder='instructions'></textarea>
+<button>save</button>

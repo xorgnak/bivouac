@@ -48,8 +48,8 @@ module Bivouac
       erb :index
     }
     get('/favicon.ico') {}
-    get('/service-worker.js') {}
-    get('/manifest.webmanifest') {}
+    get('/service-worker.js') { @entity = @host[params[:entity]]; erb :service_worker, layout: false }
+    get('/manifest.webmanifest') { erb :manifest, layout: false }
     get('/robots.txt') {}
     get('/info') { erb :info }
     get('/:qri') {

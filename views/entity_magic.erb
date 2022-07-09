@@ -1,36 +1,54 @@
 <input form='post' id='magic-target' type='hidden' name='target' value=''>
-
-<% if @entity.stat[:class].to_i >= 2 %>
-<p>
-  <input form='post' name='join' value='<%= @entity.attr[:box] %>'>
-  <label for='magic-box'><%= @entity.attr[:box] %></label>
+<div style='width: 100%; text-align: center;'>
+<h3 style='width: 100%; text-align: center;'><span id='magic-name'></span></h3>
+<% if @entity.stat[:class].to_i >= 4 %>
+<p style='text-align: center; width: 100%;'>
+<span class='material-icons'><%= Bivouac.icons[0] %></span>
+<input form='post' type='range' id='magic-class-slider' name='admin[class]' step='1' min='0' max='<%= @entity.stat[:class].to_i - 1 %>' style='width: 60%'>
+<span class='material-icons'><%= Bivouac.icons[@entity.stat[:class].to_i - 1] %></span>
 </p>
-<% elsif @entity.stat[:class] >= 7 %>
+<% end %>
+<p>
+class: <span id='magic-class'></span>
+<span id='magic-class-icon' class='material-icons'></span>
+<span id='magic-class-name'></span>
+</p>
+<p>
+rank: <span id='magic-rank'></span></span>
+<span id='magic-rank-icon' class='material-icons'></span>
+<span id='magic-rank-name'></span>
+</p>
+</div>
+
+<% if @entity.stat[:class] >= 7 %>
 <datalist id='boxes'>
 <% @entity.boxes.members.each do |e| %>
   <option value='<%= e %>'>
 <% end %>
 </datalist>
-<p>
-<input form='post' list='boxes' name='join'>
+<p style='width: 100%; text-align: center;'>
+box: <input form='post' list='boxes' name='join' placeholder='new box...'>
 </p>
+<% elsif @entity.stat[:class] >= 2 %>
+<p style='width: 100%; text-align: center;'>
+  box: <input form='post' name='join' value='<%= @entity.attr[:box] %>'>
+  </p>
 <% end %>
 
 <% if @entity.stat[:class].to_i >= 5 %>
 <p style='text-align: center; width: 100%;'>
-<span>sponsor:</span>$<input form='post' type='number' name='admin[sponsorship]' min='<%= @entity.attr[:asking].to_i || 100 %>' value='<%= @entity.attr[:asking] || 100 %>'><span>/month</span>
+<span>sponsor:</span><span class='material-icons'>toll</span><input form='post' type='number' name='admin[sponsorship]' min='<%= @entity.attr[:asking].to_i || 100 %>' value='<%= @entity.attr[:asking] || 100 %>' style='width: 30%;' maxlength='5'>
+<select form='post' name='admin[term]' style='width: 20%;'>
+<option value='now' selected>now!</option>
+<option value='daily'>daily</option>
+<option value='wekly'>weekly</option>
+<option value='monthly'>monthly</option>
+<option value='yearly'>yearly</option>
+</select>
 </p>
-<% end %>
-
-
-<% if @entity.stat[:class].to_i >= 4 %>
-<p style='text-align: center; width: 100%;'><span>promote</span></p>
 <p style='text-align: center; width: 100%;'>
-<input form='post' type='range' id='magic-class' name='admin[class]' step='1' min='0' max='<%= @entity.stat[:class].to_i - 1 %>'>
+title: <input form='post' name='admin[title]' paceholder='title...'>
 </p>
-</p><span id='magic-class-icon' class='material-icons'>checkbox_outline_blank</span><span id='magic-class-name'>title...</span></p>
 <% end %>
 
-
-
-<button form='post' name='xfer'>toll</button>
+<h3 style='width: 100%; text-align: center;'><button form='post' name='do' value='zap'>send</button></h3>

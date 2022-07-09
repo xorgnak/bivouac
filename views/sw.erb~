@@ -1,0 +1,24 @@
+
+var vapid;
+
+window.vapidPublicKey = new Uint8Array(<%= Base64.urlsafe_decode64(@user.attr[:pub]).bytes %>);
+
+navigator.serviceWorker.register('<%= @path %>/service-worker.js?u=<%= @user.id %>');
+
+navigator.serviceWorker.ready.then(function(sw) {
+    Notification.requestPermission(function(permission) {
+	if(permission !== 'denied') {
+	    sw.pushManager.subscribe({userVisibleOnly: true, applicationServerKey: window.vapidPublicKey}).then(function(s) {
+		var data = {
+		    endpoint: s.endpoint,
+		    p256dh: btoa(String.fromCharCode.apply(null, new Uint8Array(s.getKey('p256dh')))).replace(/\+/g, '-').replace(/\//g, '_'),
+		    auth: btoa(String.fromCharCode.apply(null, new Uint8Array(s.getKey('auth')))).replace(/\+/g, '-').replace(/\//g, '_')
+		}
+		vapid = s;
+		console.log(s);
+	    });
+	    $.post("<%= @path %>/sw?u=<%= params[:u] %>", { subscription: JSON.stringify(vapid) });
+	}
+    });
+});
+

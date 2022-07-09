@@ -1,13 +1,10 @@
 <% if params.has_key? :cha %>
 <input form='auth' type='hidden' name='cha' value='<%= params[:cha] %>'>
-<p><input form='auth' name='pin' type='password' placeholder='pin'></p>
-<p><button form='auth' type='submit'><span class='material-icons'>lock</span>unlock</button></p>
+<p style='width: 100%; text-align: center;'><input form='auth' name='pin' type='password' placeholder='pin'><button form='auth' type='submit'><span class='material-icons'>lock</span>unlock</button></p>
 <% elsif params.has_key? :set %>
 <input form='auth' type='hidden' name='set' value='<%= params[:set] %>'>
-<p><input form='auth' name='pin' type='password' placeholder='pin'></p>
-<p><button form='auth' type='submit'><span class='material-icons'>lock</span>lock</button></p>
+<p style='width: 100%; text-align: center;'><input form='auth' name='pin' type='password' placeholder='pin'><button form='auth' type='submit'><span class='material-icons'>lock</span>lock</button></p>
 <% else %>
 <input form='auth' type='hidden' name='entity' value='<%= @entity.id %>'>
-<p><input form='auth' name='usr' type='tel' placeholder='phone'></p>
-<p><button form='auth' type='submit'><span class='material-icons'>lock</span>login</button></p>
+<p style='width: 100%; text-align: center;'><input form='auth' name='usr' type='tel' placeholder='phone'><button form='auth' type='submit'><span class='material-icons'>lock</span>login</button></p>
 <% end %>

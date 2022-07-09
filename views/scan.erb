@@ -13,7 +13,20 @@ function handler(scn) {
     var dataURL = canvas.toDataURL();
     h['pic'] = dataURL;
     $.post('/' + qri, h, function(data) {
-      log({ icon: 'qr_code_2', message: JSON.stringify(data) });
+      $('.foot').hide();
+      $('#magic').show();
+      $('#magic-target').val(data.target);
+      $('#magic-class').text(data.class);
+      $('#magic-class-slider').val(data.class);
+      $('#magic-class-name').text(classes[data.class]);
+      $('#magic-class-icon').text(icons[data.class]);
+      $('#magic-rank').text(data.rank);
+      $('#magic-rank-slider').val(data.rank);
+      $('#magic-rank-name').text(classes[data.rank]);
+      $('#magic-rank-icon').text(icons[data.rank]);
+      $('#magic-name').text(data.name || 'anonymous');
+      $('#magic-title').text(data.title || '<%= Bivouac.classes[@entity.stat[:class].to_i] %>');
+//      log({ icon: 'qr_code_2', message: JSON.stringify(data) });
     });
 }
 
