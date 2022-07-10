@@ -55,7 +55,7 @@ color: orange;
   <div class='foot' id='focus'>
   <p style='width: 100%; text-align: center; background-color: black; color: white;'>
   <span class='material-icons'>toll</span><span id='mycredits'><%= @entity.stat[:credits] %></span>
-  <span id='myclass'><span class='material-icons'><%= Bivouac.icons[@entity.stat[:class].to_i] %></span><%= Bivouac.classes[@entity.stat[:class].to_i] %></span>
+  <span id='myclass'><span class='material-icons'><%= Bivouac.icons[@entity.stat[:class].to_i] %></span><%= @entity.attr[:title] || Bivouac.classes[@entity.stat[:class].to_i] %></span>
  <span class='material-icons'>military_tech</span><span id='myrank'><%= @entity.stat[:rank].to_i %></span></p>
     <div id='log'></div>
     <%= erb :entity_config %>

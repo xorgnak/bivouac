@@ -38,7 +38,6 @@ module Bivouac
         if @params.has_key? :magic
           @params[:magic].each_pair {|k,v| @target.attr[k] = v }
         end
-        @goto = "#{goto}/?entity=#{@params[:entity]}"
       end
       
       if @params.has_key? :qri
