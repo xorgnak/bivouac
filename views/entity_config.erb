@@ -1,14 +1,14 @@
 <p>
-  <input form='post' name='config[name]' placeholder='name' value='<%= @entity.attr[:name] %>'>
+  <input form='post' name='config[name]' id='entity-config-name' placeholder='name' value='<%= @entity.attr[:name] %>'>
 </p>
 
 <p>
-  <select form='post' name='config[contact]' style='width: min-content;'>
+  <select form='post' id='entity-config-contact' name='config[contact]' style='width: min-content;'>
     <option value='none' selected>none</option>
     <option value='tel'>call</option>
     <option value='sms'>text</option>
   </select>
-  <input form='post' name='config[phone]' placeholder='phone' value='<%= @entity.attr[:phone] %>'>
+  <input form='post' name='config[phone]' placeholder='phone' id='entity-config-phone' value='<%= @entity.attr[:phone] %>'>
 </p>
 
 <p>
@@ -18,9 +18,9 @@
 <option value='<%= e %>'>
 <% end %>
 </datalist>
-<input form='post'name='box' list='sponsors' placeholder='sponsor'>
+<input form='post' name='config[box]' list='sponsors' id='entity-config-box' placeholder='sponsor'>
 <% else %>
-<select form='post' name='box'>
+<select form='post' name='config[box]' id='entity-config-box' >
   <option selected disabled>sponsor</option>
 <% @entity.boxes.members.each do |e| %>
 <option value='<%= e %>'><%= e %></option>

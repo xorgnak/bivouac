@@ -106,6 +106,10 @@ color: orange;
 
   <% if params.has_key?(:entity) %>
 $('#qrcode').qrcode('<%= @qr.badge(@entity.id) %>');
+$('#entity-config-box').val('<%= @entity.attr[:box] %>');
+$('#entity-config-phone').val('<%= @entity.attr[:phone] %>');
+$('#entity-config-contact').val('<%= @entity.attr[:contact] %>');
+$('#entity-config-name').val('<%= @entity.attr[:name] %>');
 setTimeout(function() { log({ icon: 'follow_the_signs', message: '<%= @host.env[:title] %>' }); }, 250);
 setTimeout(function() { log({ icon: 'star', message: '<%= @host.env[:pitch] %>' }); }, 500);
    <% if @entity.attr[:class].to_i < 1 %>
