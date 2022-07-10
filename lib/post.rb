@@ -16,7 +16,7 @@ module Bivouac
         @entity = @host[@params[:entity]]
         
         if @params.has_key? :config
-          @params[:config].each_pair {|k,v| if "#{v}".length > 0; @entity.attr[k] = v; end }
+          @params[:config].each_pair {|k,v| @entity.attr[k] = v; }
         end
         
         if @params.has_key?(:box) && "#{@params[:box]}".length > 0
