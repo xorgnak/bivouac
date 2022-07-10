@@ -10,8 +10,8 @@ module Bivouac
       n = "#{Time.now.utc.to_f}"
       @host.at["#{n}"] = m.join('')
       @host.dx[m.join('')] = n
-      if "".length > 0
-        return %[#{@host.url}/#{@host.qro[@user.id]}/#{@user.attr[:host]}?mark=#{m.join('')}&#{opts.join('&')}]
+      if "#{@user.attr[:box]}".length > 0
+        return %[#{@host.url}/#{@host.qro[@user.id]}/#{@user.attr[:box]}?mark=#{m.join('')}&#{opts.join('&')}]
       else
         return %[#{@host.url}/#{@host.qro[@user.id]}?mark=#{m.join('')}&#{opts.join('&')}]
       end
