@@ -1,46 +1,63 @@
-<h1 id='top' style='margin: 0; width: 100%; text-align: center;'>
+<style>
+#canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -10; }
+</style>
+<canvas id='canvas'></canvas>
 
-<% if @user.attr.has_key?(:contact) %>
-<button class='goto material-icons' value='<%= @user.attr[:contact] %>'>call</button>
-<% else %>
-<button class='goto material-icons' value='<%= @path %>'>home</button>
-<% end %>
+<div id='foot' style='position: fixed; bottom: 0; width: 100%;'>
 
-<button class='tog material-icons'>star</button>
+<fieldset id='magic' class='foot' style='display: none;'><legend>magic</legend>
+<%= erb Bivouac.form(@host.app[:magic]) %>
+</fieldset>
 
-<button class='goto material-icons' value='<%= @user.attr[:social] || %[#{@path}/#{params[:app]}] %>'>menu</button>
+<fieldset id='info' class='foot'><legend><%= @box.id %></legend>
 
-</h1>
+<div id='log'></div>
 
+</fieldset>
 
+<!--
+<fieldset id='settings' class='foot' style='display: none;'><legend>settings</legend>
+<%= erb Bivouac.form(@host.app[:config]) %>
+</fieldset>
+-->
+<!--
+<fieldset id='groups' class='foot' style='display: none;'><legend>groups</legend>
 
-<% if @user.attr.has_key?(:contest) %>
-<div style='matgin: 0;'>
-<a href='<%= @path %>/<%= params[:entity] %>/<%= params[:app] %>?origin=<%= params[:origin] %>&vote=1' style='text-decoration: none; color: black;'>
-<h3 style='width: 100%; text-align: center;'><span>VOTE</span></h3>
-<p style='width: 100%; text-align: center;'><span><%= @user.attr[:contest] %></span></p>
-</a>
-</div>
-<% end %>
+</fieldset>
+-->
+<!--
+<fieldset id='reports' class='foot' style='display: none;'><legend>reports</legend>
+<%= erb Bivouac.form(@host.app[:reports]) %>
+</fieldset>
+-->
 
-<div id='merit' style='position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: none;'>
-<%= erb :merit %>
-</div>
-
-<div id='badge' style='display: none;'>
-<% if @host.env[:merit] == 'true' %>
+<fieldset id='badge' class='foot' style='display: none;'><legend>badge</legend>
+<% if @host.env[:merit] == 'on' %>
 <%= erb :level %>
 <% end %>
 <div id='qrcode'></div>
-<% if @host.env[:merit] == 'true' %>
+<% if @host.env[:merit] == 'on' %>
 <%= erb :badges %>
 <% end %>
-</div>
+</fieldset>
 
+<h1 style='width: 100%; text-align: center; margin: 0;'>
+<button class='tog material-icons' value='info'>info</button>
+<!-- <button class='tog material-icons' value='settings'>settings</button> -->
+<!-- <button class='tog material-icons' value='groups'>groups</button> -->
+<!-- <button class='tog material-icons' value='reports'>report</button> -->
 
-<h1 style='margin: 0; position: fixed; bottom: 0; width: 100%; text-align: center;'>
-<button class='tog' value='badge'>BADGE</button>
+<% if @entity.attr[:contact] != 'none' %>
+<button class='goto material-icons' value='<%= @entity.attr[:contact] %>:<%= @entity.attr[:phone] %>'>call</button>
+<% end %>
+
+<% if @box.attr.has_key? :link %>
+<button class='goto material-icons' value='<%= @box.attr[:link] %>'>link</button>
+<% end %>
+
+<button class='tog material-icons' value='badge'>qr_code_2</button>
 </h1>
+</div>
 <script>
-
+$('#qrcode').qrcode('<%= @qr.badge(@visitor.id) %>');
 </script>
