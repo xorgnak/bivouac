@@ -1,3 +1,7 @@
+<style>
+#magic-love + label:before {color: black;}
+#magic-love:checked + label:before {color: red;}
+</style>
 <input id='magic-image' type='hidden' name='magic[pic]'>                                                                                                                <div style='width: 100%; text-align: center;'>
 <!--<canvas id='picture'></canvas>-->
 <img id='magic-picture' style='width: 50%; height: 50%;'>
@@ -63,6 +67,15 @@
 </select>
 </p> -->
 <% end %>
+
+<h1 style='width: 100%; text-align: center; margin: 0;'>
+
+<span>
+<label for='magic-love' class='material-icons'>heart</label>
+<input type='checkbox' id='magic-love' name='love'>
+</span>
+
+</h1>
 
 <h3 style='width: 100%; text-align: center;'><button form='post' name='do' value='zap'>send</button></h3>
 
