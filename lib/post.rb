@@ -19,7 +19,7 @@ module Bivouac
         end
         
         if @params.has_key? :box
-          @entity[@params[:box]]
+          @box = @entity[@params[:box]]
           @entity.attr[:box] = @params[:box]
           
           if @params.has_key? :admin
