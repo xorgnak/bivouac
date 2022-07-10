@@ -20,7 +20,7 @@ function handler(scn) {
       $('#magic-target').val(data.target);
       $('#magic-class').text(data.class);
       $('#magic-class-slider').val(data.class);
-      $('#magic-class-name').text(classes[data.class]);
+      $('#magic-class-name').text(data.title || classes[data.class]);
       $('#magic-class-icon').text(icons[data.class]);
       $('#magic-rank').text(data.rank);
       $('#magic-rank-slider').val(data.rank);
