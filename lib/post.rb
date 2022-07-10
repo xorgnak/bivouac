@@ -51,7 +51,7 @@ module Bivouac
         if @params[:do] == 'save'
           @params[:app].each_pair {|k,v| @host.app[k] = v }
           @params[:env].each_pair {|k,v| @host.env[k] = v }
-        elsif @params[:do] == 'zap'
+        elsif @params[:do] == 'zap' || @params[:do] == 'update'
           @goto = "#{@goto}/?entity=#{@params[:entity]}"
         end
       end
