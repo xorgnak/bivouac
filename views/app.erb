@@ -9,7 +9,7 @@
 <%= erb Bivouac.form(@host.app[:magic]) %>
 </fieldset>
 
-<fieldset id='info' class='foot'><legend><%= @box.id %></legend>
+<fieldset id='info' class='foot'><legend><%= @box.attr[:name] || @entity.attr[:name] || 'anonymous' %></legend>
 
 <div id='log'></div>
 
