@@ -1,35 +1,33 @@
-</p>
-  <input form='post' name='config[name]' id='entity-config-name' placeholder='name' value='<%= @entity.attr[:name] %>'>
+<div style='border: thin solid black;'>
+<p style='width: 100%; text-align: center;'>
+  <input form='post' name='config[name]' id='entity-config-name' placeholder='name'>
 </p>
 
-<p>
+<p style='width: 100%; text-align: center;'>
   <select form='post' id='entity-config-contact' name='config[contact]' style='width: min-content;'>
     <option value='none' selected>none</option>
     <option value='tel'>call</option>
     <option value='sms'>text</option>
   </select>
-  <input form='post' name='config[phone]' placeholder='phone' id='entity-config-phone' value='<%= @entity.attr[:phone] %>'>
+  <input form='post' name='config[phone]' placeholder='phone' id='entity-config-phone'>
 </p>
 
-<p>
+<p style='width: 100%; text-align: center;'>
 <% if @entity.stat[:class].to_i >= 7 %>
 <datalist id='sponsors'>
 <% @entity.boxes.members.each do |e| %>
 <option value='<%= e %>'>
 <% end %>
 </datalist>
-<input form='post' name='config[box]' list='sponsors' id='entity-config-box' placeholder='sponsor'>
+<input form='post' name='box' list='sponsors' id='entity-config-box' placeholder='sponsor'>
 <% else %>
-<select form='post' name='config[box]' id='entity-config-box' >
+<select form='post' name='box' id='entity-config-box' >
   <option selected disabled>sponsor</option>
 <% @entity.boxes.members.each do |e| %>
 <option value='<%= e %>'><%= e %></option>
 <% end %>
 </select>
 <% end %>
+<button form='post' class='material-icons' name='do' value='update' disabled>save</button>
 </p>
-
-
-<p style='width: 100%; text-align: center;'>
-<button form='post' name='do' value='update'>UPDATE</button>
-</p>
+</div>
