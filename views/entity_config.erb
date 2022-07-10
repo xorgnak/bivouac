@@ -1,8 +1,8 @@
-<p>
+<p><span class='material-icons'>settings</span>
   <input form='post' name='config[name]' id='entity-config-name' placeholder='name' value='<%= @entity.attr[:name] %>'>
 </p>
 
-<p>
+<p><span class='material-icons'>settings</span>
   <select form='post' id='entity-config-contact' name='config[contact]' style='width: min-content;'>
     <option value='none' selected>none</option>
     <option value='tel'>call</option>
@@ -11,7 +11,7 @@
   <input form='post' name='config[phone]' placeholder='phone' id='entity-config-phone' value='<%= @entity.attr[:phone] %>'>
 </p>
 
-<p>
+<p><span class='material-icons'>settings</span>
 <% if @entity.stat[:class].to_i >= 7 %>
 <datalist id='sponsors'>
 <% @entity.boxes.members.each do |e| %>
@@ -29,7 +29,7 @@
 <% end %>
 </p>
 
-<p style='width: 100%; text-align: center;'>
+<p><span class='material-icons'>settings</span>
 <button form='post'>SAVE</button>
 </p>
 
