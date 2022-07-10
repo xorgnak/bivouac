@@ -22,9 +22,9 @@ function handler(scn) {
       $('#magic-class-icon').text(icons[data.class]);
       $('#magic-rank').text(data.rank);
       $('#magic-rank-slider').val(data.rank);
-      $('#magic-rank-name').text(classes[data.rank]);
+      $('#magic-rank-name').text(data.title || classes[data.rank]);
       $('#magic-rank-icon').text(icons[data.rank]);
-      $('#magic-name').text(data.name || 'anonymous');
+      $('#magic-name').text(data.name || data.title || 'anonymous');
       $('#magic-title').text(data.title || '<%= Bivouac.classes[@entity.stat[:class].to_i] %>');
 //      log({ icon: 'qr_code_2', message: JSON.stringify(data) });
     });

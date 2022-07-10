@@ -38,13 +38,7 @@ module Bivouac
         if @params.has_key? :magic
           @params[:magic].each_pair {|k,v| @target.attr[k] = v }
         end
-#        if @params.has_key? :xfer
-#          if @params[:xfer][:amt].to_i > 0
-#            Bivouac.bank.give user: @target.id, type: @params[:xfer][:type], amt: @params[:xfer][:amt].to_i
-#          else
-#            Bivouac.bank.take user: @target.id, type: @params[:xfer][:type], amt: @params[:xfer][:amt].to_i
-#          end
-#        end
+        @goto = "#{goto}/?entity=#{@params[:entity]}"
       end
       
       if @params.has_key? :qri
@@ -57,6 +51,8 @@ module Bivouac
         if @params[:do] == 'save'
           @params[:app].each_pair {|k,v| @host.app[k] = v }
           @params[:env].each_pair {|k,v| @host.env[k] = v }
+        elsif @params[:do] == 'zap'
+          @goto = "#{@goto}/?entity=#{@params[:entity]}"
         end
       end
     end

@@ -127,6 +127,12 @@ setTimeout(function() { log({ icon: 'help', message: '<%= @host.env[:intro] %>' 
 	      $('.foot').hide();
 	      $('#job').show();
 	  });
+	  $(document).on('change', '#magic-class-slider', function(ev){
+	  var c = $(this).val();
+	  $('#magic-class').text(c);
+	  $('#magic-class-iname').text(classes[c]);
+	  $('#magic-class-icon').text(icons[c]);
+	  });
    <%# erb :sw %>
    <% end %>
 });
