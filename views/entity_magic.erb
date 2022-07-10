@@ -22,7 +22,7 @@
 <% end %>
 
 </div>
-
+<% if @entity.stat[:class] >= 2 %>
 <p style='width: 100%; text-align: center;'>
 <% if @entity.stat[:class] >= 7 %>
 <datalist id='boxes'>
@@ -45,9 +45,11 @@
 <% elsif @entity.stat[:class] >= 2 %>
 <span style='width: 45%;'><%= @entity.attr[:box] %></span><input form='post' type='hidden' name='join' value='<%= @entity.attr[:box] %>'>
 <% end %>
-<input form='post' name='magic[title]' paceholder='title...' style='width: 45%;'>
+<% if @entity.stat[:class] >= 4 %>
+<input form='post' id='magic-title-new' name='magic[title]' placeholder='title...' style='width: 45%;'>
+<% end %>
 </p>
-
+<% end %>
 
 <% if @entity.stat[:class].to_i >= 5 %>
 <!-- <p style=''>
@@ -60,9 +62,6 @@
 <option value='yearly'>yearly</option>
 </select>
 </p> -->
-<p style=''>
-title: <input form='post' name='magic[title]' paceholder='title...'>
-</p>
 <% end %>
 
 <h3 style='width: 100%; text-align: center;'><button form='post' name='do' value='zap'>send</button></h3>
