@@ -1,6 +1,14 @@
 <input form='post' id='magic-target' type='hidden' name='target' value=''>
 <div style='width: 100%; text-align: center;'>
-<h3 style='width: 100%; text-align: center;'><span id='magic-name'></span></h3>
+<h3 style='width: 100%; text-align: center;'>
+<span id='magic-name'></span>
+<span id='magic-class-icon' class='material-icons'></span>
+<span id='magic-class-name'></span>
+<span style='background-color: black; color: white;'>
+<span class='material-icons'>military_tech</span>
+<span id='magic-rank'></span>
+</span>
+</h3>
 
 <% if @entity.stat[:class].to_i >= 4 %>
 <p style='text-align: center; width: 100%;'>
@@ -9,14 +17,6 @@
 <span class='material-icons'><%= Bivouac.icons[@entity.stat[:class].to_i - 1] %></span>
 </p>
 <% end %>
-
-<p>
-class: <span id='magic-class'></span>
-<span id='magic-class-icon' class='material-icons'></span>
-<span id='magic-class-name'></span>
-</p>
-
-<p>rank: <span id='magic-rank'></span></span></p>
 
 </div>
 
