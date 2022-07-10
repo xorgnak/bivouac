@@ -17,10 +17,10 @@ module Bivouac
     [
       'check_box_outline_blank', # visitor
       'square',                  # member
-      'radio_botton_unchecked',  # influencer
+      'radio_button_unchecked',  # influencer
       'radio_button_checked',    # ambassador
       'circle',                  # manager
-      'blue_circular',           # owner
+      'blur_circular',           # owner
       'stars',                   # agent
       'star_border',             # operator
       'star'                     # developer
