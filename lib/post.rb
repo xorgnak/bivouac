@@ -11,22 +11,24 @@ module Bivouac
         @goto = "https://#{@path}"
       end
       @host = Bivouac[@path]
+
       if @params.has_key? :entity
         @entity = @host[@params[:entity]]
         
         if @params.has_key? :config
-          @params[:config].each_pair {|k,v| @entity.attr[k] = v }
+          @params[:config].each_pair {|k,v| if "#{v}".length > 0; @entity.attr[k] = v; end }
         end
         
-        if @params.has_key? :box
+        if @params.has_key?(:box) && "#{@params[:box]}".length > 0
           @box = @entity[@params[:box]]
           @entity.attr[:box] = @params[:box]
           
           if @params.has_key? :admin
-            @params[:admin].each_pair {|k,v| @box.attr[k] = v }
+            @params[:admin].each_pair {|k,v| if "#{v}".length > 0; @box.attr[k] = v; end }
           end
         end
       end
+      
       if @params.has_key? :target
         @target = @host[@params[:target]]
         
@@ -36,7 +38,7 @@ module Bivouac
         end
         
         if @params.has_key? :magic
-          @params[:magic].each_pair {|k,v| @target.attr[k] = v }
+          @params[:magic].each_pair {|k,v| if "#{v}".length > 0; @target.attr[k] = v; end }
         end
       end
       
@@ -48,8 +50,8 @@ module Bivouac
       
       if @params.has_key? :do
         if @params[:do] == 'save'
-          @params[:app].each_pair {|k,v| @host.app[k] = v }
-          @params[:env].each_pair {|k,v| @host.env[k] = v }
+          @params[:app].each_pair {|k,v| if "#{v}".length > 0; @host.app[k] = v; end }
+          @params[:env].each_pair {|k,v| if "#{v}".length > 0; @host.env[k] = v; end }
         elsif @params[:do] == 'zap' || @params[:do] == 'update'
           @goto = "#{@goto}/?entity=#{@params[:entity]}"
         end
