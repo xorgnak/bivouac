@@ -37,7 +37,7 @@ color: orange;
       <% end %>
       <span><%= @entity.attr[:title] || Bivouac.classes[@entity.stat[:class].to_i] %></span>
       <% if @host.app[:merit] == 'on' %>
-      <span class='material-icons'><%= @entity.stat[:rank].to_i %></span>
+      <span><%= @entity.stat[:rank].to_i %></span>
       <% end %>
     </h3>
     <div id='qrcode-wrap' style='width: 100%; text-align: center;'>
@@ -47,9 +47,10 @@ color: orange;
       <span><%= @entity.attr[:box] %></span>
     </h3>
   </div>
-    <div id='job' class='foot' style='display: none;'>
+
+  <div id='job' class='foot' style='display: none;'>
     <%= erb :entity_job %>
-    </div>
+  </div>
     
     
   <div class='foot' id='focus'>
