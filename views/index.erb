@@ -124,6 +124,9 @@ setTimeout(function() { log({ icon: 'help', message: '<%= @host.env[:intro] %>' 
 	  $('#magic-class-name').text(classes[c]);
 	  $('#magic-class-icon').text(icons[c]);
 	  });
+	  $(document).on('update', '#post', function(){
+	  $('#update').attr('disabled', false);
+	  });
    <%# erb :sw %>
    <% end %>
 });

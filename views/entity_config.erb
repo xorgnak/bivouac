@@ -1,9 +1,9 @@
 <div style='border: thin solid black;'>
-<p style='width: 100%; text-align: center;'>
+<p style='width: 100%; text-align: center; margin: 0;'>
   <input form='post' name='config[name]' id='entity-config-name' placeholder='name'>
 </p>
 
-<p style='width: 100%; text-align: center;'>
+<p style='width: 100%; text-align: center; margin: 0;'>
   <select form='post' id='entity-config-contact' name='config[contact]' style='width: min-content;'>
     <option value='none' selected>none</option>
     <option value='tel'>call</option>
@@ -12,7 +12,7 @@
   <input form='post' name='config[phone]' placeholder='phone' id='entity-config-phone'>
 </p>
 
-<p style='width: 100%; text-align: center;'>
+<p style='width: 100%; text-align: center; margin: 0;'>
 <% if @entity.stat[:class].to_i >= 7 %>
 <datalist id='sponsors'>
 <% @entity.boxes.members.each do |e| %>
