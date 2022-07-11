@@ -25,7 +25,7 @@ a { text-decoration: none; background-color: white; border: thick outset grey; }
 <% end %>
 
 <% if @entity.attr.has_key? :link %>
-<a class='material-icons' href='<%= @box.attr[:link] %>' style='color: orange'>hilight</a>
+<a class='material-icons' href='<%= @entity.attr[:link] %>' style='color: orange'>link</a>
 <% end %>
 
 <button class='tog material-icons' value='badge'>qr_code_2</button>
