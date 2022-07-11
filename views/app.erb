@@ -9,46 +9,21 @@
 <%= erb Bivouac.form(@host.app[:magic]) %>
 </fieldset>
 
-<fieldset id='info' class='foot'><legend><%= @box.attr[:name] || @entity.attr[:name] || 'anonymous' %></legend>
+<div id='info' class='foot'><legend><%= @box.attr[:name] || @entity.attr[:name] || 'anonymous' %></legend>
 
 <div id='log'></div>
 
-</fieldset>
+</div>
 
-<!--
-<fieldset id='settings' class='foot' style='display: none;'><legend>settings</legend>
-<%= erb Bivouac.form(@host.app[:config]) %>
-</fieldset>
--->
-<!--
-<fieldset id='groups' class='foot' style='display: none;'><legend>groups</legend>
-
-</fieldset>
--->
-<!--
-<fieldset id='reports' class='foot' style='display: none;'><legend>reports</legend>
-<%= erb Bivouac.form(@host.app[:reports]) %>
-</fieldset>
--->
-
-<fieldset id='badge' class='foot' style='display: none;'><legend>badge</legend>
-<% if @host.env[:merit] == 'on' %>
-<%= erb :level %>
-<% end %>
-<div id='qrcode'></div>
-<% if @host.env[:merit] == 'on' %>
-<%= erb :badges %>
-<% end %>
-</fieldset>
+<div id='badge' class='foot' style='display: none;'>
+<%= erb :app_badge %>
+</div>
 
 <h1 style='width: 100%; text-align: center; margin: 0;'>
 <button class='tog material-icons' value='info'>info</button>
-<!-- <button class='tog material-icons' value='settings'>settings</button> -->
-<!-- <button class='tog material-icons' value='groups'>groups</button> -->
-<!-- <button class='tog material-icons' value='reports'>report</button> -->
 
 <% if @entity.attr[:contact] != 'none' %>
-<button class='goto material-icons' value='<%= @entity.attr[:contact] %>:<%= @entity.attr[:phone] %>'>call</button>
+<a class='material-icons' href='<%= @entity.attr[:contact] %>:<%= @entity.attr[:phone] %>' style='text-decoration: none; color: green; border: thick outset grey;'>call</a>
 <% end %>
 
 <% if @box.attr.has_key? :link %>
