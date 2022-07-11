@@ -40,8 +40,15 @@ module Bivouac
         if @params.has_key? :magic
           @params[:magic].each_pair {|k,v| if "#{v}".length > 0; @target.attr[k] = v; end }
         end
-      end
       
+
+      if @params.has_key? :boost
+        @params[:boost].each_pair {|k,v| @target.stat.incr(k) }
+      end
+      if @params.has_key? :touch
+        @params[:touch].each_pair {|k,v| @target.badge.incr(k) }
+      end
+      end
       if @params.has_key? :qri
         @target = @json[:target] = @host.qri[@params[:qri]]
         [:name, :title].each { |e| @json[e] = @host[@target].attr[e] }
@@ -54,6 +61,8 @@ module Bivouac
           @params[:env].each_pair {|k,v| if "#{v}".length > 0; @host.env[k] = v; end }
         elsif @params[:do] == 'zap' || @params[:do] == 'update'
           @goto = "#{@goto}/?entity=#{@params[:entity]}"
+        elsif @params[:do] == 'app'
+          @goto = "#{@goto}/#{@params[:qri]}/#{@params[:box]}"
         end
       end
     end
