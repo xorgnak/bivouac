@@ -9,6 +9,7 @@
   </span>
   </p>
 <% end %>
+<% if @host.app[:merit] == 'on' %>
 <div>
 <% Bivouac.badges.each_pair do |k,v| %>
 <p style='width: 100%; text-align: center;'>
@@ -19,3 +20,5 @@
 </p>
 <% end %>
 </div>
+<% end %>
+<h3 style='width: 100%; text-align: center;'><button form='post' name='do' value='scan'>send</button></h3>
