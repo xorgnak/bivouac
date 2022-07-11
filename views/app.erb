@@ -9,6 +9,7 @@ a { text-decoration: none; background-color: white; border: thick outset grey; }
 <%= erb Bivouac.form(@host.app[:magic]) %>
 <div id='magic' style='display: none;'>
 <%= erb :app_magic %>
+<h3 style='width: 100%; text-align: center;'><button form='post' name='do' value='app'>send</button></h3>
 </div>
 <div id='info' class='foot'><div id='log'></div></div>
 
