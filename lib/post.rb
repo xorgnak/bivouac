@@ -46,7 +46,10 @@ module Bivouac
         @params[:boost].each_pair {|k,v| @target.stat.incr(k) }
       end
       if @params.has_key? :touch
-        @params[:touch].each_pair {|k,v| @target.badge.incr(k) }
+        @params[:touch].each_pair {|k,v| @target.badges.incr(k) }
+      end
+      if @params.has_key? :award
+        @params[:award].each_pair {|k,v| @target.awardss.incr(k) }
       end
       end
       if @params.has_key? :qri
