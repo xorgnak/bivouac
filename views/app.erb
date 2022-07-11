@@ -24,7 +24,7 @@ a { text-decoration: none; background-color: white; border: thick outset grey; }
 <a class='material-icons' href='<%= @entity.attr[:contact] %>:<%= @entity.attr[:phone] %>' style='color: green;'>call</a>
 <% end %>
 
-<% if @box.attr.has_key? :link %>
+<% if @entity.attr.has_key? :link %>
 <a class='material-icons' href='<%= @box.attr[:link] %>' style='color: orange'>hilight</a>
 <% end %>
 
