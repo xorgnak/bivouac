@@ -1,0 +1,17 @@
+<style>
+.pill { background-color: black; color: white; padding: 0 2% 0 2%; border-radius: 50px; }
+</style>
+<% { "vote" => "how_to_vote", "love" => "heart", 'boost' => 'star' }.each_pair do |k,v| %>
+<span class='pill'>
+    <input form='post' id='has_<%= k %>' type='checkbox' name='boost[<%= k %>]' checked>
+    <label for='has_<%= k %>'><span class='material-icons'><%= v %></span><%= k %></label>
+  </span>
+<% end %>
+<div>
+<% Bivouac.badges.each_pair do |k,v| %>
+<span class='pill'>
+    <input form='post' id='has_<%= k %>' type='checkbox' name='touch[<%= k %>]'>
+    <label for='has_<%= k %>'><span class='material-icons'>people</span><%= v %></label>
+</span>
+<% end %>
+</div>
