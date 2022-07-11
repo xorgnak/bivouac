@@ -1,0 +1,15 @@
+<h3 style='text-align: center; width: 100%;'>
+<% if @host.app[:merit] == 'on' %>
+<span class='material-icons'><%= Bivouac.icons[@entity.stat[:class].to_i] %></span>
+<% end %>
+<span><%= @entity.attr[:title] || Bivouac.classes[@entity.stat[:class].to_i] %></span>
+<% if @host.app[:merit] == 'on' %>
+<span><%= @entity.stat[:rank].to_i %></span>
+<% end %>
+</h3>
+<div id='qrcode-wrap' style='width: 100%; text-align: center;'>
+<div id='qrcode' style='padding: 2%; border: thick solid black; background-color: white;'></div>
+</div>
+<h3 style='text-align: center; width: 100%;'>
+<span><%= @entity.attr[:box] %></span>
+</h3>

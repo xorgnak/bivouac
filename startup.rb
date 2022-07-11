@@ -1,7 +1,15 @@
 log "STARTUP", :Startup
 
 @host = Bivouac['192.168.146.52']
-#@usr = @host['usr']
+@usr = @host['481588e5f4a8ad72@192.168.60.52']
+def doit *n
+  if n[0]
+    t = n[0]
+  else
+    t = 0
+  end
+  Bivouac.badges.keys.each {|e| @usr.badges[e] = t }
+end
 #@you = @host['you']
 #@here = @usr['here']
 #@there = @usr['there']

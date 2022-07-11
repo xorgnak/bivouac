@@ -1,0 +1,28 @@
+
+<% if Bivouac[request.host].app[:merit] == 'on' %>
+<h3 style='width: 100%; text-align: center; margin: 0; padding: 0; background-color: <%= Bivouac.bg[@entity.stat[:class].to_i] %>; color: <%= Bivouac.fg[@entity.stat[:class].to_i] %>; border: thick solid <%= Bivouac.bd[@entity.stat[:class]] %>;'>
+<% (@entity.stat[:rank].to_i + 1).times do %>
+<span class='material-icons' style=''><%= Bivouac.icons[@entity.stat[:class].to_i] %></span>
+<% end %>
+</h3>
+<% end %>
+
+<h3 style='width: 100%; text-align: center; margin: 0;'>
+<span><%= @entity.attr[:title] || Bivouac.classes[@entity.stat[:class].to_i] %></span>
+</h3>
+<div id='qrcode-wrap' style='width: 100%; text-align: center;'>
+<div id='qrcode' style='padding: 2%; border: thick solid black; background-color: white;'></div>
+</div>
+<h3 style='text-align: center; width: 100%; margin: 0;'>
+<span><%= @entity.attr[:box] %></span>
+</h3>
+
+<% if Bivouac[request.host].app[:merit] == 'on' %>
+<div style='width: 100%; text-align: center;'>
+<% Bivouac.badges.each_pair do |badge, icon| %>
+<% if @entity.badges[badge] > 0 || @entity.awards[badge] > 0 %>
+<span class='material-icons' style='padding: 1%; border-radius: 100px; background-color: <%= Bivouac.bg[@entity.badges[badge].to_i] || "black" %>; color: <%= Bivouac.fg[@entity.badges[badge].to_i] || "white" %> ; border: thick solid <%= Bivouac.bd[@entity.awards[badge].to_i] || "black" %>'><%= icon %></span>
+<% end %>
+<% end %>
+</div>
+<% end %>

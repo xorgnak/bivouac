@@ -26,7 +26,32 @@ module Bivouac
       'star'                     # developer
     ]
   end
-  
+  def self.badges
+    {
+      "support" => 'support',
+      'explore' => 'explore',
+      'shelter' => 'cabin',
+      'medical' => 'local_hospital',
+      'food' => 'restaurant',
+      'clothing' => 'dry_cleaning',
+      'flare' => 'flare',
+      'vision' => 'flashlight_on',
+      'ideas' => 'lightbulb',
+    }.merge(Redis::HashKey.new('BADGES').all)
+  end
+ 
+  COLORS = ['lightgrey', 'darkgrey', 'yellow', 'orange', 'red', 'purple', 'blue', 'green', 'gold']
+  # badge colors
+  def self.fg
+    ['darkgrey','lightgrey','purple', 'black', 'white', 'white', 'white', 'white', 'black']
+  end
+  def self.bg
+    COLORS
+  end
+  # award colors
+  def self.bd
+    COLORS
+  end
   ##
   # Bivouac: the host
   # user: the user

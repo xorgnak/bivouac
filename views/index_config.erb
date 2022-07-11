@@ -1,5 +1,8 @@
 <style>
-form { background-color: white; color: black; }
+  form { background-color: white; color: black; }
+  .pill { background-color: black; color: white; padding: 0 2% 0 2%; border-radius: 50px; }
+  div > p { padding: 0; width: 100%; text-align: center; }
+  div > textarea { width: 100%; height: 33vh; }
 </style>
 
 <div id='index_config'>
@@ -8,7 +11,7 @@ form { background-color: white; color: black; }
   <p><input form='post' name='env[intro]' placeholder='intro' value='<%= @host.env[:intro] %>'></p>
   
   <p>
-    <select form='post' name='env[font]'>
+    <select form='post' name='env[font]' class='pill'>
       <option value='monospace' selected>monospace</option>
       <option value='serif'>serif</option>
       <option value='sans-serif'>sans-serif</option>
@@ -16,24 +19,32 @@ form { background-color: white; color: black; }
       <option value='fantasy'>fantasy</option>
     </select>
   </p>
-  
-  <p><input form='post' id='has_members' type='checkbox' name='app[members]' checked><label for='has_members'><span class='material-icons'>people</span>do you need users?</label></p>
-<p><input form='post' id='has_merit' type='checkbox' name='app[merit]' checked><label for='type_scan'><span class='material-icons'>military_tech</span>can users earn levels and badges?</label></p>
-<p><input form='post' id='has_link' type='checkbox' name='app[link]' checked><label for='has_link'><span class='material-icons'>star</span>can they share their social media?</label></p>
-  <p><input form='post' id='has_brand' type='checkbox' name='app[brand]' checked><label for='has_brand'><span class='material-icons'>follow_the_signs</span>shall we brand team apps?</label></p>
-  
-<textarea form='post' name='app[index]' placeholder='index html...' style='width: 100%; height: 50vh;'><%= @host.app[:index] %></textarea>
-<textarea form='post' name='app[entity]' placeholder='user callback app html...' style='width: 100%; height: 50vh;'><%= @host.app[:entity] %></textarea>
-<textarea form='post' name='app[box]' placeholder='sponsor referral app html...' style='width: 100%; height: 50vh;'><%= @host.app[:box] %></textarea>
+  <p>
+  <span class='pill'>
+    <input form='post' id='has_members' type='checkbox' name='app[members]' checked>
+    <label for='has_members'><span class='material-icons'>people</span>users</label>
+  </span>
+  <span class='pill'>
+    <input form='post' id='has_merit' type='checkbox' name='app[merit]' checked>
+    <label for='type_scan'><span class='material-icons'>military_tech</span>ranks</label>
+  </span>
+  <span class='pill'>
+    <input form='post' id='has_brand' type='checkbox' name='app[jobs]' checked>
+    <label for='has_brand'><span class='material-icons'>follow_the_signs</span>jobs</label>
+  </span>
+  </p>
+  <textarea form='post' name='app[index]' placeholder='landing form...'><%= @host.app[:index] %></textarea>
+  <textarea form='post' name='app[entity]' placeholder='profile form...'><%= @host.app[:entity] %></textarea>
+  <textarea form='post' name='app[box]' placeholder='group form...'><%= @host.app[:box] %></textarea>
 </div>
 
 <!-- lock and save -->
 <div>
-<p>
-<input form='post' id='has_lock' type='checkbox' name='env[locked]' checked>
-<label for='has_lock'><span class='material-icons'>lock</span>lock</label>
-</p>
-<p style='width: 100%; text-align: center;'>
-<button form='post' name='do' value='save'>SAVE</button>
-</p>
+  <p>
+    <input form='post' id='has_lock' type='checkbox' name='env[locked]' checked>
+    <label for='has_lock'><span class='material-icons'>lock</span>lock</label>
+  </p>
+  <p style='width: 100%; text-align: center;'>
+    <button form='post' name='do' value='save'>SAVE</button>
+  </p>
 </div>
