@@ -38,7 +38,7 @@ body { margin: 0; padding: 0; font-family: '<%= @host.env[:font] || "monospace" 
 	      ev.preventDefault();
 	      $('.foot').hide();
 	      $('#' + $(this).val()).show();
-	      $('.tog').css('color', 'grey');
+	      $('.tog').css('color', 'black');
 	      $(this).css('color', 'orange');
 	  });
       $(document).on('click', '.goto', function(ev) {
