@@ -11,7 +11,7 @@
 <% Bivouac.badges.each_pair do |k,v| %>
 <span class='pill'>
     <input form='post' id='has_<%= k %>' type='checkbox' name='touch[<%= k %>]'>
-    <label for='has_<%= k %>'><span class='material-icons'><%= v %></span><%= k %></label>
+    <label for='has_<%= k %>'><span class='material-icons'>people</span><%= v %></label>
 </span>
 <% end %>
 </div>
