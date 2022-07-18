@@ -39,7 +39,7 @@ module Bivouac
     COLORS
   end
   def self.hosts
-    Redis::Set.new('HOSTS')
+    Redis::Set.new('HOSTS').members.select {|e| !/\d+.\d+.\d+.\d+/.match(e) && !/.onion/.match(e) }
   end
   ##
   # Bivouac: the host
