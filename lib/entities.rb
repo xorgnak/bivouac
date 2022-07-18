@@ -176,6 +176,7 @@ module Bivouac
         return user u
       else
         return false
+      end
     end
     def url
       return %[#{@pre}://#{@id}]
