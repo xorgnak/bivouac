@@ -5,9 +5,9 @@
   .tog { margin: 0; padding: 0; background-color: black; border-color: orange; color: grey; }
   .pill { margin: 0 1% 0 1%; padding: 0 2% 0 2%; border-radius: 100px; background-color: black; }
 
-.pill > input[type="checkbox"] {}
-.pill > input[type="checkbox"] > * { color: grey; }
-.pill > input[type="checkbox"]:checked > * { color: grey; }
+.pill > input[type="checkbox"] { height: 0; width: 0; }
+.pill > input[type="checkbox"] + label:before > * { color: grey; }
+.pill > input[type="checkbox"]:checked + label:before > * { color: gold; }
 
 </style>
 
