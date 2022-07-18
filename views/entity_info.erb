@@ -5,7 +5,7 @@
    <span class='material-icons'>military_tech</span><span id='myrank'><%= @entity.stat[:rank].to_i %></span>
 </p>
 <p style='width: 100%; text-align: center; background-color: black; color: white;'>
-   <% [ :heart, star, :loyalty ].each do |e| %>
+   <% [ :heart, :star, :loyalty ].each do |e| %>
    <span style='padding: 0 2% 0 2%;'><span class='material-icons'><%= e %></span><span><%= @entity.stat[e].to_i %></span></span>
    <% end %>
 </p>
