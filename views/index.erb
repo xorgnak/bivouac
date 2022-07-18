@@ -3,6 +3,15 @@
   .foot > p { margin: 0; padding: 0; }
   #log > p { margin: 0; padding: 0; }
   .tog { margin: 0; padding: 0; background-color: black; border-color: orange; color: grey; }
+input[type="checkbox"] { display: none; }
+input[type="checkbox"] + label:before {
+    border: thick outset grey;
+ }
+
+input[type="checkbox"]:checked + label:before {
+    border: thick inset gold;
+ }
+
 </style>
 
 <% if @host.env[:locked] != 'on' %>
