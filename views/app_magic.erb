@@ -1,14 +1,18 @@
 
 <div style='width: 100%; text-align: center; margin: 0;'>
 <% { "vote" => "loyalty", "love" => "favorite", 'boost' => 'star' }.each_pair do |k,v| %> 
-<label for='has_<%= k %>' class='pill'><input form='post' id='has_<%= k %>' type='checkbox' name='boost[<%= k %>]'>
+<p style='width: 100%; text-align: center; margin: 0;'>
+<label for='has_<%= k %>' class='give pill'><input form='post' id='has_<%= k %>' type='checkbox' name='boost[<%= k %>]'>
 <span class='material-icons'><%= v %></span><span><%= k %></span></label>
+</p>
 <% end %>
 
 <% if @host.app[:merit] == 'on' %>
 <% @host.badges.each_pair do |k,v| %>
+<p style='width: 100%; text-align: center; margin: 0;'>
 <label for='has_<%= k %>' class='pill'><input form='post' id='has_<%= k %>' type='checkbox' name='touch[<%= k %>]'>
 <span class='material-icons'><%= v %></span><span><%= k %></span></label>
+</p>
 <% end %>
 <% end %>
 </div>
