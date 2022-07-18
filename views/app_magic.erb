@@ -16,7 +16,7 @@
 <p style='width: 100%; text-align: center;'>
 <span class='pill'>
     <input form='post' id='has_<%= k %>' type='checkbox' name='touch[<%= k %>]'>
-    <label for='has_<%= k %>'><span class='material-icons'><%= v %></span><%= k %></label>
+    <label for='has_<%= k %>' onclick='$("#has_<%= k %>").click();'><span class='material-icons'><%= v %></span><%= k %></label>
 </span>
 </p>
 <% end %>
