@@ -3,13 +3,13 @@
   .foot > p { margin: 0; padding: 0; }
   #log > p { margin: 0; padding: 0; }
   .tog { margin: 0; padding: 0; background-color: black; border-color: orange; color: grey; }
-input[type="checkbox"] { height: 0; width: 0; opacity: 0; }
+input[type="checkbox"] { display: none; }
 input[type="checkbox"] + label:before {
-    border: thick outset grey;
+    color: grey;
  }
 
 input[type="checkbox"]:checked + label:before {
-    border: thick inset gold;
+    color: gold;
  }
 
 </style>
