@@ -174,7 +174,7 @@ module Bivouac
     def auths
       @auths
     end
-    def admin phone
+    def admin phone, &b
       if @auths.ids.has_key? phone
         u = @auths.ids[phone]
         uu = user u
