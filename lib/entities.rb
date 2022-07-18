@@ -177,7 +177,12 @@ module Bivouac
     def admin phone
       if @auths.ids.has_key? phone
         u = @auths.ids[phone]
-        return user u
+        uu = user u
+        if block_given?
+          return b.call(uu)
+        else
+          return uu
+        end  
       else
         return false
       end
