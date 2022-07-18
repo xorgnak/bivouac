@@ -3,12 +3,13 @@
   .foot > p { margin: 0; padding: 0; }
   #log > p { margin: 0; padding: 0; }
   .tog { margin: 0; padding: 0; background-color: black; border-color: orange; color: grey; }
-input[type="checkbox"] { display: none; }
-input[type="checkbox"] + label:before {
+  .pill { margin: 0 1% 0 1%; padding: 0 2% 0 2%; border-radius: 100px; }
+  input[type="checkbox"] { opacity: 0; height: 0; width: 0; }
+input[type="checkbox"] + label:before > span {
     color: grey;
  }
 
-input[type="checkbox"]:checked + label:before {
+input[type="checkbox"]:checked + label:before > span {
     color: gold;
  }
 

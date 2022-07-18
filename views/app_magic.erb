@@ -1,16 +1,21 @@
 
 <h1 style='width: 100%; text-align: center; margin: 0;'>
 <% { "vote" => "loyalty", "love" => "favorite", 'boost' => 'star' }.each_pair do |k,v| %>
-    <input form='post' id='has_<%= k %>' type='checkbox' name='boost[<%= k %>]' checked>
-    <label for='has_<%= k %>'><span class='material-icons'><%= v %></span></label>
+<span class='pill'>
+<label for='has_<%= k %>'>
+    <input form='post' id='has_<%= k %>' type='checkbox' name='boost[<%= k %>]'>
+<span class='material-icons'><%= v %></span><%= k %></label>
+</span>
 <% end %>
-</h1>
+
 
 <% if @host.app[:merit] == 'on' %>
-<h3 style='width: 100%; text-align: center;'>
 <% @host.badges.each_pair do |k,v| %>
-    <input form='post' id='has_<%= k %>' type='checkbox' name='touch[<%= k %>]'>
-    <label for='has_<%= k %>' onclick='$("#has_<%= k %>").click();'><span class='material-icons'><%= v %></span><%= k %></label>
+<span class='pill'>
+<label for='has_<%= k %>' onclick='$("#has_<%= k %>").click();'>    
+<input form='post' id='has_<%= k %>' type='checkbox' name='touch[<%= k %>]'>
+<span class='material-icons'><%= v %></span><%= k %></label>
+</span>
 <% end %>
-</h3>
 <% end %>
+</h1>
