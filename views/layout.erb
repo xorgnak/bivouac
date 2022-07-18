@@ -43,7 +43,7 @@ body { margin: 0; padding: 0; font-family: '<%= @host.env[:font] || "monospace" 
 	  });
       $(document).on('click', '.goto', function(ev) {
 	  ev.preventDefault();
-	  window.localtion = $(this).val();
+	  window.location.href = $(this).val();
       });
 //log('app loaded.');
 });
