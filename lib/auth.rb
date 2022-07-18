@@ -9,6 +9,9 @@ module Bivouac
     end
     def id; @id; end
   end
+  def self.auths h
+    Auths.new(h)
+  end
   class Auth
     def initialize request, params
       @auth = Auths.new(request.host)
@@ -23,6 +26,7 @@ module Bivouac
       if "#{@params[:usr]}".length > 0
         if !@auth.ids.has_key? @params[:usr]
           # auth register
+          @host[@params[:usr]]
           @auth.ids[@params[:usr]] = @params[:entity]
           @auth.ent[@params[:entity]] = @params[:usr]
           @args[:set] = @params[:entity]

@@ -26,20 +26,6 @@ module Bivouac
       'star'                     # developer
     ]
   end
-  def self.badges
-    {
-      "support" => 'support',
-      'explore' => 'explore',
-      'shelter' => 'cabin',
-      'medical' => 'local_hospital',
-      'food' => 'restaurant',
-      'clothing' => 'dry_cleaning',
-      'flare' => 'flare',
-      'vision' => 'flashlight_on',
-      'ideas' => 'lightbulb',
-    }.merge(Redis::HashKey.new('BADGES').all)
-  end
- 
   COLORS = ['lightgrey', 'darkgrey', 'yellow', 'orange', 'red', 'purple', 'blue', 'green', 'gold']
   # badge colors
   def self.fg
@@ -52,12 +38,16 @@ module Bivouac
   def self.bd
     COLORS
   end
+  def self.hosts
+    Redis::Set.new('HOSTS')
+  end
   ##
   # Bivouac: the host
   # user: the user
   # box: the zone, group, tag, crew, etc
   # @host = Bivouac[request.host || localhost][user][box]
   def self.[] k
+    Redis::Set.new('HOSTS') << k
     Host.new(k)
   end
   class Bank
@@ -156,12 +146,29 @@ module Bivouac
     set :contests
     set :users
     def initialize i
+      @auths = Bivouac.auths(i)
       @id = i
       if /\d+.\d+.\d+.\d+/.match(i) || /.onion/.match(i) || i == 'localhost'
         @pre = 'http'
       else
         @pre = 'https'
       end
+    end
+    def badges
+    {
+      "support" => 'support',
+      'explore' => 'explore',
+      'shelter' => 'cabin',
+      'medical' => 'local_hospital',
+      'food' => 'restaurant',
+      'clothing' => 'dry_cleaning',
+      'flare' => 'flare',
+      'vision' => 'flashlight_on',
+      'ideas' => 'lightbulb',
+    }.merge(Redis::HashKey.new("BADGES:#{@id}").all)
+    end
+    def auths
+      @auths
     end
     def url
       return %[#{@pre}://#{@id}]

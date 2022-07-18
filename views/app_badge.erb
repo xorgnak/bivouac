@@ -19,7 +19,7 @@
 
 <% if Bivouac[request.host].app[:merit] == 'on' %>
 <div style='width: 100%; text-align: center;'>
-<% Bivouac.badges.each_pair do |badge, icon| %>
+<% @host.badges.each_pair do |badge, icon| %>
 <% if @visitor.badges[badge] > 0 || @visitor.awards[badge] > 0 %>
 <span class='material-icons' style='padding: 1%; border-radius: 100px; background-color: <%= Bivouac.bg[@visitor.badges[badge].to_i] || "black" %>; color: <%= Bivouac.fg[@visitor.badges[badge].to_i] || "white" %> ; border: thick solid <%= Bivouac.bd[@visitor.awards[badge].to_i] || "black" %>'><%= icon %></span>
 <% end %>
