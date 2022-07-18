@@ -1,6 +1,6 @@
 
 <h3 style='width: 100%; text-align: center; margin: 0;'>
-<% { "vote" => "loyalty", "love" => "favorite", 'boost' => 'star' }.each_pair do |k,v| 
+<% { "vote" => "loyalty", "love" => "favorite", 'boost' => 'star' }.each_pair do |k,v| %> 
 <label for='has_<%= k %>' class='pill'><input form='post' id='has_<%= k %>' type='checkbox' name='boost[<%= k %>]'>
 <span class='material-icons'><%= v %></span><span><%= k %></span></label>
 <% end %>
