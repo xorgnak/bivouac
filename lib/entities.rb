@@ -182,7 +182,7 @@ module Bivouac
           return b.call(uu)
         else
           return uu
-        end  
+        end
       else
         return false
       end

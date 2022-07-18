@@ -1,11 +1,17 @@
 <% if params.has_key? :entity %>
-      <button class='tog material-icons' value='focus' style='color: orange;'>center_focus_weak</button>
-      <button class='tog material-icons' value='badge'>qr_code_2</button>
-      <% if @host.app[:jobs] == 'on' %>
-      <button id='pic' class='material-icons' style='background-color: green; color: black;'>camera</button>
-      <% end %>
-    <% else %>
-      <% if !params.has_key?(:cha) && !params.has_key?(:set) %>
-      <button class='tog material-icons' value='login'>login</button>
-      <% end %>
-    <% end %>
+  <button class='tog material-icons' value='focus' style='color: orange;'>center_focus_weak</button>
+  <button class='tog material-icons' value='badge'>qr_code_2</button>
+  <% if @entity.stat[:class] > 5 %>
+  <button id='wand' class='tog material-icons' value='magic'>auto_fix_high</button>
+  <% end %>
+  <% if "#{@entity.attr[:box]}".length > 0 %>
+  <button class='tog material-icons' value='sign'>gps_fixed</button>
+  <% end %>
+  <% if @host.app[:jobs] == 'on' %>
+    <button id='pic' class='material-icons' style='background-color: green; color: black;'>camera</button>
+  <% end %>
+<% else %>
+  <% if !params.has_key?(:cha) && !params.has_key?(:set) %>
+     <button class='tog material-icons' value='login'>login</button>
+  <% end %>
+<% end %>
