@@ -170,6 +170,13 @@ module Bivouac
     def auths
       @auths
     end
+    def admin phone
+      if @auths.ids.has_key? phone
+        u = @auths.ids[phone]
+        return user u
+      else
+        return false
+    end
     def url
       return %[#{@pre}://#{@id}]
     end
@@ -251,8 +258,11 @@ module Bivouac
       voting
       contest
     end
-    
-    def [] b 
+
+    def [] b
+      user b
+    end
+    def user b 
       if /.+@.+/.match(b)
         self.users << b
         User.new(b)
