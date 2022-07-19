@@ -24,11 +24,11 @@ module Bivouac
         end
       end
     end
-    def entity q
-      return %[#{@host.url}/#{q}]
+    def entity v, q
+      return %[#{@host.url}/#{q}?v=#{v}]
     end
-    def app q, u
-      return %[#{@host.url}/#{q}/#{u}]
+    def app v, q, u
+      return %[#{@host.url}/#{q}/#{u}?v=#{v}]
     end
   end
   def self.qr h

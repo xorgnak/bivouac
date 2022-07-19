@@ -32,7 +32,7 @@ a { text-decoration: none; background-color: white; border: thick outset grey; }
 </h1>
 </div>
 <script>
-$('#qrcode').qrcode('<%= @qr.entity(@entity.id) %>');
+$('#qrcode').qrcode('<%= @qr.entity(@visitor.id, params[:qri]) %>');
 log({ icon: 'qr_code_2', message: '<%= @entity.attr[:name] || "anonymous" %>@<%= @host.id %>' })
 setTimeout(function() { log({ icon: 'follow_the_signs', message: '<%= @host.env[:title] %>' }); }, 250);
 setTimeout(function() { log({ icon: 'star', message: '<%= @host.env[:pitch] %>' }); }, 500);
