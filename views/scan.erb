@@ -70,7 +70,7 @@ function tick() {
 		  log({ icon: 'qr_code_2': message: '<span style="background-color: green; color: black; padding: 0 2% 0 2%;">VALID!</span>' });
 		  handler(code.data);
 	      } else {
-		  log({ icon: 'qr_code', message: "<button class='goto' value='" + code.data + "'>" + code.data + "</button>");
+		  log({ icon: 'qr_code', message: "<button class='goto' value='" + code.data + "'>" + code.data + "</button>" });
 	      }
 	  }
 	  }
