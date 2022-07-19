@@ -58,7 +58,7 @@ function tick() {
       var imageData = canvas.getImageData(0, 0, canvasElement.width, canvasElement.height);
       var code = jsQR(imageData.data, imageData.width, imageData.height, { inversionAttempts: 'dontInvert' });
       var onion = /.onion/g;
-      var dom = /<%= @host.id.gsub('://', ':\/\/') %>/g;
+      var dom = /<%= @host.id %>/g;
 
 	  if (code) {
 	  if (found == false) {
@@ -68,10 +68,10 @@ function tick() {
 
 	      if (valid == true) {
 	      	  found = true;
-		  log({ icon: 'qr_code_2', message: '<span style="background-color: green; color: black; padding: 0 2% 0 2%;">VALID!</span>' });
+		  log({ icon: "qr_code_2", message: "<span style='background-color: green; color: black; padding: 0 2% 0 2%;'>VALID!</span>" });
 		  handler(code.data);
 	      } else {
-                  log({ icon: 'qr_code', message: '<button class="goto" value="' + code.data + '">' + code.data + '</button>' })
+                  log({ icon: "qr_code", message: "<button class='goto' value='" + code.data + "'>" + code.data + "</button>" })
               {
 	  }
 	  }
