@@ -39,11 +39,11 @@ module Bivouac
     COLORS
   end
   def self.hosts &b
-    h = Redis::Set.new('HOSTS').members.select {|e| !/\d+.\d+.\d+.\d+/.match(e) && !/.onion/.match(e) }
     if block_given?
-      h.each {|e| b.call(Host.new(e)) }
+      Redis::Set.new('HOSTS').members.each {|e| b.call(Host.new(e)) }
+    else
+      return Redis::Set.new('HOSTS').members.select {|e| !/\d+.\d+.\d+.\d+/.match(e) && !/.onion/.match(e) }
     end
-    return h
   end
   ##
   # Bivouac: the host
@@ -51,8 +51,8 @@ module Bivouac
   # box: the zone, group, tag, crew, etc
   # @host = Bivouac[request.host || localhost][user][box]
   def self.[] k
-    Redis::Set.new('HOSTS') << k
-    Host.new(k)
+      Redis::Set.new('HOSTS') << k
+      Host.new(k)
   end
   class Bank
     include Redis::Objects
@@ -123,6 +123,88 @@ module Bivouac
       self.votes.members(with_scores: true).to_h.sort_by {|k,v| v}.reverse.to_h
     end
   end
+
+  class Map
+    include Redis::Objects
+    set :tracks
+    set :waypoints
+    sorted_set :track
+    sorted_set :waypoint
+    def initialize i
+      @@MAP = @id = i
+    end
+    def << t
+      self.track.incr(t)
+      self.tracks << t
+    end
+    def [] k
+      self.waypoint.incr(k)
+      self.waypoints << k
+      Waypoint.new(k)
+    end
+    def id; @id; end
+  end
+  
+  class Track
+    include Redis::Objects
+    hash_key :attr
+    sorted_set :stat
+
+    list :path
+    set :waypoints
+    sorted_set :visits
+
+    sorted_set :visitors
+    sorted_set :contributors
+    sorted_set :maintainers
+    
+    def initialize i
+      @id = i
+    end
+    def id; @id; end
+    def length
+      self.path.length
+    end
+    def << waypoint
+      if !self.path.include? waypoint
+        self.path << waypoint
+      end
+      self.waypoints << waypoint
+      self.visits.incr(waypoint)
+    end
+  end
+ 
+  class Waypoint
+    include Redis::Objects
+    hash_key :attr
+    sorted_set :stat
+    sorted_set :track
+    sorted_set :froms
+    sorted_set :tos
+    set :tracks
+    def initialize i
+      @id = i
+    end
+    def id; @id; end
+    def length
+      self.tracks.members.length
+    end
+    def [] t
+      i = "#{t}:#{@id}"
+      self.tracks << t
+      self.track.incr(t)
+      a = Track.new(t)
+      a << @id
+      return a
+    end 
+  end
+
+  # MAP[host][waypoint][track]
+  module MAP
+    def self.[] k
+      Map.new(k)
+    end
+  end
   class Host
     include Redis::Objects
     # content
@@ -143,12 +225,15 @@ module Bivouac
     hash_key :at
     # mark: time
     hash_key :dx
+    
     # boxes
     set :boxes
     # contests
     set :votes
     set :contests
     set :users
+
+    
     def initialize i
       @auths = Bivouac.auths(i)
       @id = i
@@ -186,6 +271,9 @@ module Bivouac
       else
         return false
       end
+    end
+    def map
+      MAP[@id]
     end
     def url
       return %[#{@pre}://#{@id}]

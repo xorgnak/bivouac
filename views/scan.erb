@@ -11,6 +11,7 @@ function handler(scn) {
     });
     var canvas = document.getElementById('canvas');
     var dataURL = canvas.toDataURL();
+    h['entity'] = '<%= @entity.id %>';
     h['pic'] = dataURL;
     $.post('/' + qri, h, function(data) {
       $('.foot').hide();

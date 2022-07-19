@@ -44,6 +44,7 @@ module Bivouac
     end
     get('/') {
       @id = user(params[:entity])
+      @map = @host.map[@id]
       @entity = @host[@id]
       erb :index
     }
@@ -53,11 +54,13 @@ module Bivouac
     get('/robots.txt') {}
     get('/info') { erb :info }
     get('/:qri') {
+      @map = @host.map[@host.qri[params[:qri]]]
       @entity = @host[@host.qri[params[:qri]]];
       @visitor = visitor(@entity.id);
       erb :entity
     }
     get('/:qri/:box') {
+      @map = @host.map[@host.qri[params[:qri]]][params[:box]]
       @entity = @host[@host.qri[params[:qri]]];
       @visitor = visitor(@entity.id);
       @box = @host[@host.qri[params[:qri]]][params[:box]];

@@ -5,18 +5,25 @@ module Bivouac
       @request, @params = request, params
       @path = request.host
       @json = {}
-      if /\d+.\d+.\d+.\d+/.match(request.host) || request.host == 'localhost'
+
+      # interaction redirect path
+      if /\d+.\d+.\d+.\d+/.match(request.host) || request.host == 'localhost' || /.onion/.match(request.host)
         @goto = "http://#{@path}"
       else
         @goto = "https://#{@path}"
       end
       @host = Bivouac[@path]
-
+      
+      # config interaction
       if @params.has_key? :entity
         @entity = @host[@params[:entity]]
         
         if @params.has_key? :config
           @params[:config].each_pair {|k,v| @entity.attr[k] = v; }
+        end
+
+        if "#{@entity.attr[:waypoint]}".length > 0
+          #####
         end
         
         if @params.has_key?(:box) && "#{@params[:box]}".length > 0
@@ -28,7 +35,11 @@ module Bivouac
           end
         end
       end
-      
+      # lookup interaction
+      if "#{@params[:wand]}".length > 0
+        @params[:target] = @host.admin(@params[:wand])
+      end
+      # scan interaction
       if @params.has_key? :target
         @target = @host[@params[:target]]
         
@@ -41,21 +52,24 @@ module Bivouac
           @params[:magic].each_pair {|k,v| if "#{v}".length > 0; @target.attr[k] = v; end }
         end
       
-
-      if @params.has_key? :boost
-        @params[:boost].each_pair {|k,v| @target.stat.incr(k) }
+        if @params.has_key? :boost
+          @params[:boost].each_pair {|k,v| @target.stat.incr(k) }
+        end
+        if @params.has_key? :touch
+          @params[:touch].each_pair {|k,v| @target.badges.incr(k) }
+        end
+        if @params.has_key? :award
+          @params[:award].each_pair {|k,v| @target.awardss.incr(k) }
+        end
       end
-      if @params.has_key? :touch
-        @params[:touch].each_pair {|k,v| @target.badges.incr(k) }
-      end
-      if @params.has_key? :award
-        @params[:award].each_pair {|k,v| @target.awardss.incr(k) }
-      end
-      end
+      # scan post return
       if @params.has_key? :qri
         @target = @json[:target] = @host.qri[@params[:qri]]
         [:name, :title].each { |e| @json[e] = @host[@target].attr[e] }
         [:rank, :class].each { |e| @json[e] = @host[@target].stat[e].to_i }
+        if @params.has_key? :box
+          @host.map[@target][@params[:box]].visitors.incr(@params[:entity])
+        end
       end
       
       if @params.has_key? :do
