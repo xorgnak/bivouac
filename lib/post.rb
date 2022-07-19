@@ -59,12 +59,12 @@ module Bivouac
           @params[:touch].each_pair {|k,v| @target.badges.incr(k) }
         end
         if @params.has_key? :award
-          @params[:award].each_pair {|k,v| @target.awardss.incr(k) }
+          @params[:award].each_pair {|k,v| @target.awards.incr(k) }
         end
       end
 
       if /.+-.+-.+/.match(@params[:entity])
-        if "".length > 0
+        if "#{@params[:box]}".length > 0
           @goto = "#{@goto}/#{@params[:qri]}/#{@params[:box]}"
         else
           @goto = "#{@goto}/#{@params[:qri]}"
