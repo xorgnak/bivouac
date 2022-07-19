@@ -64,7 +64,7 @@ module Bivouac
       end
 
       if /.+-.+-.+/.match(@params[:entity])
-        if "#{@params[:box]}".length > 0
+        if @params.has_key? :box
           @goto = "#{@goto}/#{@params[:qri]}/#{@params[:box]}"
         else
           @goto = "#{@goto}/#{@params[:qri]}"
