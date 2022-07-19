@@ -14,7 +14,7 @@ a { text-decoration: none; background-color: white; border: thick outset grey; }
 <div id='info' class='foot'><div id='log'></div></div>
 
 <div id='boxes' class='foot' style='max-height: 80%; overflow-y: scroll; display: none;'>
-<% @entity.boxes do |box| %>
+<% @entity.boxes.members.each do |box| %>
 <%= @b = @entity[box] %>
 <p style='width: 100%; text-align: center; margin: 0;'>
 <button class='goto' value='<%= @qr.app(@visitor.id, params[:qri], @b.id)  %>'></button>

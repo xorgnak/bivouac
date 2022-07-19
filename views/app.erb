@@ -18,7 +18,7 @@ a { text-decoration: none; background-color: white; border: thick outset grey; }
 <div id='info' class='foot'><div id='log'></div></div>
 
 <div id='users' class='foot' style='max-height: 80%; overflow-y: scroll; display: none;'>
-<% @box.users do |usr| %>
+<% @box.users.members.each do |usr| %>
 <% @b = @host[usr] %>
 <p style='width: 100%; text-align: center; margin: 0;'>
 <button class='goto' value='<%= @qr.entity(@visitor.id, @b.attr[:qr])  %>'>
@@ -45,6 +45,7 @@ a { text-decoration: none; background-color: white; border: thick outset grey; }
 <% end %>
 
 <button class='tog material-icons' value='badge'>qr_code_2</button>
+<button class='tog material-icons' value='users'>diversity_1</button>
 </h1>
 </div>
 <script>
