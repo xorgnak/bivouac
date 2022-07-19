@@ -17,7 +17,7 @@ a { text-decoration: none; background-color: white; border: thick outset grey; }
 <% @entity.boxes.members.each do |box| %>
 <% @b = @entity[box] %>
 <p style='width: 100%; text-align: center; margin: 0;'>
-<button class='goto' value='<%= @qr.app(@visitor.id, params[:qri], @b.id)  %>'><%= @b.id.split('/')[1] %></button>
+<button class='goto' value='<%= @qr.box(params[:qri], @b.id.split('/')[1])  %>'><%= @b.id.split('/')[1] %></button>
 </p>
 <% end %>
 </div>

@@ -32,6 +32,12 @@ module Bivouac
       vv = v.split('-')
       return %[#{@host.url}/#{q}/#{URI.encode(u)}?mark=#{vv[1]}&from=#{vv[2]}]
     end
+    def point q
+      %[#{@host.url}/#{q}]
+    end
+    def box q, b
+      %[#{@host.url}/#{q}/#{URI.encode(b)}]
+    end
   end
   def self.qr h
     Qrcode.new(h)
