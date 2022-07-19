@@ -26,11 +26,11 @@ module Bivouac
     end
     def entity v, q
       vv = v.split('-')
-      return %[#{@host.url}/#{q}?mark=#{vv[0]}&from=#{vv[2]}]
+      return %[#{@host.url}/#{q}?mark=#{vv[1]}&from=#{vv[2]}]
     end
     def app v, q, u
       vv = v.split('-')
-      return %[#{@host.url}/#{q}/#{URI.encode(u)}?mark=#{vv[0]}&from=#{vv[2]}]
+      return %[#{@host.url}/#{q}/#{URI.encode(u)}?mark=#{vv[1]}&from=#{vv[2]}]
     end
   end
   def self.qr h
