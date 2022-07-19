@@ -61,16 +61,14 @@ function tick() {
       var dom = /<%= @host.id.gsub('://', ':\/\/') %>/g;
 	  if (code) {
 	  if (found == false) {
-	      var valid = false
-//	      if (onion.test(code.data)) { valid = true; }
+	      var valid = false;
+
 	      if (dom.test(code.data)) { valid = true; }
 
 	      if (valid == true) {
 	      	  found = true;
 		  log({ icon: 'qr_code_2': message: '<span style="background-color: green; color: black; padding: 0 2% 0 2%;">VALID!</span>' });
 		  handler(code.data);
-	      } else {
-		  log({ icon: 'qr_code', message: "<button class='goto' value='" + code.data + "'>" + code.data + "</button>" });
 	      }
 	  }
 	  }
