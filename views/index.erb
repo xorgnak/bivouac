@@ -5,22 +5,7 @@
   .tog { margin: 0; padding: 0; background-color: black; border-color: orange; color: grey; }
   .pill { margin: 0 1% 0 1%; padding: 0 2% 0 2%; border-radius: 100px; background-color: black; color: white; }
   .give { border: thick solid gold; }
-.progress{
-    position: relative;
-    height: 10px;
-    width: 1110%;
-    border: 10px solid #f4a261;
-    border-radius: 15px;
-}
-.progress .color{
-    position: absolute;
-    background-color: #ffffff;
-    width: 0px;
-    height: 10px;
-    border-radius: 15px;
-    animation: progres 4s infinite linear;    
-}
-@keyframes progres{
+@keyframes .cylon {
     0%{
       width: 0%;
     }
@@ -28,13 +13,13 @@
         width: 50%;
     }
     50%{
-        width: 75%;
+        width: 100%;
     }
     75%{
-        width: 85%;
+        width: 50%;
     }
     100%{
-        width: 100%;
+        width: 0%;
     }
 };
 </style>

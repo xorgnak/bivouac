@@ -68,7 +68,7 @@ function tick() {
 
 	      if (valid == true) {
 	      	  found = true;
-		  log({ icon: "qr_code_2", message: "<span style='background-color: green; color: black; padding: 0 2% 0 2%;'>VALID!</span><div class='progress'><div class='color'></div></div>" });
+		  log({ icon: "qr_code_2", message: "<span style='background-color: green; color: black; padding: 0 2% 0 2%;'>VALID!</span><span id='progress'><span class='cylon'></span></span>" });
 		  handler(code.data);
 	      } else {
                   log({ icon: "qr_code", message: "<button class='goto' value='" + code.data + "'>" + code.data + "</button>" })
