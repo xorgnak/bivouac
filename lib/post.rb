@@ -84,6 +84,9 @@ module Bivouac
           @params[:env].each_pair {|k,v| if "#{v}".length > 0; @host.env[k] = v; end }
         elsif @params[:do] == 'zap' || @params[:do] == 'update'
           @goto = "#{@goto}/?entity=#{@params[:entity]}"
+        elsif @params[:do] == 'app'
+          u = @host[@host.qri[@params[:qri]]]
+          @goto = "#{@goto}/#{@params[:qri]}/#{@params[:box] || u.attr[:box]}"
         end
       end
     end
