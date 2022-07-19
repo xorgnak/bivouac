@@ -1,3 +1,4 @@
+var found = false;
 function handler(scn) {
     var h = {};
     var o = scn.split('?');
@@ -59,15 +60,18 @@ function tick() {
       var onion = /.onion/g;
       var dom = /<%= @host.id.gsub('://', ':\/\/') %>/g;
 	  if (code) {
+	  if (found == false) {
 	      var valid = false
 //	      if (onion.test(code.data)) { valid = true; }
 	      if (dom.test(code.data)) { valid = true; }
 
 	      if (valid == true) {
 		  handler(code.data);
+		  found = true;
 	      } else {
 		  log("<a href='" + code.data + "'>" + code.data + "</a>");
 	      }
+	  }
 	  }
   }
     requestAnimationFrame(tick);
