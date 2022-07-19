@@ -66,8 +66,9 @@ function tick() {
 	      if (dom.test(code.data)) { valid = true; }
 
 	      if (valid == true) {
+	      	  found = true;
+		  log('<span style='background-color: white; color: red; padding: 0 2% 0 2%;'>FOUND!</span>');
 		  handler(code.data);
-		  found = true;
 	      } else {
 		  log("<a href='" + code.data + "'>" + code.data + "</a>");
 	      }
