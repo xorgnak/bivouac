@@ -1,79 +1,42 @@
 <style>
 #canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -10; }
+a { text-decoration: none; background-color: white; border: thick outset grey; }
 </style>
 <canvas id='canvas'></canvas>
 
-<div id='foot' style='position: fixed; bottom: 0; width: 100%;'>
+<div id='foot' style='position: fixed; bottom: 0; width: 100%; background-color: black; color: white;'>
 
-<fieldset id='magic' class='foot' style='display: none;'><legend>magic</legend>
 <%= erb Bivouac.form(@host.app[:magic]) %>
-</fieldset>
-
-<fieldset id='info' class='foot'><legend><%= @entity.attr[:name] || 'anonymous' %>@<%= @host.id %></legend>
-
-<div>
-<h3 style='width: 100%; text-align: center;'><span><%= @entity.attr[:contest] %></span></h3>
-<h3 style='width: 100%; text-align: center;'><button class='goto'>vote</button></h3>
+<div id='magic' style='display: none;'>
+<%= erb :app_magic %>
+<h3 style='width: 100%; text-align: center;'><button form='post' name='do' value='app'>send</button></h3>
 </div>
+<div id='info' class='foot'><div id='log'></div></div>
 
-<div id='log'></div>
-
-<div style='border: thin solid orange;'><h3 style='width: 100%; text-align: center; margin: 0;'><span>sponsors</span></h3>
-<ul id='boxes' style='text-align: left;'>
-<% @entity.boxes.members.each do |box| %>
-<% @box = @entity[box] %>
-<p style='width: 100%; text-align: center;'>
-<span class='material-icons'><%= @box.attr[:icon] || 'box' %></span>
-<a href='<%= @host.url %>/<%= @entity.attr[:qr] %>/<%= @box.id %>'><%= @box.attr[:name] || 'private' %></a>
-</p>
-<% end %>
-</ul>
+<div id='badge' class='foot' style='display: none;'>
+<%= erb :app_badge %>
 </div>
-</fieldset>
-
-<!--
-<fieldset id='settings' class='foot' style='display: none;'><legend>settings</legend>
-<%= erb Bivouac.form(@host.app[:config]) %>
-</fieldset>
--->
-<!--
-<fieldset id='groups' class='foot' style='display: none;'><legend>groups</legend>
-
-</fieldset>
--->
-<!--
-<fieldset id='reports' class='foot' style='display: none;'><legend>reports</legend>
-<%= erb Bivouac.form(@host.app[:reports]) %>
-</fieldset>
--->
-
-<fieldset id='badge' class='foot' style='display: none;'><legend>badge</legend>
-<% if @host.env[:merit] == 'on' %>
-<%= erb :level %>
-<% end %>
-<div id='qrcode'></div>
-<% if @host.env[:merit] == 'on' %>
-<%= erb :badges %>
-<% end %>
-</fieldset>
-
+</div>
 <h1 style='width: 100%; text-align: center; margin: 0;'>
 <button class='tog material-icons' value='info'>info</button>
-<!-- <button class='tog material-icons' value='settings'>settings</button> -->
-<!-- <button class='tog material-icons' value='groups'>groups</button> -->
-<!-- <button class='tog material-icons' value='reports'>report</button> -->
 
 <% if @entity.attr[:contact] != 'none' %>
-<button class='goto material-icons' value='<%= @entity.attr[:contact] %>:<%= @entity.attr[:phone] %>'>call</button>
+<a class='material-icons' href='<%= @entity.attr[:contact] %>:<%= @entity.attr[:phone] %>' style='color: green;'>call</a>
 <% end %>
 
 <% if @entity.attr.has_key? :link %>
-<button class='goto material-icons' value='<%= @entity.attr[:link] %>'>link</button>
+<a class='material-icons' href='<%= @entity.attr[:link] %>' style='color: orange'>link</a>
 <% end %>
 
 <button class='tog material-icons' value='badge'>qr_code_2</button>
 </h1>
 </div>
 <script>
-$('#qrcode').qrcode('<%= @qr.badge(@visitor.id) %>');
+$('#qrcode').qrcode('<%= @qr.entity(@entity.id) %>');
+log({ icon: 'qr_code_2', message: '<%= @entity.attr[:name] || "anonymous" %>@<%= @host.id %>' })
+setTimeout(function() { log({ icon: 'follow_the_signs', message: '<%= @host.env[:title] %>' }); }, 250);
+setTimeout(function() { log({ icon: 'star', message: '<%= @host.env[:pitch] %>' }); }, 500);
+<% if @visitor.attr[:class].to_i < 1 %>
+setTimeout(function() { log({ icon: 'help', message: '<%= @host.env[:intro] %>' }); }, 750);
+<% end %>
 </script>

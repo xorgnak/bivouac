@@ -24,15 +24,15 @@ a { text-decoration: none; background-color: white; border: thick outset grey; }
 <a class='material-icons' href='<%= @entity.attr[:contact] %>:<%= @entity.attr[:phone] %>' style='color: green;'>call</a>
 <% end %>
 
-<% if @entity.attr.has_key? :link %>
-<a class='material-icons' href='<%= @entity.attr[:link] %>' style='color: orange'>link</a>
+<% if @box.attr.has_key? :link %>
+<a class='material-icons' href='<%= @box.attr[:link] %>' style='color: orange'>link</a>
 <% end %>
 
 <button class='tog material-icons' value='badge'>qr_code_2</button>
 </h1>
 </div>
 <script>
-$('#qrcode').qrcode('<%= @qr.badge(@visitor.id) %>');
+$('#qrcode').qrcode('<%= @qr.app(@entity.id, @box.id) %>');
 log({ icon: 'qr_code_2', message: '<%= @entity.attr[:name] || "anonymous" %>@<%= @host.id %>/<%= params[:box] %>' })
 setTimeout(function() { log({ icon: 'follow_the_signs', message: '<%= @host.env[:title] %>' }); }, 250);
 setTimeout(function() { log({ icon: 'star', message: '<%= @host.env[:pitch] %>' }); }, 500);

@@ -17,12 +17,18 @@ module Bivouac
       if "#{ENV['MASK']}".length > 0
         return %[#{@host.url}/#{ENV['ID']}/#{URI.encode(ENV['BOX'])}?mark=#{m.join('')}&#{opts.join('&')}]
       else
-      if "#{@user.attr[:box]}".length > 0
-        return %[#{@host.url}/#{@host.qro[@user.id]}/#{@user.attr[:box]}?mark=#{m.join('')}&#{opts.join('&')}]
-      else
-        return %[#{@host.url}/#{@host.qro[@user.id]}?mark=#{m.join('')}&#{opts.join('&')}]
+        if "#{@user.attr[:box]}".length > 0
+          return %[#{@host.url}/#{@host.qro[@user.id]}/#{@user.attr[:box]}?mark=#{m.join('')}&#{opts.join('&')}]
+        else
+          return %[#{@host.url}/#{@host.qro[@user.id]}?mark=#{m.join('')}&#{opts.join('&')}]
+        end
       end
-      end
+    end
+    def entity q
+      return %[#{@host.url}/#{q}]
+    end
+    def app q, u
+      return %[#{@host.url}/#{q}/#{u}]
     end
   end
   def self.qr h
