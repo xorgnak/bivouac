@@ -54,16 +54,16 @@ module Bivouac
     get('/robots.txt') {}
     get('/info') { erb :info }
     get('/:qri') {
-      @map = @host.map[@host.qri[params[:qri]]]
       @entity = @host[@host.qri[params[:qri]]];
       @visitor = visitor(@entity.id);
+      @map = @host.map[@entity.id]
       erb :entity
     }
     get('/:qri/:box') {
-      @map = @host.map[@host.qri[params[:qri]]][params[:box]]
       @entity = @host[@host.qri[params[:qri]]];
       @visitor = visitor(@entity.id);
       @box = @host[@host.qri[params[:qri]]][params[:box]];
+      @map = @host.map[@entity.id][@box.id]
       erb :app
     }
     post('/') { b = Bivouac::Post.new(request, params); redirect b.goto }
