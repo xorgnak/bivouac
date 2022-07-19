@@ -15,9 +15,9 @@ a { text-decoration: none; background-color: white; border: thick outset grey; }
 
 <div id='boxes' class='foot' style='max-height: 80%; overflow-y: scroll; display: none;'>
 <% @entity.boxes.members.each do |box| %>
-<%= @b = @entity[box] %>
+<% @b = @entity[box] %>
 <p style='width: 100%; text-align: center; margin: 0;'>
-<button class='goto' value='<%= @qr.app(@visitor.id, params[:qri], @b.id)  %>'><%= @b.id %></button>
+<button class='goto' value='<%= @qr.app(@visitor.id, params[:qri], @b.id)  %>'><%= @b.id.split('/')[1] %></button>
 </p>
 <% end %>
 </div>
