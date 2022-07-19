@@ -2,6 +2,10 @@
 #canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -10; }
 a { text-decoration: none; background-color: white; border: thick outset grey; }
 </style>
+
+<input form='post' type='hidden' name='qri' value='<%= params[:qri] %>'>
+<input form='post' type='hidden' name='box' value='<%= params[:box] %>'>
+
 <canvas id='canvas'></canvas>
 
 <div id='foot' style='position: fixed; bottom: 0; width: 100%; background-color: black; color: white;'>
@@ -12,6 +16,18 @@ a { text-decoration: none; background-color: white; border: thick outset grey; }
 <h3 style='width: 100%; text-align: center;'><button form='post' name='do' value='app'>send</button></h3>
 </div>
 <div id='info' class='foot'><div id='log'></div></div>
+
+<div id='users' class='foot' style='max-height: 80%; overflow-y: scroll; display: none;'>
+<% @box.users do |usr| %>
+<% @b = @host[usr] %>
+<p style='width: 100%; text-align: center; margin: 0;'>
+<button class='goto' value='<%= @qr.entity(@visitor.id, @b.attr[:qr])  %>'>
+<span class='material-icons'><%= Bivouac.icons[@b.stat[:class].to_i] %></span>
+<span><%= @b.attr[:name] || 'anonymous' %></span>
+</button>
+</p>
+<% end %>
+</div>
 
 <div id='badge' class='foot' style='display: none;'>
 <%= erb :app_badge %>
@@ -33,10 +49,8 @@ a { text-decoration: none; background-color: white; border: thick outset grey; }
 </div>
 <script>
 $('#qrcode').qrcode('<%= @qr.app(@visitor.id, params[:qri], params[:box]) %>');
-log({ icon: 'qr_code_2', message: '<%= @entity.attr[:name] || "anonymous" %>@<%= @host.id %>/<%= params[:box] %>' })
-setTimeout(function() { log({ icon: 'follow_the_signs', message: '<%= @host.env[:title] %>' }); }, 250);
-setTimeout(function() { log({ icon: 'star', message: '<%= @host.env[:pitch] %>' }); }, 500);
+log({ icon: 'qr_code_2', message: '<%= @entity.attr[:name] %>@<%= params[:box] %>' })
 <% if @visitor.attr[:class].to_i < 1 %>
-setTimeout(function() { log({ icon: 'help', message: '<%= @host.env[:intro] %>' }); }, 750);
+log({ icon: 'help', message: '<%= @host.env[:intro] %>' });;
 <% end %>
 </script>

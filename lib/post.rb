@@ -61,6 +61,9 @@ module Bivouac
         if @params.has_key? :award
           @params[:award].each_pair {|k,v| @target.awardss.incr(k) }
         end
+        if /.+-.+-.+/.match(@params[:entity])
+          @goto = "#{@goto}/#{@params[:qri]}/#{@params[:box]}"
+        end
       end
       # scan post return
       if @params.has_key? :qri

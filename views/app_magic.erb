@@ -2,7 +2,7 @@
 <div style='width: 100%; text-align: center; margin: 0;'>
 <% { "vote" => "loyalty", "love" => "favorite", 'boost' => 'star' }.each_pair do |k,v| %> 
 <p style='width: 100%; text-align: center; margin: 0;'>
-<label for='has_<%= k %>' class='give pill'><input form='post' id='has_<%= k %>' type='checkbox' name='boost[<%= k %>]'>
+<label for='has_<%= k %>' class='give pill'><input form='post' id='has_<%= k %>' type='checkbox' name='boost[<%= v %>]'>
 <span class='material-icons'><%= v %></span><span><%= k %></span></label>
 </p>
 <% end %>

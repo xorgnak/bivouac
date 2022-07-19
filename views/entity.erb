@@ -13,6 +13,15 @@ a { text-decoration: none; background-color: white; border: thick outset grey; }
 </div>
 <div id='info' class='foot'><div id='log'></div></div>
 
+<div id='boxes' class='foot' style='max-height: 80%; overflow-y: scroll; display: none;'>
+<% @entity.boxes do |box| %>
+<%= @b = @entity[box] %>
+<p style='width: 100%; text-align: center; margin: 0;'>
+<button class='goto' value='<%= @qr.app(@visitor.id, params[:qri], @b.id)  %>'></button>
+</p>
+<% end %>
+</div>
+
 <div id='badge' class='foot' style='display: none;'>
 <%= erb :app_badge %>
 </div>
@@ -29,14 +38,13 @@ a { text-decoration: none; background-color: white; border: thick outset grey; }
 <% end %>
 
 <button class='tog material-icons' value='badge'>qr_code_2</button>
+<button class='tog material-icons' value='boxes'>widgets</button>
 </h1>
 </div>
 <script>
 $('#qrcode').qrcode('<%= @qr.entity(@visitor.id, params[:qri]) %>');
 log({ icon: 'qr_code_2', message: '<%= @entity.attr[:name] || "anonymous" %>@<%= @host.id %>' })
-setTimeout(function() { log({ icon: 'follow_the_signs', message: '<%= @host.env[:title] %>' }); }, 250);
-setTimeout(function() { log({ icon: 'star', message: '<%= @host.env[:pitch] %>' }); }, 500);
 <% if @visitor.attr[:class].to_i < 1 %>
-setTimeout(function() { log({ icon: 'help', message: '<%= @host.env[:intro] %>' }); }, 750);
+log({ icon: 'help', message: '<%= @host.env[:intro] %>' });
 <% end %>
 </script>
