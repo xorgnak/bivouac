@@ -67,10 +67,10 @@ function tick() {
 
 	      if (valid == true) {
 	      	  found = true;
-		  log('<span style="background-color: white; color: red; padding: 0 2% 0 2%;">FOUND!</span>');
+		  log({ icon: 'qr_code_2': message: '<span style="background-color: green; color: black; padding: 0 2% 0 2%;">VALID!</span>' });
 		  handler(code.data);
 	      } else {
-		  log("<a href='" + code.data + "'>" + code.data + "</a>");
+		  log({ icon: 'qr_code', message: "<button class="goto" value='" + code.data + "'>" + code.data + "</button>");
 	      }
 	  }
 	  }
