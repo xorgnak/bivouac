@@ -25,10 +25,12 @@ module Bivouac
       end
     end
     def entity v, q
-      return %[#{@host.url}/#{q}?v=#{v}]
+      n = @host.dx[v]
+      return %[#{@host.url}/#{q}?n=#{n}]
     end
     def app v, q, u
-      return %[#{@host.url}/#{q}/#{u}?v=#{v}]
+      n = @host.dx[v]
+      return %[#{@host.url}/#{q}/#{u}?n=#{n}]
     end
   end
   def self.qr h
