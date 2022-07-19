@@ -1,18 +1,24 @@
 
 <div style='width: 100%; text-align: center; margin: 0;'>
-<% { "vote" => "loyalty", "love" => "favorite", 'boost' => 'star' }.each_pair do |k,v| %> 
-<p style='width: 100%; text-align: center; margin: 0;'>
+<% if "#{@entity.attr[:box]}".length > 0 && "#{@entity.attr[:title]}".length > 0 %>
+<h3 style='width: 100%; text-align: center; margin: 1% 0 1% 0;'>
+<label for='has_vote' class='give pill' style='border-style: dotted;'><input form='post' id='has_vote' type='checkbox' name='boost[vote]'>
+<span class='material-icons'>loyalty</span><span>best <%= @entity.attr[:title] %> in <%= @entity.attr[:box] %></span></label>
+</h3>
+<% end %>
+<% { "love" => "favorite", 'boost' => 'star' }.each_pair do |k,v| %> 
+<h3 style='width: 100%; text-align: center; margin: 1% 0 1% 0;'>
 <label for='has_<%= k %>' class='give pill'><input form='post' id='has_<%= k %>' type='checkbox' name='boost[<%= v %>]'>
 <span class='material-icons'><%= v %></span><span><%= k %></span></label>
-</p>
+</h3>
 <% end %>
 
 <% if @host.app[:merit] == 'on' %>
 <% @host.badges.each_pair do |k,v| %>
-<p style='width: 100%; text-align: center; margin: 0;'>
+<h3 style='width: 100%; text-align: center; margin: 1% 0 1% 0;'>
 <label for='has_<%= k %>' class='pill'><input form='post' id='has_<%= k %>' type='checkbox' name='touch[<%= k %>]'>
 <span class='material-icons'><%= v %></span><span><%= k %></span></label>
-</p>
+</h3>
 <% end %>
 <% end %>
 </div>
