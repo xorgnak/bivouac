@@ -120,10 +120,12 @@ $(document).on('change', '#magic-class-slider', function(ev){
     $('#magic-class-name').text(classes[c]);
     $('#magic-class-icon').text(icons[c]);
 });
-$(document).on('input', '#entity-config-box', function(){
+$(document).on('change paste keyup input', '#entity-config-box', function(){
+    if ($('#entity-config-box').val() != '<%= @entity.attr[:box] %>') {
     $('#box-body').val('');
     $('#box-pay').val('');
     $('#box-conf').hide();
+    }
 });
 	<%# erb :sw %>
 	<% else %>
