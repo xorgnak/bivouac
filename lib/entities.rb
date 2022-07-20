@@ -487,6 +487,7 @@ module Bivouac
         if !self.attr.has_key? :pub
           c = cipher
           c.encrypt
+          self.attr[:host] = @host.id
           self.attr[:created] = Time.now.utc.to_i
           self.attr[:priv] = Base64.encode64(c.random_key)
           self.attr[:pub] = Base64.encode64(c.random_iv)

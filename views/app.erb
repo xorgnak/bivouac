@@ -20,12 +20,14 @@ a { text-decoration: none; background-color: white; border: thick outset grey; }
 <div id='users' class='foot' style='max-height: 80%; overflow-y: scroll; display: none;'>
 <% @box.users.members.each do |usr| %>
 <% @b = @host[usr] %>
+<% if @b.attr[:host] == @host.id %>
 <p style='width: 100%; text-align: center; margin: 0;'>
 <button class='goto' value='<%= @qr.point(@b.attr[:qr])  %>'>
 <span class='material-icons'><%= Bivouac.icons[@b.stat[:class].to_i] %></span>
 <span><%= @b.attr[:name] || 'anonymous' %></span>
 </button>
 </p>
+<% end %>
 <% end %>
 </div>
 
