@@ -66,8 +66,8 @@ module Bivouac
       @box = @host[@host.qri[params[:qri]]][params[:box]];
       @map = @host.map[@entity.id][@box.id]
       @entity.karma.incr(@box.id)
-      @box.bank.give type: :credits, amt: @box.stat[:pay]
-      @box.bank.give type: :karma
+      @box.bank.give user: @entity.id, type: :credits, amt: @box.stat[:pay]
+      @box.bank.give user: @entity.id, type: :karma
       @box.traffic.incr(@entity.id);
       erb :app
     }
