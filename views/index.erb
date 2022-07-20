@@ -120,8 +120,10 @@ $(document).on('change', '#magic-class-slider', function(ev){
     $('#magic-class-name').text(classes[c]);
     $('#magic-class-icon').text(icons[c]);
 });
-$(document).on('update', '#post', function(){
-    $('#update').attr('disabled', false);
+$('#entity-config-box').change( function(){
+    $('#box-body').val('');
+    $('#box-pay').val('');
+    $('#box-conf').hide();
 });
 	<%# erb :sw %>
 	<% else %>

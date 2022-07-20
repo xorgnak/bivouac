@@ -31,10 +31,10 @@ module Bivouac
           @entity.attr[:box] = @params[:box]
           
           if @params.has_key?(:admin)
-            @params[:admin].each_pair {|k,v| @box.attr[k] = v; }
+            @params[:admin].each_pair {|k,v| if "#{v}".length > 0; @box.attr[k] = v; end }
           end
           if @params.has_key?(:boss)
-            @params[:boss].each_pair {|k,v| @box.stat[k] = v.to_i }
+            @params[:boss].each_pair {|k,v| if "#{v}".length > 0; @box.stat[k] = v.to_i; end }
           end
         end
         check @entity
