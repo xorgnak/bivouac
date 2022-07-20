@@ -5,7 +5,7 @@
   <button id='wand' class='tog material-icons' value='magic'>auto_fix_high</button>
   <% end %>
   <% if @entity[@entity.attr[:box]].attr[:owner] == @entity.id %>
-  <button class='tog material-icons' value='bank'>bank</button>
+  <button class='tog material-icons' value='bank'>account_balance</button>
   <% end %>
   <% if "#{@entity.attr[:box]}".length > 0 %>
   <button class='goto material-icons' value='<%= @qr.badge(@entity.id) %>'>gps_fixed</button>
