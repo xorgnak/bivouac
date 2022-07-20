@@ -424,15 +424,17 @@ module Bivouac
     # box 
     set :webs
     def initialize i
-      @id = i
       ix = i.split('@')
       ih = ix[1].split('/')
       @host = ih[0]
       @user, @box = %[#{ix[0]}@#{ih[0]}], ih[1]
       if !self.attr.has_key? :name
         self.attr[:name] = @box
+        self.attr[:payee] = @user
         self.attr[:owner] = @user
+        self.stat[:click] = 1
       end
+      @id = @box
     end
     def id; @id; end
   end

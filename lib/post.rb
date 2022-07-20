@@ -34,6 +34,7 @@ module Bivouac
             @params[:admin].each_pair {|k,v| if "#{v}".length > 0; @box.attr[k] = v; end }
           end
         end
+        check @entity
       end
       # lookup interaction
       if "#{@params[:wand]}".length > 0
@@ -61,6 +62,7 @@ module Bivouac
         if @params.has_key? :award
           @params[:award].each_pair {|k,v| @target.awards.incr(k) }
         end
+        check @target
       end
 
       if /.+-.+-.+/.match(@params[:entity])
@@ -89,6 +91,12 @@ module Bivouac
           @goto = "#{@goto}/#{@params[:qri]}/#{@params[:box] || u.attr[:box]}"
         end
       end
+    end
+    def check u
+      if u.boxes > 0 && u.stat[:class].to_i < 1
+        u.stat[:class] = 1
+      end
+      
     end
     def path
       @path

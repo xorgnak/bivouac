@@ -66,7 +66,11 @@ module Bivouac
       @box = @host[@host.qri[params[:qri]]][params[:box]];
       @map = @host.map[@entity.id][@box.id]
       @entity.stat.incr(:credits)
+      @entity.stat.incr(:xp)
+      @entity.karma(@box.id)
       @box.stat.incr(:credits)
+      @box.traffic.incr(@entity.id);
+      
       erb :app
     }
     post('/') { b = Bivouac::Post.new(request, params); redirect b.goto }
