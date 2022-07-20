@@ -58,26 +58,25 @@ module Bivouac
     include Redis::Objects
     sorted_set :stat
     sorted_set :xfer
-    def initialize
-      @id = 'BANK'
+    def initialize i
+      @id = i
     end
     def id; @id; end
+    # { :user, :type, :amt }
     def give h={}
-      self.stat.decrement(h[:type], h[:amt].to_i)
-      User.new(h[:user]).stat.increment(h[:type], h[:amt].to_i)
+      self.stat.decrement(h[:type], h[:amt] || 1)
+      User.new(h[:user]).stat.increment(h[:type], h[:amt] || 1)
     end
+    # { :user, :type, :amt }
     def take h={}
-      self.stat.increment(h[:type], h[:amt].to_i)
-      User.new(h[:user]).stat.decrement(h[:type], h[:amt].to_i)
+      self.stat.increment(h[:type], h[:amt] || 1)
+      User.new(h[:user]).stat.decrement(h[:type], h[:amt] || 1)
     end
+    # { user: user, type: { from: type, to: type } amt: { from: n, to: n }
     def swap h={}
-      User.new(h[:user]).stat.decrement(h[:type][:from], h[:amt][:from])
-      User.new(h[:user]).stat.increment(h[:type][:to], h[:amt][:to])
+      User.new(h[:user]).stat.decrement(h[:type][:from], h[:amt][:from] || 1)
+      User.new(h[:user]).stat.increment(h[:type][:to], h[:amt][:to] || 1)
     end
-  end
-  BANK = Bank.new
-  def self.bank
-    BANK
   end
   class Vote
     include Redis::Objects
@@ -435,6 +434,9 @@ module Bivouac
         self.stat[:click] = 1
       end
       @id = @box
+    end
+    def bank
+      Bank.new(@id)
     end
     def id; @id; end
   end

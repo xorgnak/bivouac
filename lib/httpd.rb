@@ -57,7 +57,7 @@ module Bivouac
       @entity = @host[@host.qri[params[:qri]]];
       @visitor = visitor(@entity.id);
       @map = @host.map[@entity.id]
-      @entity.stat.incr(:credits)
+      @entity.stat.incr(:xp)
       erb :entity
     }
     get('/:qri/:box') {
@@ -65,8 +65,10 @@ module Bivouac
       @visitor = visitor(@entity.id);
       @box = @host[@host.qri[params[:qri]]][params[:box]];
       @map = @host.map[@entity.id][@box.id]
-      @entity.stat.incr(:credits)
-      @box.stat.incr(:credits)
+      @entity.karma(@box.id)
+      @entity.stat.incr(:karma)
+      @box.bank.give :credits, @box.stat[:pay] || 1
+      @box.traffic.incr(@entity.id);
       erb :app
     }
     post('/') { b = Bivouac::Post.new(request, params); redirect b.goto }

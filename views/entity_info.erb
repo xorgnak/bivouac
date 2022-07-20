@@ -9,3 +9,9 @@
    <span style='padding: 0 2% 0 2%;'><span class='material-icons'><%= e %></span><span><%= @entity.stat[e].to_i %></span></span>
    <% end %>
 </p>
+
+<p style='width: 100%; text-align: center; background-color: black; color: white;'>
+<% { "self_improvement" => @entity.stat[:xp].to_i, "campaign" => @entity.stat[:karma].to_i }.each_pair do |k,v| %>
+<span style='padding: 0 2% 0 2%;'><span class='material-icons'><%= k %></span><span><%= v %></span></span>
+<% end %>
+</p>
