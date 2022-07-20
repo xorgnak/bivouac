@@ -21,7 +21,7 @@
 <div style='width: 100%; text-align: center;'>
 <% @host.badges.each_pair do |badge, icon| %>
 <% if @entity.badges[badge] > 0 || @entity.awards[badge] > 0 %>
-<span class='material-icons' style='padding: 1%; border-radius: 100px; background-color: <%= Bivouac.bg["#{@entity.badges[badge].to_i}".length] || "black" %>; color: <%= Bivouac.fg["#{@entity.badges[badge].to_i}".length] || "white" %> ; border: thick solid <%= Bivouac.bd["@entity.awards[badge].to_i] || "black" %>'><%= icon %></span>
+<span class='material-icons' style='padding: 1%; border-radius: 100px; background-color: <%= Bivouac.bg["#{@entity.badges[badge].to_i}".length] || "black" %>; color: <%= Bivouac.fg["#{@entity.badges[badge].to_i}".length] || "white" %> ; border: thick solid <%= Bivouac.bd[@entity.awards[badge].to_i] || "black" %>'><%= icon %></span>
 <% end %>
 <% end %>
 </div>
