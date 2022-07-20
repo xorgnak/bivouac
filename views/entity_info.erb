@@ -1,8 +1,8 @@
 <p style='width: 100%; text-align: center; background-color: black; color: white;'>
    <span class='material-icons'>toll</span><span id='mycredits'><%= @entity.stat[:credits].to_i %></span>
-   <span id='myclass'><span class='material-icons' style='background-color: <%= Bivouac.bg[@entity.stat[:class].to_i] %>; color: <%= Bivouac.fg[@entity.stat[:class].to_i] %>;'><%= Bivouac.icons[@entity.stat[:class].to_i] %></span>
+   <span id='myclass'><span class='material-icons' style='background-color: <%= Bivouac.bg[@entity.stat[:class].to_i] %>; color: <%= Bivouac.fg[@entity.stat[:class].to_i] %>; border-radius: 100px;'><%= Bivouac.icons[@entity.stat[:class].to_i] %></span>
    <span id='myTitle'><%= @entity.attr[:title] || Bivouac.classes[@entity.stat[:class].to_i] %></span>
-   <span class='material-icons' style='background-color: <%= Bivouac.bg[@entity.stat[:rank].to_i] %>; color: <%= Bivouac.fg[@entity.stat[:rank].to_i] %>;'>military_tech</span><span id='myrank'><%= @entity.stat[:rank].to_i %></span>
+   <span class='material-icons' style='background-color: <%= Bivouac.bg[@entity.stat[:rank].to_i] %>; color: <%= Bivouac.fg[@entity.stat[:rank].to_i] %>; border-radius: 100px;'>military_tech</span><span id='myrank'><%= @entity.stat[:rank].to_i %></span>
 </p>
 <p style='width: 100%; text-align: center; background-color: black; color: white;'>
    <% [ :favorite, :star, :loyalty ].each do |e| %>
