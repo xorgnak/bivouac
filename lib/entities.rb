@@ -427,13 +427,13 @@ module Bivouac
       ih = ix[1].split('/')
       @host = ih[0]
       @user, @box = %[#{ix[0]}@#{ih[0]}], ih[1]
+      @id = @box
       if !self.attr.has_key? :name
         self.attr[:name] = @box
         self.attr[:payee] = @user
         self.attr[:owner] = @user
         self.stat[:click] = 1
       end
-      @id = @box
     end
     def bank
       Bank.new(@id)
@@ -504,11 +504,11 @@ module Bivouac
     def id; @id; end
     def [] u
       if "#{u}".length > 0
-      @host.boxes << u
-      self.boxes << u
-      uu = Box.new("#{@id}/#{u}")
-      uu.users << @id
-      return uu
+        @host.boxes << u
+        self.boxes << u
+        uu = Box.new("#{@id}/#{u}")
+        uu.users << @id
+        return uu
       end
     end
     def mk s, *k
