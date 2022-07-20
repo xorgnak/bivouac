@@ -1,0 +1,11 @@
+<% @box.bank.acct.members(with_scores: true).to_h.each_pair do |k,v| %>
+<p style='width: 100%; margin: 0;'>
+<span style=''>
+<span class='material-icons'>toll</span>
+<span><%= v %></span>
+</span>
+<span style='text-align: right;'>
+<span><%= @host[k].attr[:name] || 'anonymous' %></span>
+</span>
+</p>
+<% end %>
