@@ -1,16 +1,17 @@
 #!/bin/bash
 
-if [[ $1 == '' ]]; then
-    DIR='..'
-else
-    DIR=$1
+if [[ "$1" == "" ]]; then
+    echo "usage: $0 \$USERNAME";
+    exit;
 fi
-source /home/pi/nomad.conf
+USERNAME=$1;
+
+echo "USERNAME: $USERNAME"
 
 X="[NOMAD]"
 
-echo -e "$X SCREEN"
-cat << END > $DIR/.screenrc 
+echo "$X SCREEN"
+cat << END > /home/$USERNAME/.screenrc 
 shell -${SHELL}
 caption always "[ %H ] %w"
 defscrollback 1024
@@ -18,53 +19,24 @@ startup_message off
 hardstatus on
 hardstatus alwayslastline
 screen -t EMACS 0 emacs -nw --visit ~/index.org
-screen -t NOMAD 1 ./nomad.sh
-screen -t BASH 2 bash
-screen -t COMMS 3 ./nomad.sh operator
+screen -t '#' 1 /bin/bash
 screen -t BT 8 bluetoothctl
 screen -t MON 9 redis-cli monitor
-select 3
+select 1
 END
 
-echo -e "$X INDEX"
-cat << END > $DIR/index.org
+echo "$X INDEX"
+cat << END > /home/$USERNAME/index.org
 #+TITLE: Nomadic Linux.
 #+TODO: TODO(t!/@) ACTION(a!/@) WORKING(w!/@) | ACTIVE(f!/@) DELEGATED(D!/@) DONE(X!/@)
 #+OPTIONS: stat:t html-postamble:nil H:1 num:nil toc:t \n:nil ::nil |:t ^:t f:t tex:t
 
 * Welcome!
-  Nomadic linux is built to cope with disasters.  It has a simple set of tools designed to get you up and running quickly and consistantly.  Keep a Spare usb stick in your pocket - you never know when it will come in handy.
-
-* Tools
-  - git: The version control system of the future.
-  - emacs: The gnu text editor.
-  - vim: It's always there.
-  - ruby: A dynamic, object oriented, interpreted language.
-  - python: A compiled high level language.
-  - inotify: Kernel file event notification tools.
-  - screen: The gnu terminal multiplexer.
-  - redis: A next generation NOsql database.
-  - tor: The tor network client tools.
-  - nmap: A network analysis tool.
-  - tshark: A packet analysis tool.
-  - wifite: A simple wireless network decrypter.
-  - netcat: The linux network swiss army knife.
-  - ii: A tiny filesystem based irc client suitable for scripting.
-
-* Leah
-  The Leah tool allows single administrator access to common tools used to administer standalone systems (desktops and laptops) and networks.  It can be thought of as a "smart sudo" or an easy way to not grant privledges unnecessarily on a system.
-  - lan: scans the local area network, and performs an OS fingerprint on the attached devices.
-  - wifi: connects the local wireless card to an ssid and key, or an existing ssid/key pair.
-  - svc: adds a port to be hosted as a hidden service.
-  - mnt: mounts a local device.
-
-* Org Mode for fun and profit
-  Nomadic linux believes in staying organized.  Org mode keeps notes well organized. Nomadic linux also integrates lots of other tools to automate the process of exporting these files.
-
+  Nomadic linux is built to cope with disasters.  It has a simple set of tools designed to get you up and running quickly and consistantly.  You never know when it will come in handy.
 END
 
-echo -e "$X PROMPT"
-cat << 'END' > $DIR/.prompt
+echo "$X PROMPT"
+cat << 'END' > /home/$USERNAME/.prompt
 #  Customize BASH PS1 prompt to show current GIT repository and branch.
 #  by Mike Stewart - http://MediaDoneRight.com
 #  SETUP CONSTANTS
@@ -175,7 +147,7 @@ END
 
 
 echo -e "$X NOMAD"
-cat << 'END' > $DIR/.nomad
+cat << 'END' > /home/$USERNAME/.nomad
 ##### NOMADIC begin #####
 echo "`cat /etc/logo`"
 echo "[`hostname`] `uname -a`"
@@ -184,9 +156,7 @@ alias commit="rm -f nomadic/bin/*~ && rm -f *~ && git add . && git commit && git
 echo "commit -> push changes to the origin repo."
 function token() { git remote set-url origin https://$1:$2@github.com/$1/`pwd`.git; }
 echo "token <user> <token> -> set push token for repo."
-alias op="cd ~/nomad && screen"
-echo "op -> enter operator mode."
-function leah() { su -c "source /root/leah.sh && \$*"; }
+echo "nomad -> connect."
 ##### NOMADIC end #####
 END
 
@@ -198,7 +168,6 @@ cat << END >> /home/$USERNAME/.profile
 ##### NOMADIC end #####
 END
 
-echo -e "$X LEAH"
 cat << 'END' > /usr/bin/leah
 #!/bin/bash
 AUTOSTART=~/.autostart.sh
@@ -243,30 +212,29 @@ function kill_wifi() {
     ifconfig
 }
 
-function svc() {
-  pkill tor
-cat <<EXX >> /etc/tor/torrc
-HiddenServiceDir /var/lib/tor/$1/
-HiddenServicePort $1 127.0.0.1:$1
-EXX
-  tor &
-  cat /var/lib/tor/$1/hostname
-}
 
-function mnt() {
-    mkdir -p /mnt/sd
-    mount /dev/sdb2 /mnt/$1
-    echo "DEVICE: /dev/$1 MOUNTED: /mnt/$1"
-    ls -lha /mnt/$1
-}
-
+if [[ "$1" == "lan" ]]; then
+   lan 
+elif [[ "$1" == "wifi" ]]; then
+   wifi $2 $3 $4
+elif [[ "$1" == 'off' ]]; then
+   kill_wifi
+else
+echo "usage: $0 [lan|wifi|off]"
+echo "lan -> map local network"
+echo "wifi <profile> <ssid> [password] -> connect to wifi."
+echo "off -> kill all wifi services."
 echo -e "############################\n# Dont do anything stupid. #\n############################"
+fi
+
 END
 chmod +x /usr/bin/leah
 
+
+echo "$X DEVS"
 CAMS="";
 SSL="";
-for c in `redis-cli hkeys CAMS`
+for c in `redis-cli hkeys DEVS`
 do
     CAMS+="location /$c { proxy_pass http://`redis-cli hget CAMS $c`; }\n"
 done
@@ -318,6 +286,7 @@ else
     SSL=$sss;
 fi
 
+echo "$X NGINX"
 cat << END > /etc/nginx/nginx.conf
 user www-data;
 worker_processes auto;
@@ -354,10 +323,11 @@ include /etc/nginx/sites-enabled/*;
 
 }
 END
-rm -f /etc/nginx/sites-enabled/*
-service nginx restart
+sudo rm -f /etc/nginx/sites-enabled/*
+sudo service nginx restart
 
-cat << END > /etc/tor/torrc
+echo "$X TOR"
+sudo cat << END > /etc/tor/torrc
 #nomad
 HiddenServiceDir /var/lib/tor/nomad/
 HiddenServicePort 80 unix:/var/run/nginx.sock
@@ -367,94 +337,7 @@ HiddenServicePort 64738 127.0.0.1:64738
 END
 sudo service tor restart
 
-##
-# TRAMP STAMP
-
-# configure ap
-#cat <<EOF > /etc/hostapd/hostapd.conf
-#//driver=nl80211
-#//ctrl_interface=/var/run/hostapd
-#//ctrl_interface_group=0
-#//beacon_int=100
-#auth_algs=1
-#wpa_key_mgmt=WPA-PSK
-#ssid=nomad
-#channel=1
-#hw_mode=g
-#wpa_passphrase=nomadnetwork
-#interface=wlan0
-#wpa=2
-#wpa_pairwise=CCMP
-#country_code=
-## Rapberry Pi 3 specific to on board WLAN/WiFi
-#ieee80211n=1 # 802.11n support (Raspberry Pi 3)
-#wmm_enabled=1 # QoS support (Raspberry Pi 3)
-#ht_capab=[HT40][SHORT-GI-20][DSSS_CCK-40] # (Raspberry Pi 3)
-## RaspAP wireless client AP mode
-#interface=uap0
-## RaspAP bridge AP mode (disabled by default)
-#bridge=br0
-#EOF
-
-# resolve domains across interfaces
-#cat <<EOF > /etc/dhcpcd.conf
-# RaspAP default configuration
-#hostname
-#clientid
-#persistent
-#option rapid_commit
-#option domain_name_servers, domain_name, domain_search, host_name
-#option classless_static_routes
-#option ntp_servers
-#require dhcp_server_identifier
-#slaac private
-#nohook lookup-hostname
-
-# RaspAP wlan0 configuration
-#interface wlan0
-#static ip_address=10.3.141.1/24
-#static routers=10.3.141.1
-#static domain_name_server=9.9.9.9 1.1.1.1
-
-#interface uap0
-#static ip_address=192.168.50.1/24
-#nohook wpa_supplicant
-#EOF
-
-# create ap network
-#cat <<EOF > /etc/dnsmasq.d/090_ap.conf
-# RaspAP wlan0 configuration for wired (ethernet) AP mode
-#interface=wlan0
-#domain-needed
-#dhcp-range=10.3.141.50,10.3.141.255,255.255.255.0,12h
-
-# RaspAP default config
-#log-facility=/tmp/dnsmasq.log
-#conf-dir=/etc/dnsmasq.d
-
-#interface=lo,uap0
-#bind-interfaces
-#domain-needed
-#bogus-priv
-#EOF
-# bridge traffic
-#echo -e "net.ipv4.ip_forward=1" > /etc/sysctl.d/90_nomad.conf;
-#echo -e "net.ipv6.conf.all.forwarding=1" >> /etc/sysctl/90_nomad.conf;
-
-#cat <<EOF > /etc/rc.local
-#!/bin/sh -e
-#
-# rc.local
-#
-# bridge wifi and ap
-#iw dev wlan0 interface add uap0 type __ap
-#ifconfig wlan0 up
-#ifconfig uap0 up
-#exit 0
-#EOF
-
-echo -e "$X LOGO"
-
+echo "$X ICON"
 cat << END > /etc/icon
 ######  ####################
 #####    ###################
@@ -479,12 +362,12 @@ cat << END > /etc/icon
 #####: . :###  ##   ###: ###
 ######  # ###: ## .# ###  ##
 END
-
+echo "$X LOGO"
 cat << END > /etc/logo
 ####### NOMADIC LINUX ######
 END
 
-echo -e "$X ISSUE"
+echo "$X ISSUE"
 cat << END > /etc/issue
 `cat /etc/logo`
 `uname -a`
@@ -492,11 +375,19 @@ This image was born on: `date`
 No warranty.  No help. May the force be with you.
 END
 
-echo -e "$X MOTD"
+echo "$X MOTD"
 cat << END > /etc/motd
 `cat /etc/icon`
 `cat /etc/logo`
 No warranty.  No help. May the force be with you.
 END
 
-echo -e "$X READY!"
+echo "$X BIN";
+sudo echo '(screen -Dr || screen)' > /usr/bin/nomad;
+sudo chmod +x /usr/bin/nomad;
+
+echo "$X HOME";
+sudo chown $USERNAME:$USERNAME ~/*;
+sudo chown $USERNAME:$USERNAME ~/.*;
+
+echo "$X READY!"

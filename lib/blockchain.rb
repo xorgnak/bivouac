@@ -11,6 +11,7 @@ module Bivouac
       @transactions_count  = transactions.size
       @previous_hash   = previous_hash
       @nonce, @hash    = compute_hash_with_proof_of_work
+      return @hash
     end
     
     def compute_hash_with_proof_of_work(difficulty="00")
@@ -61,12 +62,12 @@ module Bivouac
     def self.ledger
       LEDGER
     end
-    def self.create_first_block
+    def self.create
       instance_variable_set("@b0", Block.first([{ from: '0', to: '0', what: 'genesis', qty: 0 }]))
       LEDGER << @b0
     end
     
-    def self.add_block *t
+    def self.add *t
       instance_variable_set("@b#{LINK.value}", Block.next((instance_variable_get("@b#{LINK.value - 1}")), [t].flatten)) 
       LEDGER << instance_variable_get("@b#{LINK.value}")
       p "============================"
@@ -76,30 +77,14 @@ module Bivouac
     end
 
     def self.launcher
+      puts "===========================" 
+      puts "      NOMAD NETWORK        " 
       puts "==========================="
-      puts ""
-      puts "Welcome to Simple Blockchain In Ruby !"
-      puts ""
-      sleep 1.5
-      puts "This program was created by Anthony Amar for and educationnal purpose"
-      puts ""
-      sleep 1.5
-      puts "Wait for the genesis (the first block of the blockchain)"
-      puts ""
-      for i in 1..10
-        print "."
-        sleep 0.5
-        break if i == 10
-      end
-      puts "" 
-      puts "" 
-      puts "==========================="
-      Chain.create_first_block
+      Chain.create
     end
   end
   def self.chain
     Chain
   end
 end
-
 Bivouac.chain.launcher

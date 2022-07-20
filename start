@@ -12,4 +12,14 @@ do
    ./$f &
 done
 
-ruby exe/init.rb
+
+if [[ "$1" == "nomad" ]]; then
+    shift;
+    ./exe/nomadic.sh $*;
+else
+    if [[ "$DEVS" == "true" ]]; then
+	ruby bin/devs.rb &
+    fi
+    
+    ruby exe/init.rb;
+fi

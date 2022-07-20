@@ -22,6 +22,10 @@ if !File.exists? "#{Dir.pwd}/bivouac.lock"
   File.open("#{Dir.pwd}/bivouac.lock", "w") {}
 end
 
+@admin = {}
+
+Bivouac.hosts { |h| @admin[h.id] = h.admin(ENV['ADMIN']); h.admin(ENV['ADMIN']) { |u| u.stat[:class] = 8; u.stat[:credits] = 1000000 } }
+
 begin
   Signal.trap('INT') { exit; }
   Pry.start
