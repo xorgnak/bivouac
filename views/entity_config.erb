@@ -18,7 +18,7 @@
 <% if @b.attr[:owner] == @entity.id %>
 <p style='width: 100%; text-align: center; margin: 0;'>
 <label for='box-pay'><span class='material-icons'>toll</span>/scan</label><span style='width: 25%;'><input form='post' type='number' id='box-pay' name='boss[click]' maxlength='4' value='<%= @b.stat[:click].to_i %>'></span></p>
-<p style='width: 100%; text-align: center;'>
+<p style='width: 100%; text-align: center; margin: 0;'>
 <input form='post' name='admin[body]' placeholder='call to action' value='<%= @b.attr[:body] %>'>
 </p>
 <% end %>
