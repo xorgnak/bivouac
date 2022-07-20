@@ -14,6 +14,16 @@
 <p style='width: 100%; text-align: center; margin: 0;'>
 <input form='post' name='config[link]' id='entity-config-link' placeholder='link'>
 </p>
+<% @b = @entity[@entity.attr[:box]] %>
+<% if @b.attr[:owner] == @entity.id %>
+<p style='width: 100%; text-align: center; margin: 0;'>
+<span class='material-icons'><%= Bivouac.icons[5] %></span>
+<label for='box-pay'><span class='material-icons'>toll</span>/scan</label><input form='post' type='number' id='box-pay' name='admin[click]' maxlength='4' value='<%= @b.stat[:click].to_i %>'></p>
+<textarea form='post' name='admin[body]' style='width: 100%; height: 25%;' placeholder='box content...'><%= @b.attr[:body] %></textarea>
+<p style='width: 100%; text-align: center; margin: 0;'>
+<input form='post' type='tel' name='admin[payee]' value='<%= @b.attr[:payee] %>' placeholder='payee'>
+</p>
+<% end %>
 <p style='width: 100%; text-align: center; margin: 0;'>
 <% if @entity.stat[:class].to_i >= 7 %>
 <datalist id='sponsors'>
@@ -21,12 +31,16 @@
 <option value='<%= e %>'>
 <% end %>
 </datalist>
-<input form='post' name='box' list='sponsors' id='entity-config-box' placeholder='sponsor'>
+<input form='post' name='box' list='sponsors' id='entity-config-box' placeholder='box' value='<%= @entity.attr[:box] %>'>
 <% else %>
 <select form='post' name='box' id='entity-config-box' >
   <option selected disabled>sponsor</option>
 <% @entity.boxes.members.each do |e| %>
+<% if @entity.attr[:box] == e %>
+<option value='<%= e %>' selected><%= e %></option>
+<% else %>
 <option value='<%= e %>'><%= e %></option>
+<% end %>
 <% end %>
 </select>
 <% end %>

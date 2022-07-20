@@ -10,12 +10,12 @@ a { text-decoration: none; background-color: white; border: thick outset grey; }
 
 <div id='foot' style='position: fixed; bottom: 0; width: 100%; background-color: black; color: white;'>
 
-<%= erb Bivouac.form(@host.app[:magic]) %>
 <div id='magic' style='display: none;'>
 <%= erb :app_magic %>
 <h3 style='width: 100%; text-align: center;'><button form='post' name='do' value='app'>send</button></h3>
 </div>
-<div id='info' class='foot'><div id='log'></div></div>
+
+<div id='info' class='foot'><div id='body'><%= @box.attr[:body] || '<p>welcome.</p>' %></div><div id='log'></div></div>
 
 <div id='users' class='foot' style='max-height: 80%; overflow-y: scroll; display: none;'>
 <% @box.users.members.each do |usr| %>

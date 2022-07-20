@@ -30,7 +30,7 @@ module Bivouac
           @box = @entity[@params[:box]]
           @entity.attr[:box] = @params[:box]
           
-          if @params.has_key? :admin
+          if @params.has_key?(:admin)
             @params[:admin].each_pair {|k,v| if "#{v}".length > 0; @box.attr[k] = v; end }
           end
         end
@@ -93,10 +93,15 @@ module Bivouac
       end
     end
     def check u
-      if u.boxes > 0 && u.stat[:class].to_i < 1
+      if u.boxes.members.length > 0 && u.stat[:class].to_i < 1
         u.stat[:class] = 1
       end
-      
+      if u.stat[:xp] >= 10 && u.stat[:class] < 2
+        u.stat[:class] = 2
+      end
+      if u.stat[:karma] >= 100 && u.stat[:class] < 3
+        u.stat[:class] = 3
+      end
     end
     def path
       @path
