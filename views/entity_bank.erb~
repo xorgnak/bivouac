@@ -1,4 +1,4 @@
-<% @entity[@entity.attr[:box]].bank.acct.members(with_scores: true).to_h.each_pair do |k,v| %>
+<% @box.bank.acct.members(with_scores: true).to_h.each_pair do |k,v| %>
 <p style='width: 100%; margin: 0;'>
 <span style=''>
 <span class='material-icons'>toll</span>

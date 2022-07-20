@@ -56,9 +56,11 @@
     <%= erb :entity_job %>
   </div>
 
+  <% if @entity[@entity.attr[:box]].attr[:owner] == @entity.id %>
   <div id='bank' class='foot' style='display: none;'>
     <%= erb :entity_bank %>
   </div>
+  <% end %>
   
   <div class='foot' id='focus'>
   <div id='log' style='max-height: 30%; overflow-y: scroll;'></div>
