@@ -503,11 +503,13 @@ module Bivouac
     end
     def id; @id; end
     def [] u
+      if "#{u}".length > 0
       @host.boxes << u
       self.boxes << u
       uu = Box.new("#{@id}/#{u}")
       uu.users << @id
       return uu
+      end
     end
     def mk s, *k
       if k[0]
