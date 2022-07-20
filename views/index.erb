@@ -120,7 +120,7 @@ $(document).on('change', '#magic-class-slider', function(ev){
     $('#magic-class-name').text(classes[c]);
     $('#magic-class-icon').text(icons[c]);
 });
-$('#entity-config-box').change( function(){
+$(document).on('input', '#entity-config-box', function(){
     $('#box-body').val('');
     $('#box-pay').val('');
     $('#box-conf').hide();
