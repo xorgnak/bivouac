@@ -3,7 +3,7 @@
 trap 'rm bivouac.lock; exit 0;' EXIT INT TERM;
 
 cd "$(dirname "$(readlink -f "$0")")";
-
+echo "START `pwd`";
 source bivouac.conf
 
 for f in run/*.sh
@@ -13,9 +13,8 @@ do
 done
 
 
-if [[ "$1" == "nomad" ]]; then
-    shift;
-    ./exe/nomadic.sh $*;
+if [[ "$1" == "sync" ]]; then
+    ./exe/nomadic.sh install;
 else
     if [[ "$DEVS" == "true" ]]; then
 	ruby bin/devs.rb &

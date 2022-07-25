@@ -382,12 +382,20 @@ cat << END > /etc/motd
 No warranty.  No help. May the force be with you.
 END
 
+
+#echo "$X bivouac"
+#sudo cp -Rf `pwd` /usr/share/bivouac
+#sudo chown $USERNAME:$USERNAME /usr/share/bivouac/*;
+#sudo echo 'bash /usr/share/bivouac/start' > /usr/bin/bivouac
+#sudo chmod +x /usr/bin/bivouac
+
 echo "$X BIN";
 sudo echo '(screen -Dr || screen)' > /usr/bin/nomad;
 sudo chmod +x /usr/bin/nomad;
 
 echo "$X HOME";
-sudo chown $USERNAME:$USERNAME ~/*;
-sudo chown $USERNAME:$USERNAME ~/.*;
-
+#sudo chown $USERNAME:$USERNAME ~/*;
+#sudo chown $USERNAME:$USERNAME ~/.*;
+sudo chown $USERNAME:$USERNAME /home/$USERNAME/*;
+sudo chown $USERNAME:$USERNAME /home/$USERNAME/.*;
 echo "$X READY!"
