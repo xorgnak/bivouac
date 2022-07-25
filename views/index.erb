@@ -55,11 +55,13 @@
   <div id='job' class='foot' style='display: none;'>
     <%= erb :entity_job %>
   </div>
-
+  
+  <% if @entity.attr.has_key? :box %>
   <% if @entity[@entity.attr[:box]].attr[:owner] == @entity.id %>
   <div id='bank' class='foot' style='display: none;'>
     <%= erb :entity_bank %>
   </div>
+  <% end %>
   <% end %>
   
   <div class='foot' id='focus'>
