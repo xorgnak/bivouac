@@ -155,8 +155,12 @@ EOF
 	(echo "@reboot cd $here && ./start") | sudo crontab -
     fi
     echo "##### resetting file ownership to user...";
-    sudo chown $USER:$USER ~/*;
-    sudo chown $USER:$USER ~/.*;
+
+#    sudo chown root:root /;
+#    sudo chown root:root /*;
+    
+#    sudo chown $USER:$USER /home/$USER/*;
+#    sudo chown $USER:$USER /home/$USER/.*;
     
     echo "##### REBOOT TO RUN #####";
     echo "# v--- add to ~/.bashrc #";

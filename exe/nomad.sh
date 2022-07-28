@@ -396,6 +396,8 @@ sudo chmod +x /usr/bin/nomad;
 echo "$X HOME";
 #sudo chown $USERNAME:$USERNAME ~/*;
 #sudo chown $USERNAME:$USERNAME ~/.*;
-sudo chown $USERNAME:$USERNAME /home/$USERNAME/*;
-sudo chown $USERNAME:$USERNAME /home/$USERNAME/.*;
+#sudo chown root:root /
+#sudo chown root:root /*
+#sudo chown $USERNAME:$USERNAME /home/$USERNAME/*;
+#sudo chown $USERNAME:$USERNAME /home/$USERNAME/.*;
 echo "$X READY!"
