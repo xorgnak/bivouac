@@ -4,8 +4,8 @@ here=`pwd`;
 conf=bivouac.conf;
 
 
-DEBS='git screen ruby-full redis-server redis-tools build-essential nginx ngircd tor emacs-nox mosquitto python3 python3-pip git python3-pil python3-pil.imagetk golang pulseaudio pulseaudio-module-bluetooth alsa-base alsa-tools alsa-utils imagemagick';
-DEBS_HAM='soundmodem multimon-ng ax25-apps ax25-tools golang libopus0 libopus-dev libopenal-dev libconfig-dev libprotobuf-c-dev libssl-dev cmake autotools-dev autoconf libtool openssl';
+DEBS='git screen ruby-full redis-server redis-tools build-essential nginx ngircd tor emacs-nox mosquitto python3 python3-pip git python3-pil python3-pil.imagetk golang pulseaudio pulseaudio-module-bluetooth alsa-base alsa-tools alsa-utils imagemagick ruby-eventmachine';
+DEBS_HAM='soundmodem multimon-ng ax25-apps ax25-tools golang libopus0 libopus-dev libopenal-dev libconfig-dev libprotobuf-c-dev libssl-dev cmake autotools-dev autoconf libtool openssl ruby-espeak';
 DEBS_FUN='games-console tintin++ slashem';
 DEBS_GUI='xinit xwayland terminator chromium dwm mumble vlc mednafen mednaffe';
 DEBS_SSL='python-nginx-certbot certbot';
