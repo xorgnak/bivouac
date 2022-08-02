@@ -154,12 +154,7 @@ echo "[`hostname`] `uname -a`"
 source ~/.prompt
 function commit() {
 git add .
-TYPE=$(gum choose "fix" "feat" "docs" "style" "refactor" "test" "chore" "revert")
-SCOPE=$(gum input --placeholder "scope")
-test -n "\$SCOPE" && SCOPE="(\$SCOPE)"
-SUMMARY=$(gum input --value "\$TYPE\$SCOPE: " --placeholder "Summary of this change")
-DESCRIPTION=$(gum write --placeholder "Details of this change")
-git commit -m "\$SUMMARY" -m "\$DESCRIPTION"
+git commit -m "$(gum input --value "$(gum choose "progress" "bug" "milestone" "pretty" "docs" "debug") " --placeholder "Summary of this change")" -m "$(gum write --placeholder "Details of this change")"
 gum spin -s minidot --title='pushing...' git push
 }
 echo "commit -> push changes to the origin repo."
