@@ -154,6 +154,7 @@ echo "[`hostname`] `uname -a`"
 source ~/.prompt
 function commit() {
 git add . && git commit -m "$(gum input --value "$(gum choose "progress" "bug" "milestone" "pretty" "docs" "debug"): " --placeholder "summary...")" -m "$(gum input --placeholder "details..")" && git push
+git log -10 --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
 }
 echo "commit -> push changes to the origin repo."
 function token() { git remote set-url origin https://$1:$2@github.com/$1/`pwd`.git; }
