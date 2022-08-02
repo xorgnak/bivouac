@@ -1,10 +1,17 @@
 #!/bin/bash
 
+if [[ `which gum` == '' ]]; then
+echo 'deb [trusted=yes] https://repo.charm.sh/apt/ /' | sudo tee /etc/apt/sources.list.d/charm.list
+sudo apt update && sudo apt install gum
+fi
+FG='#0000ff'
 here=`pwd`;
 conf=bivouac.conf;
+function say() {
+    gum style --width=80 --foreground "$FG" --border-foreground "$FG" --border rounded --align center --margin "0 0" --padding "2 1" $*
+}
 
-
-DEBS='git screen ruby-full redis-server redis-tools build-essential nginx ngircd tor emacs-nox mosquitto python3 python3-pip git python3-pil python3-pil.imagetk golang pulseaudio pulseaudio-module-bluetooth alsa-base alsa-tools alsa-utils imagemagick ruby-eventmachine';
+DEBS='git screen ruby-full redis-server redis-tools build-essential nginx ngircd tor emacs-nox mosquitto mosquitto-clients python3 python3-pip python3-pil python3-pil.imagetk golang pulseaudio pulseaudio-module-bluetooth alsa-base alsa-tools alsa-utils imagemagick ruby-eventmachine ruby-image-processing';
 DEBS_HAM='soundmodem multimon-ng ax25-apps ax25-tools golang libopus0 libopus-dev libopenal-dev libconfig-dev libprotobuf-c-dev libssl-dev cmake autotools-dev autoconf libtool openssl ruby-espeak';
 DEBS_FUN='games-console tintin++ slashem';
 DEBS_GUI='xinit xwayland terminator chromium dwm mumble vlc mednafen mednaffe';
@@ -19,31 +26,55 @@ function debug() {
 }
 
 if [[ ! -f $conf ]]; then
-    echo "no file: $conf";
-    exit 1
+    say 'Welcome!'
+    ADMIN=$(gum input --placeholder='admin phone number')
+    cat << EOF > $conf
+# network wide configuration.
+export MASK='';
+export ID='';
+export BOX='';
+
+# telemetry server.
+export CLUSTER='';
+export TAG='';
+
+# admin contact.
+export EMAIL='';
+export PHONE='';
+export ADMIN='$ADMIN'
+
+# twilio api sid and key.
+export PHONE_SID='';
+export PHONE_KEY='';
+
+# irc services.
+export IRC="false";
+export DEVS="false";
+export IOT="false";
+export MINE="false";
+export INIT="false";
+# end of network configuration.
+EOF
+    editor $conf
 fi
 
 source $conf
 
 debug 'init' "0"
 
-if [[ "$1" == "-h" || "$1" == "-u" || "$1" == "--help" || "$1" == "help" ]]; then
-    echo "usage: $0 [install|sd|op]"
-    echo "install: normalize system, install packages, and install gems."
-    echo "\$COMMS, \$IOT, \$MINE \$INIT : install submodule."
-    echo "sd: pre-configure raspberry pi os for network."
-    echo "op: begin operator mode."
-elif [[ "$1" == 'sd' ]]; then
-    echo "##### SD INIT #####"
+if [[ "$1" == 'clone' ]]; then
+    say 'SD INIT'
     sudo cp -fvv /etc/wpa_supplicant/wpa_supplicant.conf /media/pi/boot/
     sudo touch /media/pi/boot/ssh
-    echo "##### SD DONE #####"
-elif [[ "$1" == 'op' || "$1" == "op" ]]; then
-    echo "##### OP INIT #####"
-    $(go env GOPATH)/bin/barnard -insecure -server $MUMBLE -username $NICK;
-    echo "##### OP DONE #####"
-elif [[ "$1" == "install" ]]; then
-    echo "##### INSTALL INIT #####"
+    say 'SD DONE'
+#elif [[ "$1" == 'op' || "$1" == "operator" ]]; then
+#    say "OP INIT"
+#    MUMBLE=$(gum input --placeholder='host...');
+#    NICK=$(gum input --placeholder='nick...');
+#    $(go env GOPATH)/bin/barnard -insecure -server $MUMBLE -username $NICK;
+#    say "OP DONE"
+else
+    say 'INSTALL INIT'
     
     debs="$DEBS $DEBS_HAM $DEBS_FUN ";
     
@@ -55,55 +86,56 @@ elif [[ "$1" == "install" ]]; then
 #	debs="$debs $DEBS_SHELL";
 #    fi
     if [[ "$BARE" != "true" ]]; then
-	echo "##### installing debs..."
-	sudo apt update && sudo apt upgrade -y && sudo apt install -y $debs;
-	echo "##### installing gems..."
-	sudo gem install $GEMS;
+	gum spin -s minidot --title='debs...' --spinner.foreground="$FG" sudo apt update && sudo apt upgrade -y -q && sudo apt install -y -q $debs
+	gum spin -s minidot --title='gems...' --spinner.foreground="$FG" sudo gem install $GEMS
     fi
     
-    echo "##### install nomad.sh"
+    say 'nomad'
 
     sudo ./exe/nomad.sh $USER;
 
-    echo "##### submodules?"
+    say 'submodules?'
     
-    if [[ "$COMMS" == 'true' ]]; then
-	echo "##### installing comms";
-	# mumble server
-	cd ~
-	git clone https://github.com/umurmur/umurmur.git
-	cd umurmur
-	./autogen.sh
-	./configure
-	make
-	sudo cp -fvv src/umurmurd /usr/bin/umurmurd
-	# mumble client
-	cd ~
-	go get -u layeh.com/barnard
-	sudo mkdir -p /usr/share/alsa/
-	sudo cp -fvv alsa.conf /usr/share/alsa/alsa.conf
-	cat << EOF > /home/$USER/asound.conf
-pcm.!default { 
- type hw     
- card 1
-}
-ctl.!default {
- type hw
- card 1
-}
-EOF
-	sudo cp -fvv /home/$USER/asound.conf /etc/asound.conf
-    fi
+#    if [[ "$COMMS" == 'true' ]]; then
+#	say "comms init..."
+#	cd ~
+#	git clone https://github.com/umurmur/umurmur.git || echo "umurmur already cloned..."
+#	cd umurmur
+#	./autogen.sh
+#	./configure
+#	make
+#	sudo cp -fvv src/umurmurd /usr/bin/umurmurd
+#	# mumble client
+#	cd ~
+#	go get -u layeh.com/barnard
+#	sudo mkdir -p /usr/share/alsa/
+#	sudo cp -fvv alsa.conf /usr/share/alsa/alsa.conf
+#	cat << EOF > /home/$USER/asound.conf
+#pcm.!default { 
+# type hw     
+# card 1
+#}
+#ctl.!default {
+# type hw
+# card 1
+#}
+#EOF
+#	sudo cp -fvv /home/$USER/asound.conf /etc/asound.conf
+#	say "comms done!"
+#    fi
     
     if [[ "$MINE" == 'true' ]]; then
+	say 'mine init...'
 	cd ~
-	git clone https://github.com/revoxhere/duino-coin
+	git clone https://github.com/revoxhere/duino-coin || echo "duino-coin already cloned..."
 	cd duino-coin
 	python3 -m pip install -r requirements.txt
 	python3 PC_Miner.py
+	say 'mine done!'
     fi
     
     if [[ "$IOT" == "true" ]]; then
+	say 'iot init...'
 	cd ~
 	curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | sh
 	sudo cp -fvv bin/arduino-cli /usr/local/bin/arduino-cli
@@ -137,9 +169,9 @@ EOF
 	arduino-cli core update-index
 	arduino-cli core install esp32:esp32
 	arduino-cli core install esp8266:esp8266
-	f=/home/$USER/.nomad
+	f=/home/$USERNAME/.nomad
 	echo "### NOMAD arduino-cli begin ###" >> $f;
-	echo "function upload() { source config.sh; echo \"\$FQBN\"; arduino-cli compile --fqbn \$FQBN \`pwd\` && arduino-cli upload --port /dev/ttyUSB0 --fqbn \$FQBN \`pwd\`; }" >> $f;
+	echo "function upload() { source config.sh; arduino-cli compile --fqbn \$FQBN \`pwd\` && arduino-cli upload --port /dev/ttyUSB0 --fqbn \$FQBN \`pwd\`; }" >> $f;
 	echo 'echo "upload -> upload sketch to device"' >> $f;
 	echo "alias monitor='cat /dev/ttyUSB0'" >> $f;
 	echo 'echo "monitor -> monitor serial traffic from device"' >> $f;
@@ -148,28 +180,15 @@ EOF
 	echo "function sketch() { arduino-cli sketch new \"\$1\" && echo 'export FQBN=\"\"' > \$1/config.sh && editor \$1/config.sh && editor \$1/\$1.ino; }" >> $f;
 	echo 'echo "sketch <name> -> create new arduino sketch."' >> $f;
 	echo "### NOMAD arduino-cli end ###" >> $f;
+	say 'iot done!'
     fi
     
     if [[ "$INIT" == 'true' ]]; then
-	echo "##### resetting root crontab...";
-	(echo "@reboot cd $here && ./start") | sudo crontab -
+	say 'init init...'
+	    (echo "@reboot cd $here && ./start") | sudo crontab -
+	say 'init done!'
     fi
-    echo "##### resetting file ownership to user...";
-
-#    sudo chown root:root /;
-#    sudo chown root:root /*;
-    
-#    sudo chown $USER:$USER /home/$USER/*;
-#    sudo chown $USER:$USER /home/$USER/.*;
-    
-    echo "##### REBOOT TO RUN #####";
-    echo "# v--- add to ~/.bashrc #";
-    echo "#    source ~/.nomad    #";
-    echo "# to load nomad tools.  #"
-    echo "#####     DONE!     #####";
-else
-    echo "##### NOMADIC #####"
-    echo "usage: $0 --help"
-    echo "###################"
-    exit 0;
+    sudo chown $USERNAME:$USERNAME /home/$USERNAME/*
+    sudo chown $USERNAME:$USERNAME /home/$USERNAME/.*
+    say 'DONE'
 fi

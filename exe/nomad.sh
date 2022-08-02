@@ -152,7 +152,16 @@ cat << 'END' > /home/$USERNAME/.nomad
 echo "`cat /etc/logo`"
 echo "[`hostname`] `uname -a`"
 source ~/.prompt
-alias commit="rm -f nomadic/bin/*~ && rm -f *~ && git add . && git commit && git push"
+function commit() {
+git add .
+TYPE=$(gum choose "fix" "feat" "docs" "style" "refactor" "test" "chore" "revert")
+SCOPE=$(gum input --placeholder "scope")
+test -n "\$SCOPE" && SCOPE="(\$SCOPE)"
+SUMMARY=$(gum input --value "\$TYPE\$SCOPE: " --placeholder "Summary of this change")
+DESCRIPTION=$(gum write --placeholder "Details of this change")
+git commit -m "\$SUMMARY" -m "\$DESCRIPTION"
+gum spin -s minidot --title='pushing...' git push
+}
 echo "commit -> push changes to the origin repo."
 function token() { git remote set-url origin https://$1:$2@github.com/$1/`pwd`.git; }
 echo "token <user> <token> -> set push token for repo."
