@@ -293,7 +293,7 @@ location / {
     }
 } 
 ";
-if [[ "$DOMAIN_ROOT" == "" ]]; then
+if [[ "$DOMAINS" == "" ]]; then
     SSL=$ssn;
 else
     SSL=$sss;
