@@ -82,6 +82,19 @@ module Bivouac
           @host.map[@target][@params[:box]].visitors.incr(@params[:entity])
         end
       end
+
+      if @params.has_key? :target
+        @tgt = Bivouac.target(@params[:target])
+        if @params.has_key? :config
+          @params[:config].each_pair { |k,v| @tgt.attr[k] = v }
+        end
+        if @params.has_key? :entity
+          @host[@params[:entity]].targets << @tgt.id
+          if @params.has_key? :box
+            @host[@params[:entity]][@params[:box]].targets << @tgt.id
+          end
+        end
+      end
       
       if @params.has_key? :do
         if @params[:do] == 'save'
@@ -96,6 +109,8 @@ module Bivouac
         elsif @params[:do] == 'app'
           u = @host[@host.qri[@params[:qri]]]
           @goto = "#{@goto}/#{@params[:qri]}/#{@params[:box] || u.attr[:box]}"
+        elsif @params[:do] == 'target'
+          @goto = "#{@goto}/t?target=#{@params[:target]}"
         end
       end
     end

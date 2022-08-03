@@ -145,7 +145,31 @@ module Bivouac
     end
     def id; @id; end
   end
-  
+  class Target
+    include Redis::Objects
+    hash_key :attr
+    sorted_set :stat
+    sorted_set :inv
+    sorted_set :usage
+    set :users
+    set :boxes
+    set :tracks
+    set :waypoints
+    set :hosts
+    def initialize i
+      @id = i
+    end
+    def id; @id; end
+  end
+  def self.target *t
+    if t[0]
+      @t = t[0]
+    else
+      tt = []; 16.times { tt << rand(16).to_s(16) }
+      @t = tt.join('');
+    end
+    Target.new(@t)
+  end
   class Track
     include Redis::Objects
     hash_key :attr
@@ -158,7 +182,7 @@ module Bivouac
     sorted_set :visitors
     sorted_set :contributors
     sorted_set :maintainers
-    
+    set :targets
     def initialize i
       @id = i
     end
@@ -173,6 +197,13 @@ module Bivouac
       self.waypoints << waypoint
       self.visits.incr(waypoint)
     end
+    def target
+      @t = Bivouac.target(@id)
+      @t.tracks << @id
+      self.targets << @t.id
+      @t.usage.incr(@id)
+      return @t
+    end
   end
  
   class Waypoint
@@ -183,6 +214,7 @@ module Bivouac
     sorted_set :froms
     sorted_set :tos
     set :tracks
+    set :targets
     def initialize i
       @id = i
     end
@@ -197,9 +229,14 @@ module Bivouac
       a = Track.new(t)
       a << @id
       return a
-    end 
+    end
+    def target
+      @t = Bivouac.target(@id)
+      @t.waypoints << @id
+      @t.usage.incr(@id)
+      return @t
+    end
   end
-
   # MAP[host][waypoint][track]
   module MAP
     def self.[] k
@@ -233,7 +270,7 @@ module Bivouac
     set :votes
     set :contests
     set :users
-
+    set :targets
     
     def initialize i
       @auths = Bivouac.auths(i)
@@ -381,6 +418,14 @@ module Bivouac
     def [] b
       user b
     end
+    def target
+      @t = Bivouac.target(@id)
+      @t.hosts << @id
+      self.targets << @t.id
+      @t.usage.incr(@id)
+      return @t
+    end
+    
     def user b 
       if /.+@.+/.match(b)
         self.users << b
@@ -444,6 +489,7 @@ module Bivouac
     sorted_set :stat
     # box 
     set :webs
+    set :targets
     def initialize i
       ix = i.split('@')
       ih = ix[1].split('/')
@@ -461,6 +507,17 @@ module Bivouac
       Bank.new(@id)
     end
     def id; @id; end
+    def target
+      @t = Bivouac.target(@id)
+      Bivouac[@host].targets << @t.id
+      Bivouac[@host][@user].targets << @t.id
+      self.targets << @t.id
+      @t.hosts << @host
+      @t.users << @user
+      @t.boxes << @id
+      @t.usage.incr(@id)
+      return @t
+    end
   end
   
   class User
@@ -499,6 +556,7 @@ module Bivouac
     set :ivs
     # visitors
     set :visitors
+    set :targets
     def initialize i
       if "#{i}".length > 0
         @id = i
@@ -533,6 +591,12 @@ module Bivouac
         uu.users << @id
         return uu
       end
+    end
+    def target
+      @t = Bivouac.target(@id)
+      @t.users << @id
+      @t.usage.incr(@id)
+      return @t
     end
     def mk s, *k
       if k[0]

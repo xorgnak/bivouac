@@ -58,6 +58,14 @@ module Bivouac
     get('/manifest.webmanifest') { erb :manifest, layout: false }
     get('/robots.txt') {}
     get('/info') { erb :info }
+    
+    get('/t') {
+      if params.has_key?(:target);
+        @target = Bivouac.target(params[:target]);
+      end;
+      erb :target
+    }
+    
     get('/:qri') {
       @entity = @host[@host.qri[params[:qri]]];
       @visitor = visitor(@entity.id);
@@ -76,9 +84,13 @@ module Bivouac
       @box.traffic.incr(@entity.id);
       erb :app
     }
+
     post('/') { b = Bivouac::Post.new(request, params); redirect b.goto }
+    
     post('/auth') { b = Bivouac::Auth.new(request, params); redirect b.goto }
+
     post('/box') { b = Bivouac::Remote.new(@path, request, params); redirect b.goto }
+
     post('/:qri') {
       content_type 'application/json'
       b = Bivouac::Post.new(request, params)

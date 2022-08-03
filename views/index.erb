@@ -52,6 +52,10 @@
     <%= erb :entity_badge %>
   </div>
 
+  <div id='targets' class='foot' style='display: none;'>
+    <%= erb :entity_targets %>
+  </div>
+
   <div id='job' class='foot' style='display: none;'>
     <%= erb :entity_job %>
   </div>
@@ -88,6 +92,8 @@ $(function() {
 $('.foot').hide();
 $('#login').show();
 <% elsif params.has_key?(:entity) %>
+          <%# erb :mqtt %>
+          <%= erb :scan %>
 $('#qrcode').qrcode('<%= @qr.badge(@entity.id) %>');
 $('#entity-config-box').val('<%= @entity.attr[:box] %>');
 $('#entity-config-phone').val('<%= @entity.attr[:phone] %>');

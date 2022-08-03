@@ -1,0 +1,29 @@
+<% if params.has_key? :target %>
+
+<h3 style='margin: 0; width: 100%; text-align: center;'>
+  <span><%= @target.attr[:name] %></span>
+</h3>
+
+<div id='qrcode-wrap' style='width: 100%; text-align: center;'>
+<div id='qrcode' style='padding: 2%; background-color: white;'></div>
+</div>
+<p style='margin: 0; width: 100%; text-align: center;'>
+  <span><%= @target.attr[:desc] %></span>
+</p>
+<script>
+$('#qrcode').qrcode('<%= @host.pre %>://<% @host.host %>/t?target=<%= @target.id %>');
+</script>
+<% else %>
+<% @tgt = Bivouac.target %>
+<input form='post' type='hidden' name='target' value='<%= @tgt.id %>'>
+<h1 style='width: 100%; text-align: center; margin: 0;'>
+<input form='post' name='config[name]' placeholder='name'>
+</h1>
+<h1 style='width: 100%; text-align: center; margin: 0;'>
+<input form='post' name='config[desc]' placeholder='desc'>
+</h1>
+<h1 style='width: 100%; text-align: center; margin: 0;'>
+<button form='post' type='submit' name='do' value='target'>save</button>
+</h1>
+<% end %>
+

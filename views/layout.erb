@@ -33,8 +33,6 @@ body { margin: 0; padding: 0; font-family: '<%= @host.env[:font] || "monospace" 
   var icons = <%= JSON.generate(Bivouac.icons) %>;
   function log(j) { console.log(j.message); $('#log').append('<p><span class="material-icons">' + j.icon + '</span>' + j.message + '</p>') }
   $(function() {
-	  <%# erb :mqtt %>
-          <%= erb :scan %>
 	  $(document).on('click', '.tog', function(ev) {
 	      ev.preventDefault();
 	      $('.foot').hide();
@@ -53,7 +51,12 @@ body { margin: 0; padding: 0; font-family: '<%= @host.env[:font] || "monospace" 
 <form id='post' action='/' method='POST'></form>
 <form id='auth' action='/auth' method='POST'></form>
 <form id='form'>
-<input type='hidden' form='post' id='entity' name='entity' value='<%= params[:entity] || @entity.id %>'>
+  <% if @entity || params.has_key?(:entity) %>
+  <input type='hidden' form='post' id='entity' name='entity' value='<%= params[:entity] || @entity.id %>'>
+  <% end %>
+  <% if @box || params.has_key?(:box) %>
+    <input type='hidden' form='post' id='entity' name='entity' value='<%= params[:box] || @box.id %>'>
+  <% end %>
 <%= yield %>
 </form>
 </body></html>
