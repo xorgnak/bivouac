@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source bivouac.conf
+
 if [[ "$1" == "" ]]; then
     echo "usage: $0 \$USERNAME";
     exit;
