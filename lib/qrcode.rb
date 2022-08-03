@@ -3,6 +3,8 @@ module Bivouac
     def initialize h
       if "#{ENV['MASK']}".length > 0
         @host = Bivouac[ENV['MASK']]
+      elsif "#{Bivouac[h].env[:mask]}".length > 0
+        @host = Bivouac[Bivouac[h].env[:mask]]
       else
         @host = Bivouac[h]
       end

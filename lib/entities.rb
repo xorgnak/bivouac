@@ -237,12 +237,29 @@ module Bivouac
     
     def initialize i
       @auths = Bivouac.auths(i)
-      @id = i
-      if /\d+.\d+.\d+.\d+/.match(i) || /.onion/.match(i) || i == 'localhost'
-        @pre = 'http'
+      @pre = 'http'
+      @host = i
+      @id = 'localhost'
+      @is = Hash.new {|h,k| h[k] = false }
+      if /\d+.\d+.\d+.\d+/.match(i)
+        @is[:local] = true
+      elsif /.onion/.match(i)
+        @is[:local] = true
+        @is[:onion] = true
+      elsif i == 'localhost'
+        @is[:local] = true
       else
+        @is[:remote] =  true
         @pre = 'https'
+        @id = @host
       end
+      @auths = Bivouac.auths(@id)
+    end
+    def host
+      @host
+    end
+    def is
+      @is
     end
     def badges
     {

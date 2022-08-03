@@ -85,8 +85,12 @@ module Bivouac
       
       if @params.has_key? :do
         if @params[:do] == 'save'
-          @params[:app].each_pair {|k,v| if "#{v}".length > 0; @host.app[k] = v; end }
-          @params[:env].each_pair {|k,v| if "#{v}".length > 0; @host.env[k] = v; end }
+          if @params.has_key? :app
+            @params[:app].each_pair {|k,v| if "#{v}".length > 0; @host.app[k] = v; end }
+          end
+          if @params.has_key? :env
+            @params[:env].each_pair {|k,v| if "#{v}".length > 0; @host.env[k] = v; end }
+          end
         elsif @params[:do] == 'zap' || @params[:do] == 'update'
           @goto = "#{@goto}/?entity=#{@params[:entity]}"
         elsif @params[:do] == 'app'

@@ -1,5 +1,3 @@
-require 'redis-objects'
-require 'mqtt'
 MQTT::Client.connect('vango.me') do |client|
   # If you pass a block to the get method, then it will loop
   client.get(`hostname`.chomp.upcase) do |topic,message|

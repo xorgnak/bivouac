@@ -1,7 +1,8 @@
 log "STARTUP", :Startup
-
-@host = Bivouac['192.168.146.52']
-@usr = @host['481588e5f4a8ad72@192.168.60.52']
+@hosts = {}
+`hostname -I`.chomp.split(' ').each { |e| if "#{e}".length > 0; @hosts[e] = Bivouac[e]; end }
+@admins = {}
+Bivouac.hosts {|h| puts "host: #{h.id}"; @admins[h.id] = h.admin(ENV['ADMIN']) }
 def doit *n
   if n[0]
     t = n[0]

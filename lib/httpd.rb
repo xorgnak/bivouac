@@ -42,11 +42,16 @@ module Bivouac
       @host.at[@now] = @mark
       @host.dx[@mark] = @now
     end
+    
     get('/') {
       @id = user(params[:entity])
       @map = @host.map[@id]
       @entity = @host[@id]
-      erb :index
+      if @host.is[:remote] == true 
+        erb :index
+      else
+        erb :local
+      end
     }
     get('/favicon.ico') {}
     get('/service-worker.js') { @entity = @host[params[:entity]]; erb :service_worker, layout: false }

@@ -1,0 +1,11 @@
+<% if params.has_key? :entity %>
+  <button class='tog material-icons' value='focus' style='color: orange;'>center_focus_weak</button>
+  <% if @host.is[:onion] == false %>
+    <button class='tog material-icons' value='onion'>qr_code</button>
+  <% end %>
+  <button class='tog material-icons' value='devs'>devices_other</button>
+<% else %>
+  <% if !params.has_key?(:cha) && !params.has_key?(:set) %>
+     <button class='tog material-icons' value='login'>login</button>
+  <% end %>
+<% end %>

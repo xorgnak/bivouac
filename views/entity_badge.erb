@@ -7,6 +7,10 @@
 </h3>
 <% end %>
 
+<p style='width: 100%; text-align: center; margin: 0;'>
+  <input style='font-size: xx-small; width: 95%;; text-align: center;' value='<%= @entity.attr[:qr] %>' disabled>
+</p>
+
 <h3 style='width: 100%; text-align: center; margin: 0;'>
 <span><%= @entity.attr[:title] || Bivouac.classes[@entity.stat[:class].to_i] %></span>
 </h3>

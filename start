@@ -3,26 +3,35 @@
 trap 'rm bivouac.lock; exit 0;' EXIT INT TERM;
 
 cd "$(dirname "$(readlink -f "$0")")";
-echo "START `pwd`";
 
 if [[ ! -e bivouac.conf ]]; then
+    say "NOT READY..."
     ./exe/nomadic.sh install;
 fi
 
+FG='#ff0000';
+function say() {
+    gum style --width=20 --foreground "$FG" --border-foreground "$FG" --border rounded --align center --margin "0 0" --padding "0 0" $*;
+}
+
+say "READY!"
+
 source bivouac.conf
+
+say "SET"
 
 for f in run/*.sh
 do
-   [ -e "$f" ] || continue
+    [ -e "$f" ] || continue
+    say "$f"
    ./$f &
 done
 
 
 if [[ "$1" != "" ]]; then
+    say "NOMAD..."
     ./exe/nomadic.sh $*;
 else
-    if [[ "$DEVS" == "true" ]]; then
-	ruby bin/devs.rb &
-    fi
+    say "GO!"
     ruby exe/init.rb;
 fi

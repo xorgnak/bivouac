@@ -5,6 +5,7 @@
   'redis-objects',
   'sinatra/base',
   'paho-mqtt',
-  'cinch'
+  'cinch',
+  'mqtt'
 #  'twilio-ruby'
 ].each { |lib| require lib }

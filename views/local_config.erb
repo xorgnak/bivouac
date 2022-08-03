@@ -1,0 +1,32 @@
+<style>
+  form { background-color: white; color: black; }
+  .pill { background-color: black; color: white; padding: 0 2% 0 2%; border-radius: 50px; }
+  div > p { padding: 0; width: 100%; text-align: center; }
+  div > textarea { width: 100%; height: 33vh; }
+</style>
+
+<div id='index_config'>
+  <p><input form='post' name='env[mask]' placeholder='mask' value='<%= @host.env[:mask] %>'></p>
+  <p><input form='post' name='env[id]' placeholder='id' value='<%= @host.env[:id] %>'></p>
+  <p><input form='post' name='env[box]' placeholder='box' value='<%= @host.env[:box] %>'></p>
+  <p>
+    <select form='post' name='env[font]' class='pill'>
+      <option value='monospace' selected>monospace</option>
+      <option value='serif'>serif</option>
+      <option value='sans-serif'>sans-serif</option>
+      <option value='cursive'>cursive</option>
+      <option value='fantasy'>fantasy</option>
+    </select>
+  </p>
+</div>
+
+<!-- lock and save -->
+<div>
+  <p>
+    <input form='post' id='has_lock' type='checkbox' name='env[locked]' checked>
+    <label for='has_lock'><span class='material-icons'>lock</span>lock</label>
+  </p>
+  <p style='width: 100%; text-align: center;'>
+    <button form='post' name='do' value='save'>SAVE</button>
+  </p>
+</div>

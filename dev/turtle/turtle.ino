@@ -15,7 +15,7 @@
 *********/
 
 #include "esp_camera.h"
-#include <WiFi.h>
+#include "WiFi.h"
 #include <PubSubClient.h>
 #include "esp_timer.h"
 #include "img_converters.h"
@@ -28,8 +28,9 @@
 static volatile bool wifi_connected = false;
 
 String userid;
-String addr;
-
+String id;
+String addr4;
+String addr6;
 #define LED_BUILTIN 33
 
 WiFiClient espClient;
@@ -93,9 +94,6 @@ void mqttCallback(char* topic, byte* message, unsigned int length) {
 
 
 void wifiOnConnect(){
-  Serial.println("STA Connected");
-  Serial.print("STA IPv4: ");
-  Serial.println(WiFi.localIP());
   mqttReconnect();
 }
 
@@ -106,43 +104,34 @@ void wifiOnDisconnect(){
 }
 
 void wifiConnectedLoop(){
-
+  if(wifi_connected){
+    if (!client.connected()) {
+      mqttReconnect();
+    }
+    client.loop();
+  }
 }
 
 void WiFiEvent(WiFiEvent_t event){
   switch(event) {
 
-  case ARDUINO_EVENT_WIFI_AP_START:
-    //can set ap hostname here
-    WiFi.softAPsetHostname("turtle");
-    //enable ap ipv6 here
-    WiFi.softAPenableIpV6();
-    break;
-
-  case ARDUINO_EVENT_WIFI_STA_START:
-    //set sta hostname here
-    WiFi.setHostname("turtle");
-    break;
-  case ARDUINO_EVENT_WIFI_STA_CONNECTED:
-    //enable sta ipv6 here
+  case SYSTEM_EVENT_STA_CONNECTED:
     WiFi.enableIpV6();
     break;
-  case ARDUINO_EVENT_WIFI_STA_GOT_IP6:
-    //    addr = WiFi.localIPv6().toString();
-    break;
-  case ARDUINO_EVENT_WIFI_AP_GOT_IP6:
-    Serial.print("AP IPv6: ");
-    Serial.println(WiFi.softAPIPv6());
-    break;
-  case ARDUINO_EVENT_WIFI_STA_GOT_IP:
+
+  case SYSTEM_EVENT_AP_STA_GOT_IP6:
+    Serial.print("GOT IPv6: ");
+    Serial.println(WiFi.localIPv6());
+    delay(2000);
     wifiOnConnect();
-    //    addr = WiFi.localIP().toString();
     wifi_connected = true;
     break;
-  case ARDUINO_EVENT_WIFI_STA_DISCONNECTED:
+
+  case SYSTEM_EVENT_STA_DISCONNECTED:
     wifi_connected = false;
     wifiOnDisconnect();
     break;
+  
   default:
     break;
   }
@@ -241,9 +230,13 @@ void mqttReconnect() {
       Serial.println("connected");
       // Subscribe
       client.subscribe(userid.c_str());
-      char o[32];
-      addr = WiFi.localIP().toString();
-      sprintf(o, "%s %s", userid.c_str(), addr.c_str());
+      char o[127];
+      addr4 = WiFi.localIP().toString();
+      addr6 = WiFi.localIPv6().toString();
+      sprintf(o, "%s %s %s", id.c_str(), addr4.c_str(), addr6.c_str());
+      Serial.print(HUB);
+      Serial.print(" <-- ");
+      Serial.println(o);
       client.publish(HUB, o);
     } else {
       Serial.print("failed, rc=");
@@ -267,17 +260,17 @@ void setupUserId() {
 
 void setup() {
   WRITE_PERI_REG(RTC_CNTL_BROWN_OUT_REG, 0); //disable brownout detector
-  
   Serial.begin(115200);
 
   setupUserId();
-  
+  char idi[15];
+  sprintf(idi, "turtle-%s", userid.c_str());
+  id = String(idi);
   pinMode(4, OUTPUT);
   pinMode(LED_BUILTIN, OUTPUT);
 
-  Serial.print("INIT!");
+  Serial.println("INIT!");
   Serial.setDebugOutput(false);
-  Serial.print("OKAY!");
 
   camera_config_t config;
   config.ledc_channel = LEDC_CHANNEL_0;
@@ -318,10 +311,10 @@ void setup() {
   }
 
 
-  Serial.print("wifi...");
+  Serial.println("wifi...");
   // Wi-Fi connection
   WiFi.disconnect(true);
-  WiFi.setHostname("turtle");
+  WiFi.setHostname(id.c_str());
   WiFi.onEvent(WiFiEvent);
   WiFi.mode(WIFI_MODE_STA);
   WiFi.begin(ssid, password);
@@ -330,25 +323,15 @@ void setup() {
     delay(500);
     Serial.print(".");
   }
-
-  WiFi.softAP(ssid, password);
   
   Serial.println("mqtt...");
   client.setServer(broker, 1883);
   client.setCallback(mqttCallback);
-  mqttReconnect();
-
-  Serial.print("Camera Stream Ready!");
+  
   startCameraServer();
 }
 
 void loop() {
-  if(wifi_connected){
-    if (!client.connected()) {
-      mqttReconnect();
-    }
-    client.loop();
-    wifiConnectedLoop();
-  }
+  wifiConnectedLoop();
   delay(1);
 }

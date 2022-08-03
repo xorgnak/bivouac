@@ -158,6 +158,19 @@ git add . && git commit -m "$(gum input --value "$(gum choose "progress" "bug" "
 echo "commit -> push changes to the origin repo."
 function token() { git remote set-url origin https://$1:$2@github.com/$1/`pwd`.git; }
 echo "token <user> <token> -> set push token for repo."
+function todo() {
+if [[ "$1" != "" ]]; then
+  echo "task type"
+  type=$(gum choose "fix" "bug" "self" "work" "buy" "sell");
+  echo "[ ][$type] $1" >> todo.txt;
+  echo "tasks"
+  cat todo.txt | gum format
+else
+  task=$(cat todo.txt | gum filter);
+  gum input --placeholder="update..." --value="$task -> " >> todo.txt;
+fi
+}
+echo "todo [task] -> task management.";
 echo "nomad -> connect."
 ##### NOMADIC end #####
 END
@@ -236,9 +249,9 @@ chmod +x /usr/bin/leah
 echo "$X DEVS"
 CAMS="";
 SSL="";
-for c in `redis-cli hkeys DEVS`
+for c in `redis-cli hkeys DEVICES`
 do
-    CAMS+="location /$c { proxy_pass http://`redis-cli hget CAMS $c`; }\n"
+    CAMS+="`redis-cli hget DEVICES $c`";
 done
 sss="server {
     listen 80 default_server;
@@ -250,7 +263,7 @@ server {
   listen [::]:443;
   server_name $DOMAINS;
   location / {
-    proxy_pass http://localhost:4567;                                                                        
+    proxy_pass http://localhost:4567; 
     proxy_set_header Host \$host;
     proxy_redirect http://localhost:4567 https://\$uri;
   }
@@ -262,27 +275,25 @@ server {
   ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
 }";
 ssn="server {
-listen 80;                                                                                                   
-listen [::]:80;                                                                                              
-listen unix:/var/run/nginx.sock;                                                                             
+listen 80;                                                                                       
+listen [::]:80;
 server_name localhost `hostname`.local `sudo cat /var/lib/tor/nomad/hostname`;
-
-### devices                                                                                                  
-`echo -e $CAMS`                                                                                              
+### devices
+`echo -e $CAMS`
 ###
 location / { 
-          proxy_pass_header  Set-Cookie;                                                                     
-          proxy_set_header   Host               \$host;                                                      
-          proxy_set_header   X-Real-IP          \$remote_addr;                                               
-          proxy_set_header   X-Forwarded-Proto  \$scheme;                                                    
-          proxy_set_header   X-Forwarded-For    \$proxy_add_x_forwarded_for;                                 
+          proxy_pass_header  Set-Cookie;                             
+	  proxy_set_header   Host               \$host;  
+          proxy_set_header   X-Real-IP          \$remote_addr;
+          proxy_set_header   X-Forwarded-Proto  \$scheme;
+          proxy_set_header   X-Forwarded-For    \$proxy_add_x_forwarded_for;
           proxy_pass http://127.0.0.1:4567/;
 	  proxy_redirect http://localhost:4567 https://\$uri;    
-          proxy_buffering off;                                                                               
-    }                                                                                                        
+          proxy_buffering off;
+    }
 } 
 ";
-if [[ "$BOX" == "true" ]]; then
+if [[ "$DOMAIN_ROOT" == "" ]]; then
     SSL=$ssn;
 else
     SSL=$sss;
@@ -332,12 +343,13 @@ echo "$X TOR"
 sudo cat << END > /etc/tor/torrc
 #nomad
 HiddenServiceDir /var/lib/tor/nomad/
-HiddenServicePort 80 unix:/var/run/nginx.sock
+HiddenServicePort 80 127.0.0.1:80
 HiddenServicePort 6667 127.0.0.1:6667
 HiddenServicePort 4321 127.0.0.1:4321
 HiddenServicePort 64738 127.0.0.1:64738
 END
 sudo service tor restart
+redis-cli set ONION `sudo cat /var/lib/tor/nomad/hostname`
 
 echo "$X ICON"
 cat << END > /etc/icon

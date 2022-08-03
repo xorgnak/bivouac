@@ -8,7 +8,7 @@ FG='#0000ff'
 here=`pwd`;
 conf=bivouac.conf;
 function say() {
-    gum style --width=80 --foreground "$FG" --border-foreground "$FG" --border rounded --align center --margin "0 0" --padding "2 1" $*
+    gum style --width=20 --foreground "$FG" --border-foreground "$FG" --border rounded --align center --margin "0 0" --padding "0 0" $*;
 }
 
 DEBS='git screen ruby-full redis-server redis-tools build-essential nginx ngircd tor emacs-nox mosquitto mosquitto-clients python3 python3-pip python3-pil python3-pil.imagetk golang pulseaudio pulseaudio-module-bluetooth alsa-base alsa-tools alsa-utils imagemagick ruby-eventmachine ruby-image-processing';
@@ -28,6 +28,9 @@ function debug() {
 if [[ ! -f $conf ]]; then
     say 'Welcome!'
     ADMIN=$(gum input --placeholder='admin phone number')
+    DOMAINS=$(gum input --placeholder='domains to host')
+    CLUSTER=$(gum input --placeholder='telemetry host')
+    TAG=$(gum input --placeholder='network tag')
     cat << EOF > $conf
 # network wide configuration.
 export MASK='';
@@ -35,13 +38,16 @@ export ID='';
 export BOX='';
 
 # telemetry server.
-export CLUSTER='';
-export TAG='';
+export CLUSTER='$CLUSTER';
+export TAG='$TAG';
+
+# hosting
+export DOMAINS='$DOMAINS';
 
 # admin contact.
 export EMAIL='';
 export PHONE='';
-export ADMIN='$ADMIN'
+export ADMIN='$ADMIN';
 
 # twilio api sid and key.
 export PHONE_SID='';
@@ -169,7 +175,7 @@ EOF
 	arduino-cli core update-index
 	arduino-cli core install esp32:esp32
 	arduino-cli core install esp8266:esp8266
-	f=/home/$USERNAME/.nomad
+	f=/home/$USER/.nomad
 	echo "### NOMAD arduino-cli begin ###" >> $f;
 	echo "function upload() { source config.sh; arduino-cli compile --fqbn \$FQBN \`pwd\` && arduino-cli upload --port /dev/ttyUSB0 --fqbn \$FQBN \`pwd\`; }" >> $f;
 	echo 'echo "upload -> upload sketch to device"' >> $f;
@@ -188,7 +194,7 @@ EOF
 	    (echo "@reboot cd $here && ./start") | sudo crontab -
 	say 'init done!'
     fi
-    sudo chown $USERNAME:$USERNAME /home/$USERNAME/*
-    sudo chown $USERNAME:$USERNAME /home/$USERNAME/.*
+    sudo chown $USER:$USER /home/$USER/*
+    sudo chown $USER:$USER /home/$USER/.*
     say 'DONE'
 fi
