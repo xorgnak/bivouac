@@ -55,7 +55,7 @@ body { margin: 0; padding: 0; font-family: '<%= @host.env[:font] || "monospace" 
   <input type='hidden' form='post' id='entity' name='entity' value='<%= params[:entity] || @entity.id %>'>
   <% end %>
   <% if @box || params.has_key?(:box) %>
-    <input type='hidden' form='post' id='entity' name='entity' value='<%= params[:box] || @box.id %>'>
+    <input type='hidden' form='post' id='entity' name='box' value='<%= params[:box] || @box.id %>'>
   <% end %>
 <%= yield %>
 </form>
