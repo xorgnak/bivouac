@@ -293,6 +293,9 @@ module Bivouac
     def map
       MAP[@id]
     end
+    def pre
+      @pre
+    end
     def url
       return %[#{@pre}://#{@id}]
     end

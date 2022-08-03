@@ -49,9 +49,9 @@ module Bivouac
     def goto
       if @args.keys.length > 0
         args = []; @args.each_pair { |k,v| args << %[#{k}=#{v}] }
-        %[#{@host.host}/?#{args.join('&')}]
+        %[#{@host.pre}://#{@host.host}/?#{args.join('&')}]
       else
-        %[#{@host.host}]
+        %[#{@host.pre}://#{@host.host}]
       end
     end
   end
