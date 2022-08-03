@@ -14,8 +14,8 @@ module Bivouac
   end
   class Auth
     def initialize request, params
-      @auth = Auths.new(request.host)
       @host = Bivouac[request.host]
+      @auth = Auths.new(@host.id)
       @request, @params, @args = request, params, {}
       Redis.new.publish('Auth', %[#{@params}])
       if @params.has_key?(:set)
