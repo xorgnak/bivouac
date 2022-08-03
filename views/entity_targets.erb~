@@ -1,0 +1,6 @@
+<% @entity.targets.members do |t| %>
+<% @t = Bivouac.target(t) %>
+<h3 style='width: 100%; text-align: center; margin: 1% 0 1% 0;'>
+<a href='<%= @host.pre %>://<%= @host.host %>?target=<%= @t.id %>' style='text-decoration: none; color: white; background-color: black;'><%= @t.attr[:name] %></a>
+</h3>
+<% end %>
