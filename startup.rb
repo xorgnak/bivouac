@@ -11,6 +11,11 @@ def doit *n
   end
   Bivouac.badges.keys.each {|e| @usr.badges[e] = t }
 end
+
+@products = Bivouac.products
+@products['cat'] = 'settings_input_antenna'
+@products['turtle'] = 'camera'
+
 #@you = @host['you']
 #@here = @usr['here']
 #@there = @usr['there']

@@ -8,7 +8,8 @@ FG='#0000ff'
 here=`pwd`;
 conf=bivouac.conf;
 function say() {
-    gum style --width=20 --foreground "$FG" --border-foreground "$FG" --border rounded --align center --margin "0 0" --padding "0 0" $*;
+    echo "[NOMADIC] $*";
+    #gum style --width=20 --foreground "$FG" --border-foreground "$FG" --border rounded --align center --margin "0 0" --padding "0 0" $*;
 }
 
 DEBS='git screen ruby-full redis-server redis-tools build-essential nginx ngircd tor emacs-nox mosquitto mosquitto-clients python3 python3-pip python3-pil python3-pil.imagetk golang pulseaudio pulseaudio-module-bluetooth alsa-base alsa-tools alsa-utils imagemagick ruby-eventmachine ruby-image-processing';
@@ -92,8 +93,10 @@ else
 #	debs="$debs $DEBS_SHELL";
 #    fi
     if [[ "$BARE" != "true" ]]; then
-	gum spin -s minidot --title='debs...' --spinner.foreground="$FG" sudo apt update && sudo apt upgrade -y -q && sudo apt install -y -q $debs
-	gum spin -s minidot --title='gems...' --spinner.foreground="$FG" sudo gem install $GEMS
+	#gum spin -s minidot --title='debs...' --spinner.foreground="$FG"
+	sudo apt update && sudo apt upgrade -y -q && sudo apt install -y -q $debs
+	#gum spin -s minidot --title='gems...' --spinner.foreground="$FG"
+	sudo gem install $GEMS
     fi
     
     say 'nomad'

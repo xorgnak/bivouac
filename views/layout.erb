@@ -37,13 +37,26 @@ body { margin: 0; padding: 0; font-family: '<%= @host.env[:font] || "monospace" 
 	      ev.preventDefault();
 	      $('.foot').hide();
 	      $('#' + $(this).val()).show();
-	      $('.tog').css('color', 'black');
+	      $('.tog').css('color', 'grey');
 	      $(this).css('color', 'orange');
 	  });
       $(document).on('click', '.goto', function(ev) {
 	  ev.preventDefault();
 	  window.location.href = $(this).val();
       });
+	  <% if @entity || params.has_key?(:entity) %>
+      $(document).on('click', '.pub', function(ev) {
+	  ev.preventDefault();
+	  var t = $(this).val();
+	  var i = "#pub_" + t;
+	  var h = { entity: '<%= @entity.id %>', topic: t, payload: $(i).val() }
+	  console.log('post', h);
+	  $.post( "/chan", h, function(data) {
+	      $(i).val('');
+	      console.log("resp", data);
+	  }, "json");
+      });
+      <% end %>
 //log('app loaded.');
 });
 </script>

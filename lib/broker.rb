@@ -1,4 +1,8 @@
 module Bivouac
+  def self.products
+    Redis::HashKey.new('PRODUCTS')
+  end
+  
   if "#{ENV['TAG']}".length > 0
     TAG = ENV['TAG']
   else
@@ -35,14 +39,35 @@ module Bivouac
   class Tag
     def initialize pkt
       m = pkt.split(' ')
-      if /.+-.{6}/.match(m[0])
+      if /.+-.+/.match(m[0])
+        @id = m[0]
         d = Bivouac.dev(m[0])
         d.ip[:v4] = "#{m[1]}";
         d.ip[:v6] = "#{m[2]}";
         DEVICES[d.id] = "location /#{d.id} { proxy_pass http://#{d.ip[:v4]}:80/; }"
+        @output = "#{d.id}"
         @type = 'DEV'
       else
-        @type = 'GEN'
+        @output = pkt
+        @type = 'MSG'
+      end
+    end
+    def id; @id; end
+    def output
+      @output
+    end
+    def device
+      if DEVICES.has_key? @id
+        return DEVICES[@id]
+      else
+        return false
+      end
+    end
+    def dev
+      if DEVICES.has_key? @id
+        return Bivouac.dev(@id)
+      else
+        return false
       end
     end
     def type
@@ -54,7 +79,7 @@ module Bivouac
       @mqtt = PahoMqtt::Client.new({host: CLUSTER, port: 1883, ssl: false})
       @mqtt.on_message do |message|
         @pkt = Tag.new(message.payload)
-        log "#{@pkt.type}", :TAG
+        log "#{@pkt.type} #{@pkt.output}", :CLUSTER
       end
       @mqtt.connect
       @mqtt.subscribe([TAG, 2])

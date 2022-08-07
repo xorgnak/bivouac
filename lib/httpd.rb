@@ -58,7 +58,14 @@ module Bivouac
     get('/manifest.webmanifest') { erb :manifest, layout: false }
     get('/robots.txt') {}
     get('/info') { erb :info }
-    
+    post('/chan') {
+      content_type 'application/json'
+      ret = Bivouac.broker.publish({
+                                      topic: params[:topic],
+                                      payload: params[:payload]
+                                    })
+      return JSON.generate({ status: ret })
+    }
     get('/t') {
       if params.has_key?(:target);
         @target = Bivouac.target(params[:target]);
