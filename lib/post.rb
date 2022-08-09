@@ -92,9 +92,9 @@ module Bivouac
           @host[@params[:entity]].targets << @tgt.id
           if @params.has_key? :box
             @host[@params[:entity]][@params[:box]].targets << @tgt.id
-            @host.target[@tgt.id] = %[#{@entity.attr[:qr]}/#{@params[:box]}?mark=#{@tgt.id}]
+            @tgt.attr[:goto] = %[#{@entity.attr[:qr]}/#{@params[:box]}?mark=#{@tgt.id}]
           else
-            @host.target[@tgt.id] = %[#{@entity.attr[:qr]}?mark=#{@tgt.id}]
+            @tgt.attr[:goto] = %[#{@entity.attr[:qr]}?mark=#{@tgt.id}]
           end
         end
       end
