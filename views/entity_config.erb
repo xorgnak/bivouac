@@ -19,9 +19,9 @@
 <% @b = @entity[@entity.attr[:box]] %>
 <% if @b.attr[:owner] == @entity.id %>
 <div id='box-conf'>
-<p style='width: 100%; text-align: center; margin: 0;'>
+<p style='width: 100%; text-align: center; margin: 0; display: none;' class='box_config'>
 <label for='box-pay'><span class='material-icons'>toll</span>/scan</label><span style='width: 25%;'><input form='post' type='number' id='box-pay' name='boss[click]' maxlength='4' value='<%= @b.stat[:click].to_i %>' style='width: 25%;'></span></p>
-<p style='width: 100%; text-align: center; margin: 0;'>
+<p style='width: 100%; text-align: center; margin: 0; display: none;' class='box_config'>
 <input form='post' id='box-body' name='admin[body]' placeholder='call to action' value='<%= @b.attr[:body] %>'>
 </p>
 </div>
@@ -29,15 +29,16 @@
 <% end %>
 
 <p style='width: 100%; text-align: center; margin: 0;'>
+<button class='material-icons' onclick='$(".box_config").toggle()'>settings</button>
 <% if @entity.stat[:class].to_i >= 7 %>
 <datalist id='sponsors'>
 <% @entity.boxes.members.each do |e| %>
 <option value='<%= e %>'>
 <% end %>
 </datalist>
-<input form='post' name='box' list='sponsors' id='entity-config-box' placeholder='box' value='<%= @entity.attr[:box] %>' style='width: 60%;'>
+<input form='post' name='box' list='sponsors' id='entity-config-box' placeholder='box' value='<%= @entity.attr[:box] %>' style='width: 40%;'>
 <% else %>
-<select form='post' name='box' id='entity-config-box' style='width: 60%;'>
+<select form='post' name='box' id='entity-config-box' style='width: 40%;'>
   <option selected disabled>sponsor</option>
 <% @entity.boxes.members.each do |e| %>
 <% if @entity.attr[:box] == e %>
