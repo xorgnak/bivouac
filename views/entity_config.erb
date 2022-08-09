@@ -9,7 +9,7 @@
     <option value='tel'>call</option>
     <option value='sms'>text</option>
   </select>
-  <input form='post' name='config[phone]' placeholder='phone' id='entity-config-phone'>
+  <input form='post' name='config[phone]' placeholder='phone' id='entity-config-phone' style='width: 60%;'>
 </p>
 <p style='width: 100%; text-align: center; margin: 0;'>
 <input form='post' name='config[link]' id='entity-config-link' placeholder='link'>
@@ -20,7 +20,7 @@
 <% if @b.attr[:owner] == @entity.id %>
 <div id='box-conf'>
 <p style='width: 100%; text-align: center; margin: 0;'>
-<label for='box-pay'><span class='material-icons'>toll</span>/scan</label><span style='width: 25%;'><input form='post' type='number' id='box-pay' name='boss[click]' maxlength='4' value='<%= @b.stat[:click].to_i %>'></span></p>
+<label for='box-pay'><span class='material-icons'>toll</span>/scan</label><span style='width: 25%;'><input form='post' type='number' id='box-pay' name='boss[click]' maxlength='4' value='<%= @b.stat[:click].to_i %>' style='width: 25%;'></span></p>
 <p style='width: 100%; text-align: center; margin: 0;'>
 <input form='post' id='box-body' name='admin[body]' placeholder='call to action' value='<%= @b.attr[:body] %>'>
 </p>
@@ -35,9 +35,9 @@
 <option value='<%= e %>'>
 <% end %>
 </datalist>
-<input form='post' name='box' list='sponsors' id='entity-config-box' placeholder='box' value='<%= @entity.attr[:box] %>'>
+<input form='post' name='box' list='sponsors' id='entity-config-box' placeholder='box' value='<%= @entity.attr[:box] %>' style='width: 60%;'>
 <% else %>
-<select form='post' name='box' id='entity-config-box' >
+<select form='post' name='box' id='entity-config-box' style='width: 60%;'>
   <option selected disabled>sponsor</option>
 <% @entity.boxes.members.each do |e| %>
 <% if @entity.attr[:box] == e %>
