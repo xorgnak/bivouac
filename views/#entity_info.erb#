@@ -1,0 +1,14 @@
+<p style='width: 100%; text-align: center; background-color: black; color: white; font-size: x-small;'>
+   <span class='material-icons'>toll</span><span id='mycredits'><%= @entity.stat[:credits].to_i %></span>
+   <span id='myclass'><span class='material-icons' style='background-color: <%= Bivouac.bg[@entity.stat[:class].to_i] %>; color: <%= Bivouac.fg[@entity.stat[:class].to_i] %>; border-radius: 100px;'><%= Bivouac.icons[@entity.stat[:class].to_i] %></span>
+   <span id='myTitle'><%= @entity.attr[:title] || Bivouac.classes[@entity.stat[:class].to_i] %></span>
+   <span class='material-icons' style='background-color: <%= Bivouac.bg[@entity.stat[:rank].to_i] %>; color: <%= Bivouac.fg[@entity.stat[:rank].to_i] %>; border-radius: 100px;'>military_tech</span><span id='myrank'><%= @entity.stat[:rank].to_i %></span>
+</p>
+<p style='width: 100%; text-align: center; background-color: black; color: white; font-size: x-small;'>
+   <% [ :favorite, :star, :loyalty ].each do |e| %>
+   <span style='padding: 0 2% 0 2%;'><span class='material-icons'><%= e %></span><span><%= @entity.stat[e].to_i %></span></span>
+   <% end %>
+<% { "self_improvement" => @entity.stat[:karma].to_i, "campaign" => @entity.stat[:xp].to_i }.each_pair do |k,v| %>
+<span style='padding: 0 2% 0 2%;'><span class='material-icons'><%= k %></span><span><%= v %></span></span>
+<% end %>
+</p>
