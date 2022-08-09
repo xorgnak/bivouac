@@ -39,9 +39,9 @@ function handler(scn) {
 	    $('#magic-name').text(data.name || data.title || 'anonymous');
 	    $('#magic-title-new').val(data.title)
 	    $('#magic-title').text(data.title || '<%= Bivouac.classes[@entity.stat[:class].to_i] %>');
-//      log({ icon: 'qr_code_2', message: JSON.stringify(data) });
-	}
-    });
+	    //      log({ icon: 'qr_code_2', message: JSON.stringify(data) });
+	});
+    }
 }
 
 var video = document.createElement("video");
