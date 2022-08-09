@@ -70,11 +70,11 @@
 <a class='material-icons' href='<%= @entity.attr[:contact] %>:<%= @entity.attr[:phone] %>' style='color: green;'>call</a>
 <% end %>
 
-<% if @box.attr.has_key? :link %>
+<% if @entity.attr.has_key? :link %>
 <a class='material-icons' href='<%= @entity.attr[:link] %>' style='color: orange'>link</a>
 <% end %>
 
-<% if @host.env[:app_scan] %>
+<% if @host.env[:app_scan] == 'on' %>
 <button class='tog material-icons' value='badge'>qr_code_2</button>
 <% end %>
 <button class='tog material-icons' value='boxes'>diversity_3</button>
