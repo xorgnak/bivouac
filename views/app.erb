@@ -37,7 +37,6 @@
 <% end %>
 
 <div id='log'></div></div>
-</div>
 
 <div id='users' class='foot' style='max-height: 80%; overflow-y: scroll; display: none;'>
 <% @box.users.members.each do |usr| %>
@@ -56,9 +55,11 @@
 <div id='badge' class='foot' style='display: none;'>
 <%= erb :app_badge %>
 </div>
+
 </div>
+
 <h1 style='width: 100%; text-align: center; margin: 0;'>
-<button class='tog material-icons' value='info'>info</button>
+<button class='tog material-icons' value='info' style='color: orange;'>info</button>
 
 <% if @entity.attr[:contact] != 'none' %>
 <a class='material-icons' href='<%= @entity.attr[:contact] %>:<%= @entity.attr[:phone] %>' style='color: green;'>call</a>
