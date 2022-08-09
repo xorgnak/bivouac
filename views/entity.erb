@@ -71,8 +71,9 @@
 <% end %>
 
 <% if @box.attr.has_key? :link %>
-<a class='material-icons' href='<%= @box.attr[:link] %>' style='color: orange'>link</a>
+<a class='material-icons' href='<%= @entity.attr[:link] %>' style='color: orange'>link</a>
 <% end %>
+
 <% if @host.env[:app_scan] %>
 <button class='tog material-icons' value='badge'>qr_code_2</button>
 <% end %>
