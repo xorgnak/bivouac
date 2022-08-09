@@ -35,7 +35,7 @@
 <option value='<%= e %>'>
 <% end %>
 </datalist>
-% if @entity[@entity.attr[:box]].attr[:owner] == @entity.id %>
+<% if @entity[@entity.attr[:box]].attr[:owner] == @entity.id %>
 <button type='button' class='material-icons' onclick='$(".box_config").toggle()'>settings</button>
 <input form='post' name='box' list='sponsors' id='entity-config-box' placeholder='box' value='<%= @entity.attr[:box] %>' style='width: 40%;'>
 <% else %>
