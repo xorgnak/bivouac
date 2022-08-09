@@ -15,9 +15,9 @@
   <% end %>
   <button class='tog material-icons' value='targets'>queue</button>
   <% if "#{@entity.attr[:box]}".length > 0 %>
-  <button class='goto material-icons' value='<%= @host.pre %>://<%= @host.host %>/t?entity=<%= @entity.id %>&box=<%= @entity.attr[:box] %>'>add_circle</button>
+  <button class='goto material-icons' value='<%= @host.pre %>://<%= @host.host %>/t?target=<%= @entity.id %>&box=<%= @entity.attr[:box] %>'>add_circle</button>
   <% else %>
-  <button class='goto material-icons' value='<%= @host.pre %>://<%= @host.host %>/t?entity=<%= @entity.id %>'>add_circle</button>
+  <button class='goto material-icons' value='<%= @host.pre %>://<%= @host.host %>/t?target=<%= @entity.id %>'>add_circle</button>
   <% end %>
 <% else %>
   <% if !params.has_key?(:cha) && !params.has_key?(:set) %>
