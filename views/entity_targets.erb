@@ -1,6 +1,10 @@
+<% if "#{@entity.attr[:box]}".length  > 0 %>
+<% if @entity[@entity.attr[:box]].targets.members.length > 0 %>
 <% @entity[@entity.attr[:box]].targets.members.each do |t| %>
 <% @t = Bivouac.target(t) %>
 <h3 style='width: 100%; text-align: center; margin: 1% 0 1% 0;'>
 <a href='<%= @host.pre %>://<%= @host.host %>/t?target=<%= @t.id %>' style='text-decoration: none; color: white; background-color: black;'><%= @t.attr[:name] %></a>
 </h3>
+<% end %>
+<% end %>
 <% end %>
