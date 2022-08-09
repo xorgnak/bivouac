@@ -85,13 +85,16 @@ module Bivouac
 
       if @params.has_key? :target
         @tgt = Bivouac.target(@params[:target])
-        if @params.has_key? :config
-          @params[:config].each_pair { |k,v| @tgt.attr[k] = v }
+        if @params.has_key? :tgt
+          @params[:tgt].each_pair { |k,v| @tgt.attr[k] = v }
         end
         if @params.has_key? :entity
           @host[@params[:entity]].targets << @tgt.id
           if @params.has_key? :box
             @host[@params[:entity]][@params[:box]].targets << @tgt.id
+            @host.target[@tgt.id] = %[#{@entity.attr[:qr]}/#{@params[:box]}?mark=#{@tgt.id}]
+          else
+            @host.target[@tgt.id] = %[#{@entity.attr[:qr]}?mark=#{@tgt.id}]
           end
         end
       end

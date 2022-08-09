@@ -11,16 +11,16 @@
   <span><%= @target.attr[:desc] %></span>
 </p>
 <script>
-$('#qrcode').qrcode('<%= @host.pre %>://<% @host.host %>/t?target=<%= @target.id %>');
+$('#qrcode').qrcode('<%= @host.pre %>://<% @host.host %>/q?t=<%= @target.id %>');
 </script>
 <% else %>
 <% @tgt = Bivouac.target %>
 <input form='post' type='hidden' name='target' value='<%= @tgt.id %>'>
 <h1 style='width: 100%; text-align: center; margin: 0;'>
-<input form='post' name='config[name]' placeholder='name'>
+<input form='post' name='tgt[name]' placeholder='name'>
 </h1>
 <h1 style='width: 100%; text-align: center; margin: 0;'>
-<input form='post' name='config[desc]' placeholder='desc'>
+<input form='post' name='tgt[desc]' placeholder='desc'>
 </h1>
 <h1 style='width: 100%; text-align: center; margin: 0;'>
 <button form='post' type='submit' name='do' value='target'>save</button>

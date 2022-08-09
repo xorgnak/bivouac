@@ -74,7 +74,9 @@ module Bivouac
       @entity = @host[@id]
       erb :target
     }
-    
+    get('/q') {
+      redirect %[#{@host.pre}://#{@host.host}/#{@host[params[:t]]}]
+    }
     get('/:qri') {
       @entity = @host[@host.qri[params[:qri]]];
       @visitor = visitor(@entity.id);

@@ -263,7 +263,8 @@ module Bivouac
     hash_key :at
     # mark: time
     hash_key :dx
-    
+    # target: url
+    hash_key :target
     # boxes
     set :boxes
     # contests
