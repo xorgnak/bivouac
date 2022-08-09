@@ -17,7 +17,14 @@ module Bivouac
       # config interaction
       if @params.has_key? :entity
         @entity = @host[@params[:entity]]
-        
+
+        if "#{@params[:pic]}".length > 0
+          @entity.pics << @params[:pic]
+          if @entity.attr.has_key? :box
+            @entity[@entity.attr[:box]].pics << @params[:pic]
+          end
+        end
+
         if @params.has_key? :config
           @params[:config].each_pair {|k,v| @entity.attr[k] = v; }
         end
@@ -46,6 +53,10 @@ module Bivouac
       # scan interaction
       if @params.has_key? :target
         @target = @host[@params[:target]]
+
+        if "#{@params[:pic]}".length > 0
+          @target.pics << @params[:pic]
+        end
         
         if @params.has_key? :join
           @target[@params[:join]]
@@ -72,7 +83,7 @@ module Bivouac
         u = @host[@host.qri[@params[:qri]]]
         @goto = "#{@goto}/#{@params[:qri]}/#{u.attr[:box]}"
       end
-    
+
       # scan post return
       if @params.has_key? :qri
         @target = @json[:target] = @host.qri[@params[:qri]]
@@ -90,6 +101,7 @@ module Bivouac
         end
         if @params.has_key? :entity
           @host[@params[:entity]].targets << @tgt.id
+          @tgt.attr[:owner] = @entity.id
           if @params.has_key? :box
             @host[@params[:entity]][@params[:box]].targets << @tgt.id
             @tgt.attr[:goto] = %[#{@entity.attr[:qr]}/#{@params[:box]}?mark=#{@tgt.id}]

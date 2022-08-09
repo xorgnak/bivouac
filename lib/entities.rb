@@ -491,6 +491,7 @@ module Bivouac
     # box 
     set :webs
     set :targets
+    set :pics
     def initialize i
       ix = i.split('@')
       ih = ix[1].split('/')
@@ -558,6 +559,7 @@ module Bivouac
     # visitors
     set :visitors
     set :targets
+    set :pics
     def initialize i
       if "#{i}".length > 0
         @id = i

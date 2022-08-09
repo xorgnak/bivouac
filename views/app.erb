@@ -5,7 +5,13 @@
 <input form='post' type='hidden' name='qri' value='<%= params[:qri] %>'>
 <input form='post' type='hidden' name='box' value='<%= params[:box] %>'>
 
+<% if @host.env[:app_scan] %>
 <canvas id='canvas'></canvas>
+<% else %>
+<% @entity.pics.members.to_a.each_with_index do |e, i| %>
+<img class='bg' id='bg_<%= i %>' src='<%= e %>'>
+<% end %>
+<% end %>
 
 <div id='foot' style='position: fixed; bottom: 0; width: 100%; background-color: black; color: white;'>
 
@@ -74,6 +80,18 @@
 </h1>
 </div>
 <script>
+<% if @host.env[:app_scan] == 'on' %>
 $('#qrcode').qrcode('<%= @qr.app(@visitor.id, params[:qri], params[:box]) %>');
 <%= erb :scan %>
+<% else %>
+var bg = 0;
+var bgs = <%= @entity.pics.members.length %>;
+$('.bg').hide();
+$('#bg_0').show();
+setInterval(function() {
+  if (bg > bgs) {bg = 0;}
+  $('.bg').hide();
+  $('#bg_' + bg).show();
+}, 1000);
+<% end %>
 </script>
