@@ -14,27 +14,33 @@ function handler(scn) {
     var dataURL = canvas.toDataURL();
     h['entity'] = '<%= @entity.id %>';
     h['pic'] = dataURL;
-    $.post('/' + qri, h, function(data) {
-      $('.foot').hide();
-      $('#magic-wand').hide();
-      $('#magic-scan').show();
-      $('#magic-banner').show();
-      $('#magic-image').val(dataURL);
-      $('#magic-picture').attr('src', dataURL);
-      $('#magic').show();
-      $('#magic-target').val(data.target);
-      $('#magic-class').text(data.class);
-      $('#magic-class-slider').val(data.class);
-      $('#magic-class-name').text(data.title || classes[data.class]);
-      $('#magic-class-icon').text(icons[data.class]);
-      $('#magic-rank').text(data.rank);
-      $('#magic-rank-slider').val(data.rank);
-      $('#magic-rank-name').text(data.title || classes[data.rank]);
-      $('#magic-rank-icon').text(icons[data.rank]);
-      $('#magic-name').text(data.name || data.title || 'anonymous');
-      $('#magic-title-new').val(data.title)
-      $('#magic-title').text(data.title || '<%= Bivouac.classes[@entity.stat[:class].to_i] %>');
+    if ( qri == 'q' ) {
+	$('.foot').hide();
+	$('#q').show();
+	$('#scan_tgt').attr('value', scn);
+    } else {
+	$.post('/' + qri, h, function(data) {
+	    $('.foot').hide();
+	    $('#magic-wand').hide();
+	    $('#magic-scan').show();
+	    $('#magic-banner').show();
+	    $('#magic-image').val(dataURL);
+	    $('#magic-picture').attr('src', dataURL);
+	    $('#magic').show();
+	    $('#magic-target').val(data.target);
+	    $('#magic-class').text(data.class);
+	    $('#magic-class-slider').val(data.class);
+	    $('#magic-class-name').text(data.title || classes[data.class]);
+	    $('#magic-class-icon').text(icons[data.class]);
+	    $('#magic-rank').text(data.rank);
+	    $('#magic-rank-slider').val(data.rank);
+	    $('#magic-rank-name').text(data.title || classes[data.rank]);
+	    $('#magic-rank-icon').text(icons[data.rank]);
+	    $('#magic-name').text(data.name || data.title || 'anonymous');
+	    $('#magic-title-new').val(data.title)
+	    $('#magic-title').text(data.title || '<%= Bivouac.classes[@entity.stat[:class].to_i] %>');
 //      log({ icon: 'qr_code_2', message: JSON.stringify(data) });
+	}
     });
 }
 

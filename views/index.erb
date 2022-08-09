@@ -35,7 +35,16 @@
   <div id='job' class='foot' style='display: none;'>
     <%= erb :entity_job %>
   </div>
-  
+
+  <div id='job' class='foot' style='display: none;'>
+    <h3 style='width: 100%; text-align: center; margin: 0;'>
+    <span>You found a target!</span>
+    </h3>
+    <h3 style='width: 100%; text-align: center; margin: 0;'>
+    <button id='scan_tgt' class='goto'>GO!</button>
+    </h3>
+  </div>
+
   <% if @entity.attr.has_key? :box %>
   <% if @entity[@entity.attr[:box]].attr[:owner] == @entity.id %>
   <div id='bank' class='foot' style='display: none;'>
@@ -89,7 +98,6 @@ setTimeout(function() { log({ icon: 'help', message: '<%= @host.env[:intro] %>' 
 <% if !params.has_key? :installed %>
 setTimeout(function() { log({ icon: 'add_to_home_screen', message: 'add to home screen' }); }, 1000);
 <% end %>
-setTimeout(function() { log({ icon: 'qr_code_2', message: 'scanning...<span class="cylon"></span>' }); }, 1000);
 $(document).on('click', '#pic', function(ev) {
     ev.preventDefault();
     $('#head').hide();

@@ -18,23 +18,6 @@ or: black; }
 .pill { margin: 0 1% 0 1%; padding: 0 2% 0 2%; border-radius: 100px; background-color: black; color: white; }
 .give { border: thick solid gold; }
 .cylon { background-color: red; }
-@keyframes .cylon {
-    0%{
-	content: "&9617;&#9608;&#9608;&#9608;&#9608;";
-    }
-    25%{
-	content: "&#9608;&9617;&#9608;&#9608;&#9608;";
-    }
-    50%{
-	content: "&#9608;&#9608;&9617;&#9608;&#9608;";
-    }
-    75%{
-	content: "&#9608;&#9608;&#9608;&9617;&#9608;";
-    }
-    100%{
-	content: "&#9608;&#9608;&#9608;&#9608;&9617;";
-    }
-};
 <%= erb @host.app[:css] || '' %>
 </style>
 <% @ts = Time.now.utc.to_i %>
