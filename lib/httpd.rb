@@ -70,6 +70,8 @@ module Bivouac
       if params.has_key?(:target);
         @target = Bivouac.target(params[:target]);
       end;
+      @id = user(params[:entity])
+      @entity = @host[@id]
       erb :target
     }
     
