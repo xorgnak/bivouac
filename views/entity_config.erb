@@ -36,8 +36,19 @@
 <% end %>
 </datalist>
 <% if @entity[@entity.attr[:box]].attr[:owner] == @entity.id %>
-<button type='button' class='material-icons' onclick='$(".box_config").toggle()'>settings</button>
-<input form='post' name='box' list='sponsors' id='entity-config-box' placeholder='box' value='<%= @entity.attr[:box] %>' style='width: 40%;'>
+<p style='width: 100%; text-align: center;'>
+<label for='box_parent'>parent</label>
+<select id='box_parent' name='parent' style='width: 50%;'>
+<option selected>self</option>
+<% @entity.boxes.members.each do |e| %>
+<% if @entity.attr[:box] != e %>
+<option value='<%= e %>'><%= e %></option>
+<% end %>
+<% end %>
+</select>
+</p>
+<p style='width: 100%; text-align: center;'><button type='button' class='material-icons' onclick='$(".box_config").toggle()'>settings</button>
+<input form='post' name='box' list='sponsors' id='entity-config-box' placeholder='box' value='<%= @entity.attr[:box] %>' style='width: 40%;'></p>
 <% else %>
 <input form='post' name='box' list='sponsors' id='entity-config-box' placeholder='box' value='<%= @entity.attr[:box] %>' style='width: 60%;'>
 <% end %>
