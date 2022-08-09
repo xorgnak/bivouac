@@ -27,12 +27,12 @@
 <%= @entity.attr[:name] %>
 </h2>
 <% if "#{@entity.attr[:title]}".length > 0 %>
-<h3 style='width: 100%; text-align: center; margin: 0;'>
+<p style='width: 100%; text-align: center; margin: 0;'>
 <span style='background-color: <%= Bivouac.bg[@entity.stat[:class].to_i] %>; color: <%= Bivouac.fg[@entity.stat[:class].to_i] %>; border-radius: 100px;'>
 <span class='material-icons'><%= Bivouac.icons[@entity.stat[:class].to_i] %></span>
 <span><%= @entity.attr[:title] %></span>
 </span>
-</h3>
+</p>
 <% end %>
 <% if params.has_key? :vote %>
 <% @v = @host.vote(params[:vote]) %>
