@@ -75,7 +75,7 @@
 <% if @box.attr.has_key? :link %>
 <a class='material-icons' href='<%= @box.attr[:link] %>' style='color: orange'>link</a>
 <% end %>
-<% if @host.env[:app_scan] %>
+<% if @host.env[:app_scan] == 'on' %>
 <button class='tog material-icons' value='badge'>qr_code_2</button>
 <% end %>
 <button class='tog material-icons' value='users'>diversity_1</button>
@@ -84,6 +84,8 @@
 <script>
 <% if @host.env[:app_scan] == 'on' %>
 $('#qrcode').qrcode('<%= @qr.app(@visitor.id, params[:qri], params[:box]) %>');
+<%= erb :scan %>
+<% elsif @host.env[:app_jobs] == 'on' %>
 <%= erb :scan %>
 <% else %>
 var bg = 0;

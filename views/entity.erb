@@ -1,25 +1,58 @@
 <style>
-#canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -10; }
-a { text-decoration: none; background-color: white; border: thick outset grey; }
+.foot { background-color: black; color: white; }
 </style>
-<input form='post' type='hidden' name='qri' value='<%= params[:qri] %>'>
 
+<input form='post' type='hidden' name='qri' value='<%= params[:qri] %>'>
+<input form='post' type='hidden' name='box' value='<%= params[:box] %>'>
+
+<% if @host.env[:app_scan] == 'on' %>
 <canvas id='canvas'></canvas>
+<% else %>
+<% @entity.pics.members.to_a.each_with_index do |e, i| %>
+<img class='bg' id='bg_<%= i %>' src='<%= e %>'>
+<% end %>
+<% end %>
 
 <div id='foot' style='position: fixed; bottom: 0; width: 100%; background-color: black; color: white;'>
 
-<%= erb Bivouac.form(@host.app[:magic]) %>
 <div id='magic' style='display: none;'>
 <%= erb :app_magic %>
-<h3 style='width: 100%; text-align: center;'><button form='post' name='do' value='app'>send</button></h3>
+<h3 style='width: 100%; text-align: center;'>
+<button form='post' name='do' value='app'>send</button>
+</h3>
 </div>
-<div id='info' class='foot'><div id='log'></div></div>
+
+<div id='info' class='foot'>
+<h2 style='width: 100%; text-align: center; margin: 0;'>
+<%= @entity.attr[:name] %>
+</h2>
+<% if "#{@box.attr[:title]}".length > 0 %>
+<h3 style='width: 100%; text-align: center; margin: 0;'>
+<span style='background-color: <%= Bivouac.bg[@entity.stat[:class].to_i] %>; color: <%= Bivouac.fg[@entity.stat[:class].to_i] %>; border-radius: 100px;'>
+<span class='material-icons'><%= Bivouac.icons[@entity.stat[:class].to_i] %></span>
+<span><%= @box.attr[:title] %></span>
+</span>
+</h3>
+<% end %>
+<% if params.has_key? :vote %>
+<% @v = @host.vote(params[:vote]) %>
+<div style='width: 100%;'>
+<h3 style='width: 100%; text-align: center; margin: 0;'>
+<span>VOTE!</span>
+</h3>
+<h3 style='width: 100%; text-align: center; margin: 0;'>
+<button class='goto'><%= @v.attr[:name] %></button>
+</h3>
+</div>
+<% end %>
+
+<div id='log'></div></div>
 
 <div id='boxes' class='foot' style='max-height: 80%; overflow-y: scroll; display: none;'>
 <% @entity.boxes.members.each do |box| %>
 <% @b = @entity[box] %>
 <p style='width: 100%; text-align: center; margin: 0;'>
-<button class='goto' value='<%= @qr.box(params[:qri], @b.id)  %>'><%= @b.id %></button>
+<button class='goto' value='<%= @host.pre %>://<%= @host.host %>/<%= @entity.attr[:qr] %>/<%= URI.encode(box) %>'><%= box %></button>
 </p>
 <% end %>
 </div>
@@ -27,26 +60,40 @@ a { text-decoration: none; background-color: white; border: thick outset grey; }
 <div id='badge' class='foot' style='display: none;'>
 <%= erb :app_badge %>
 </div>
+
 </div>
+
 <h1 style='width: 100%; text-align: center; margin: 0;'>
-<button class='tog material-icons' value='info'>info</button>
+<button class='tog material-icons' value='info' style='color: orange;'>info</button>
 
 <% if @entity.attr[:contact] != 'none' %>
 <a class='material-icons' href='<%= @entity.attr[:contact] %>:<%= @entity.attr[:phone] %>' style='color: green;'>call</a>
 <% end %>
 
-<% if @entity.attr.has_key? :link %>
-<a class='material-icons' href='<%= @entity.attr[:link] %>' style='color: orange'>link</a>
+<% if @box.attr.has_key? :link %>
+<a class='material-icons' href='<%= @box.attr[:link] %>' style='color: orange'>link</a>
 <% end %>
-
+<% if @host.env[:app_scan] %>
 <button class='tog material-icons' value='badge'>qr_code_2</button>
-<button class='tog material-icons' value='boxes'>widgets</button>
+<% end %>
+<button class='tog material-icons' value='boxes'>diversity_3</button>
 </h1>
 </div>
 <script>
+<% if @host.env[:app_scan] == 'on' %>
 $('#qrcode').qrcode('<%= @qr.entity(@visitor.id, params[:qri]) %>');
-log({ icon: 'qr_code_2', message: '<%= @entity.attr[:name] || "anonymous" %>@<%= @host.id %>' })
-<% if @visitor.attr[:class].to_i < 1 %>
-log({ icon: 'help', message: '<%= @host.env[:intro] %>' });
+<%= erb :scan %>
+<% elsif @host.env[:app_jobs] == 'on' %>
+<%= erb :scan %>
+<% else %>
+var bg = 0;
+var bgs = <%= @entity.pics.members.length %>;
+$('.bg').hide();
+$('#bg_0').show();
+setInterval(function() {
+  if (bg > bgs) {bg = 0;}
+  $('.bg').hide();
+  $('#bg_' + bg).show();
+}, 1000);
 <% end %>
 </script>
