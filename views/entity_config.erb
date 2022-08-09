@@ -36,33 +36,37 @@
 <% end %>
 </datalist>
 <% if @entity[@entity.attr[:box]].attr[:owner] == @entity.id %>
+
 <p style='width: 100%; text-align: center;'>
-<label for='box_parent'>parent</label>
-<select id='box_parent' name='parent' style='width: 50%;'>
-<option selected>self</option>
+  <label for='box_parent'>parent</label>
+  <select id='box_parent' name='parent' style='width: 50%;'>
+    <option selected>self</option>
 <% @entity.boxes.members.each do |e| %>
 <% if @entity.attr[:box] != e %>
-<option value='<%= e %>'><%= e %></option>
+    <option value='<%= e %>'><%= e %></option>
 <% end %>
 <% end %>
-</select>
+  </select>
 </p>
-<p style='width: 100%; text-align: center;'><button type='button' class='material-icons' onclick='$(".box_config").toggle()'>settings</button>
-<input form='post' name='box' list='sponsors' id='entity-config-box' placeholder='box' value='<%= @entity.attr[:box] %>' style='width: 40%;'></p>
+
+<p style='width: 100%; text-align: center;'>
+  <button type='button' class='material-icons' onclick='$(".box_config").toggle()'>settings</button>
+  <input form='post' name='box' list='sponsors' id='entity-config-box' placeholder='box' value='<%= @entity.attr[:box] %>' style='width: 40%;'>
+
 <% else %>
-<input form='post' name='box' list='sponsors' id='entity-config-box' placeholder='box' value='<%= @entity.attr[:box] %>' style='width: 60%;'>
+  <input form='post' name='box' list='sponsors' id='entity-config-box' placeholder='box' value='<%= @entity.attr[:box] %>' style='width: 60%;'>
 <% end %>
 <% else %>
-<select form='post' name='box' id='entity-config-box' style='width: 60%;'>
-  <option selected disabled>sponsor</option>
+  <select form='post' name='box' id='entity-config-box' style='width: 60%;'>
+    <option selected disabled>sponsor</option>
 <% @entity.boxes.members.each do |e| %>
 <% if @entity.attr[:box] == e %>
-<option value='<%= e %>' selected><%= e %></option>
+    <option value='<%= e %>' selected><%= e %></option>
 <% else %>
-<option value='<%= e %>'><%= e %></option>
+    <option value='<%= e %>'><%= e %></option>
 <% end %>
 <% end %>
-</select>
+  </select>
 <% end %>
 <button form='post' class='material-icons' name='do' value='update'>save</button>
 </p>
