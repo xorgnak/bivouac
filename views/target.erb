@@ -11,7 +11,7 @@
   <span><%= @target.attr[:desc] %></span>
 </p>
 <script>
-$('#qrcode').qrcode('<%= @host.pre %>://<% @host.host %>/q?t=<%= @target.id %>');
+$('#qrcode').qrcode('<%= @host.pre %>://<%= @host.host %>/q?t=<%= @target.id %>');
 </script>
 <% else %>
 <% @tgt = Bivouac.target %>
