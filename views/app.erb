@@ -1,5 +1,5 @@
 <style>
-
+.foot { background-color: black; color: white; }
 </style>
 
 <input form='post' type='hidden' name='qri' value='<%= params[:qri] %>'>
@@ -11,10 +11,18 @@
 
 <div id='magic' style='display: none;'>
 <%= erb :app_magic %>
-<h3 style='width: 100%; text-align: center;'><button form='post' name='do' value='app'>send</button></h3>
+<h3 style='width: 100%; text-align: center;'>
+<button form='post' name='do' value='app'>send</button>
+</h3>
 </div>
 
-<div id='info' class='foot'><div id='body'><%= @box.attr[:body] || '<p>welcome.</p>' %>
+<div id='info' class='foot'>
+<h2 style='width: 100%; text-align: center; margin: 0;'>
+<%= params[:box] %>
+</h2>
+<h3 style='width: 100%; text-align: center; margin: 0;'>
+<%= @box.attr[:body] || 'welcome.' %>
+</h3>
 
 <% if params.has_key? :vote %>
 <% @v = @host.vote(params[:vote]) %>
@@ -66,8 +74,4 @@
 </div>
 <script>
 $('#qrcode').qrcode('<%= @qr.app(@visitor.id, params[:qri], params[:box]) %>');
-log({ icon: 'qr_code_2', message: '<%= params[:box] %>' });
-<% if @visitor.attr[:class].to_i < 1 %>
-//log({ icon: 'help', message: '<%= @host.env[:intro] %>' });;
-<% end %>
 </script>
