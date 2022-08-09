@@ -84,7 +84,7 @@ module Bivouac
       end
 
       if @params.has_key? :target
-        @tgt = Bivouac.target(@params[:target])
+        @tgt = @host.target(@params[:target])
         if @params.has_key? :tgt
           @params[:tgt].each_pair { |k,v| @tgt.attr[k] = v }
         end

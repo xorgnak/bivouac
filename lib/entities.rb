@@ -419,11 +419,11 @@ module Bivouac
     def [] b
       user b
     end
-    def target
-      @t = Bivouac.target(@id)
-      @t.hosts << @id
+    def target *t
+      @t = Bivouac.target(t[0] || @id)
+      @t.hosts << t[0] || @id
       self.targets << @t.id
-      @t.usage.incr(@id)
+      @t.usage.incr(t[0] || @id)
       return @t
     end
     
