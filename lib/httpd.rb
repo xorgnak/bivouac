@@ -76,7 +76,7 @@ module Bivouac
     }
     get('/q') {
       @tgt = Bivouac.target(@params[:t])
-      redirect %[#{@host.pre}://#{@host.host}/#{@tgt.attr[:goto]]}]
+      redirect %[#{@host.pre}://#{@host.host}/#{@tgt.attr[:goto]}]
     }
     get('/:qri') {
       @entity = @host[@host.qri[params[:qri]]];
