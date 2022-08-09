@@ -26,10 +26,11 @@
 <h2 style='width: 100%; text-align: center; margin: 0;'>
 <%= params[:box] %>
 </h2>
+<% if "#{@box.attr[:name]}".length > 0 %>
 <h3 style='width: 100%; text-align: center; margin: 0;'>
-<%= @box.attr[:body] || 'welcome.' %>
+<%= @box.attr[:body] %>
 </h3>
-
+<% end %>
 <% if params.has_key? :vote %>
 <% @v = @host.vote(params[:vote]) %>
 <div style='width: 100%;'>
