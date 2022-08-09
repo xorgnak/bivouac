@@ -19,6 +19,7 @@
 <% @b = @entity[@entity.attr[:box]] %>
 <% if @b.attr[:owner] == @entity.id %>
 <div id='box-conf'>
+<!--
 <p style='width: 100%; text-align: center; margin: 0; display: none;' class='box_config'>
 <label for='box_parent'>parent</label>
   <select id='box_parent' name='parent' style='width: 50%;'>
@@ -30,6 +31,7 @@
     <% end %>
   </select>
 </p>
+-->
 <p style='width: 100%; text-align: center; margin: 0; display: none;' class='box_config'>
 <label for='box-pay'><span class='material-icons'>toll</span>/scan</label><span style='width: 25%;'><input form='post' type='number' id='box-pay' name='boss[click]' maxlength='4' value='<%= @b.stat[:click].to_i %>' style='width: 25%;'></span></p>
 <p style='width: 100%; text-align: center; margin: 0; display: none;' class='box_config'>
