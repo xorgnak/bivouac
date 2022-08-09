@@ -1,28 +1,4 @@
 <style>
-  .foot { position: fixed; bottom: 0; width: 100%; background-color: white; color: black; }
-  .foot > p { margin: 0; padding: 0; }
-  #log > p { margin: 0; padding: 0; }
-  .tog .goto { margin: 0; padding: 0; background-color: black; border-color: orange; color: grey; }
-  .pill { margin: 0 1% 0 1%; padding: 0 2% 0 2%; border-radius: 100px; background-color: black; color: white; }
-  .give { border: thick solid gold; }
-  .cylon { background-color: red; }
-@keyframes .cylon {
-    0%{
-      width: 0%;
-    }
-    25%{
-        width: 50%;
-    }
-    50%{
-        width: 100%;
-    }
-    75%{
-        width: 50%;
-    }
-    100%{
-        width: 0%;
-    }
-};
 </style>
 
 <% if @host.env[:locked] != 'on' %>
@@ -113,6 +89,7 @@ setTimeout(function() { log({ icon: 'help', message: '<%= @host.env[:intro] %>' 
 <% if !params.has_key? :installed %>
 setTimeout(function() { log({ icon: 'add_to_home_screen', message: 'add to home screen' }); }, 1000);
 <% end %>
+setTimeout(function() { log({ icon: 'qr_code_2', message: 'scanning...<span style='border: thin solid orange;'><span class='cylon'><span></span>' }); }, 1000);
 $(document).on('click', '#pic', function(ev) {
     ev.preventDefault();
     $('#head').hide();

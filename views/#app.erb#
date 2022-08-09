@@ -15,7 +15,22 @@ a { text-decoration: none; background-color: white; border: thick outset grey; }
 <h3 style='width: 100%; text-align: center;'><button form='post' name='do' value='app'>send</button></h3>
 </div>
 
-<div id='info' class='foot'><div id='body'><%= @box.attr[:body] || '<p>welcome.</p>' %></div><div id='log'></div></div>
+<div id='info' class='foot'><div id='body'><%= @box.attr[:body] || '<p>welcome.</p>' %>
+
+<% if params.has_key? :vote %>
+<% @v = @host.vote(params[:vote]) %>
+<div style='width: 100%;'>
+<h3 style='width: 100%; text-align: center; margin: 0;'>
+<span>VOTE!</span>
+</h3>
+<h3 style='width: 100%; text-align: center; margin: 0;'>
+<button class='goto'><%= @v.attr[:name] %></button>
+</h3>
+</div>
+<% end %>
+
+<div id='log'></div></div>
+</div>
 
 <div id='users' class='foot' style='max-height: 80%; overflow-y: scroll; display: none;'>
 <% @box.users.members.each do |usr| %>

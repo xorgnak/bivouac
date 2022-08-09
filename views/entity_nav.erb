@@ -8,7 +8,7 @@
   <button class='tog material-icons' value='bank'>account_balance</button>
   <% end %>
   <% if "#{@entity.attr[:box]}".length > 0 %>
-  <!-- <button class='goto material-icons' value='<%= @qr.badge(@entity.id) %>'>gps_fixed</button> -->
+  <button class='goto material-icons' value='<%= @qr.badge(@entity.id) %>'>gps_fixed</button>
   <% end %>
   <% if @host.app[:jobs] == 'on' %>
     <button id='pic' class='material-icons' style='background-color: green; color: black;'>camera</button>
