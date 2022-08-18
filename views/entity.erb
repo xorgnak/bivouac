@@ -102,7 +102,7 @@ $('#qrcode').qrcode('<%= @qr.entity(@visitor.id, params[:qri]) %>');
 <%= erb :scan %>
 <% elsif @host.env[:app_jobs] == 'on' %>
 <%= erb :scan %>
-<% else %>
+<% elsif "#{@entity.attr[:img]}".length == 0 %>
 var bg = 0;
 var bgs = <%= @entity.pics.members.length %>;
 $('.bg').hide();

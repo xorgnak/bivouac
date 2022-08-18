@@ -103,9 +103,9 @@ $('#qrcode').qrcode('<%= @qr.app(@visitor.id, params[:qri], params[:box]) %>');
 <%= erb :scan %>
 <% elsif @host.env[:app_jobs] == 'on' %>
 <%= erb :scan %>
-<% else %>
+<% elsif "#{@b.attr[:img]}".length == 0 %>
 var bg = 0;
-var bgs = <%= @entity.pics.members.length %>;
+var bgs = <%= @b.pics.members.length %>;
 $('.bg').hide();
 $('#bg_0').show();
 setInterval(function() {
