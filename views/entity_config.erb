@@ -51,10 +51,10 @@
 </p>
 -->
 
-  <input form='post' type='hidden' id='box-pic' name='admin[img]' value='<%= @box.attr[:img] %>'>
+  <input form='post' type='hidden' id='box-pic' name='admin[img]' value='<%= @b.attr[:img] %>'>
   <% if "#{@box.attr[:img]}".length > 0 %>
   <div id='box-img-box' style='height: 30%; text-align: center;' class='box_config'>
-    <img style='height: 100%;' id='img_box-pic' src='<%= @entity.attr[:img] %>'>
+    <img style='height: 100%;' id='img_box-pic' src='<%= @b.attr[:img] %>'>
   </div>
   <% end %>
 <p style='width: 100%; text-align: center; margin: 0; padding: 0;' class='box_config'>
