@@ -1,11 +1,11 @@
 <div style='border: thin solid black;'>
   <input form='post' type='hidden' id='entity-pic' name='config[img]' value='<%= @entity.attr[:img] %>'>
   <% if "#{@entity.attr[:img]}".length > 0 %>
-  <div id='entity-img-box'>
-    <img id='img_entity-pic' src='<%= @entity.attr[:img] %>'>
+  <div id='entity-img-box' style='height: 30%; text-align: center;' class='entity_config'>
+    <img style='height: 100%;' id='img_entity-pic' src='<%= @entity.attr[:img] %>'>
   </div>
   <% end %>
-  <p style='width: 100%; text-align: center;'>
+  <p style='width: 100%; text-align: center; margin: 0; padding: 0;' class='entity_config'>
     <button class='pic' value='entity-pic'>take picture</button>
   </p>
 <p style='width: 100%; text-align: center; margin: 0;' class='entity_config'>
@@ -50,6 +50,16 @@
   </select>
 </p>
 -->
+
+  <input form='post' type='hidden' id='box-pic' name='admin[img]' value='<%= @box.attr[:img] %>'>
+  <% if "#{@box.attr[:img]}".length > 0 %>
+  <div id='box-img-box' style='height: 30%; text-align: center;' class='box_config'>
+    <img style='height: 100%;' id='img_box-pic' src='<%= @entity.attr[:img] %>'>
+  </div>
+  <% end %>
+<p style='width: 100%; text-align: center; margin: 0; padding: 0;' class='box_config'>
+  <button class='pic' value='box-pic'>take picture</button>
+</p>
 
 <p style='width: 100%; text-align: center; margin: 0; display: none;' class='box_config'>
 <label for='box-pay'><span class='material-icons'>toll</span>/scan</label><span style='width: 25%;'><input form='post' type='number' id='box-pay' name='boss[click]' maxlength='4' value='<%= @b.stat[:click].to_i %>' style='width: 25%;'></span></p>

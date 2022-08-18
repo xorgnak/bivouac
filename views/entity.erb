@@ -6,7 +6,9 @@ iframe { heigt: 100%; width: 100%; }
 <input form='post' type='hidden' name='qri' value='<%= params[:qri] %>'>
 <input form='post' type='hidden' name='box' value='<%= params[:box] %>'>
 
-<% if @host.env[:app_scan] == 'on' %>
+<% if "#{@entity.attr[:img]}".length > 0 %>
+  <img class='bg' src='<%= @entity.attr[:img] %>'>
+<% elsif @host.env[:app_scan] == 'on' %>
 <canvas id='canvas'></canvas>
 <% else %>
 <% @entity.pics.members.to_a.each_with_index do |e, i| %>
