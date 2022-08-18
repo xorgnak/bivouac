@@ -23,6 +23,11 @@
 </div>
 
 <div id='info' class='foot'>
+<% if "#{@box.attr[:youtube]}".length > 0 %>
+<div id='youtube-wrapper' style='width: 100%; text-align: center;'>
+<%= @box.attr[:youtube] %>
+</div>
+<% end %>
 <h2 style='width: 100%; text-align: center; margin: 0;'>
 <%= params[:box] %>
 </h2>

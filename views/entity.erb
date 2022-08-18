@@ -23,6 +23,13 @@
 </div>
 
 <div id='info' class='foot'>
+
+<% if "#{@entity.attr[:youtube]}".length > 0 %>
+<div id='youtube-wrapper' style='width: 100%; text-align: center;'>
+<%= @entity.attr[:youtube] %>
+</div>
+<% end %>
+
 <h2 style='width: 100%; text-align: center; margin: 0;'>
 <%= @entity.attr[:name] %>
 </h2>
