@@ -79,7 +79,7 @@
 <% end %>
 </datalist>
 <% if @entity[@entity.attr[:box]].attr[:owner] == @entity.id %>
-  <button type='button' class='material-icons' onclick='$(".box_config").toggle();'>settings</button>
+  <button type='button' class='material-icons' onclick='$(".entity_config").hide(); $(".box_config").toggle();'>settings</button>
   <input form='post' name='box' list='sponsors' id='entity-config-box' placeholder='box' value='<%= @entity.attr[:box] %>' style='width: 30%;'>
 
 <% else %>
