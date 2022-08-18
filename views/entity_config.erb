@@ -15,10 +15,19 @@
 <input form='post' name='config[link]' id='entity-config-link' placeholder='link'>
 </p>
 
+<p style='width: 100%; text-align: center; margin: 0;'>
+<input form='post' name='config[donations]' id='entity-config-donations' placeholder='donations'>
+</p>
+
+<p style='width: 100%; text-align: center; margin: 0;'>
+<input form='post' name='config[youtube]' id='entity-config-youtube' placeholder='youtube'>
+</p>
+
 <% if @entity.attr.has_key? :box %>
 <% @b = @entity[@entity.attr[:box]] %>
 <% if @b.attr[:owner] == @entity.id %>
 <div id='box-conf'>
+
 <!--
 <p style='width: 100%; text-align: center; margin: 0; display: none;' class='box_config'>
 <label for='box_parent'>parent</label>
@@ -32,10 +41,30 @@
   </select>
 </p>
 -->
+
 <p style='width: 100%; text-align: center; margin: 0; display: none;' class='box_config'>
 <label for='box-pay'><span class='material-icons'>toll</span>/scan</label><span style='width: 25%;'><input form='post' type='number' id='box-pay' name='boss[click]' maxlength='4' value='<%= @b.stat[:click].to_i %>' style='width: 25%;'></span></p>
+
+<p style='width: 100%; text-align: center; margin: 0;'>
+  <select form='post' id='entity-config-contact' name='admin[contact]' style='width: min-content;'>
+    <option value='none' selected>none</option>
+    <option value='tel'>call</option>
+    <option value='sms'>text</option>
+  </select>
+  <input form='post' name='admin[phone]' placeholder='box phone' id='box-phone' style='width: 50%;'>
+</p>
+
 <p style='width: 100%; text-align: center; margin: 0; display: none;' class='box_config'>
 <input form='post' id='box-body' name='admin[body]' placeholder='call to action' value='<%= @b.attr[:body] %>'>
+</p>
+<p style='width: 100%; text-align: center; margin: 0; display: none;' class='box_config'>
+<input form='post' id='box-link' name='admin[link]' placeholder='box link' value='<%= @b.attr[:link] %>'>
+</p>
+<p style='width: 100%; text-align: center; margin: 0; display: none;' class='box_config'>
+<input form='post' id='box-donations' name='admin[donations]' placeholder='box donations' value='<%= @b.attr[:donations] %>'>
+</p>
+<p style='width: 100%; text-align: center; margin: 0; display: none;' class='box_config'>
+<input form='post' id='box-youtube' name='admin[youtube]' placeholder='box youtube' value='<%= @b.attr[:youtube] %>'>
 </p>
 </div>
 <% end %>

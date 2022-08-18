@@ -253,7 +253,7 @@ CAMS="";
 SSL="";
 for c in `redis-cli hkeys DEVICES`
 do
-    CAMS+="`redis-cli hget DEVICES $c`";
+    CAMS+="`redis-cli hget DEVICES $c`\n";
 done
 sss="server {
     listen 80 default_server;

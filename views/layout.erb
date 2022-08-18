@@ -39,7 +39,20 @@ or: black; }
 <!-- charts and images -->
 <!-- <script src="https://cdn.plot.ly/plotly-2.8.3.min.js"></script> -->
 <!-- <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script> -->
-<script>
+    <script>
+    function toJson(form) {
+	const array = $('form#' + form).serializeArray(); // Encodes the set of form elements as an array of names and values.
+	const json = {};
+	$.each(array, function () {
+	    json[this.name] = this.value || "";
+	});
+	return json;
+    }
+    var state = {
+	events: {
+	    loaded: '<%= Time.now.utc %>'
+	}
+    };
   var classes = <%= JSON.generate(Bivouac.classes) %>;
   var icons = <%= JSON.generate(Bivouac.icons) %>;
   function log(j) { console.log(j.message); $('#log').append('<p><span class="material-icons">' + j.icon + '</span>' + j.message + '</p>') }
@@ -56,24 +69,35 @@ or: black; }
 	  window.location.href = $(this).val();
       });
 	  <% if @entity || params.has_key?(:entity) %>
-      $(document).on('click', '.pub', function(ev) {
-	  ev.preventDefault();
-	  var t = $(this).val();
-	  var i = "#pub_" + t;
-	  var h = { entity: '<%= @entity.id %>', topic: t, payload: $(i).val() }
-	  console.log('post', h);
-	  $.post( "/chan", h, function(data) {
-	      $(i).val('');
-	      console.log("resp", data);
-	  }, "json");
-      });
-      <% end %>
+//      $(document).on('click', '.pub', function(ev) {
+//	  ev.preventDefault();
+//	  var t = $(this).val();
+//	  var i = "#pub_" + t;
+//	  var h = {
+//	      entity: '<%= @entity.id %>',
+//	      topic: t,
+//	      payload: $(i).val()
+//	  }
+//	  console.log('post', h);
+//	  $.post( "/chan", h, function(data) {
+//	      $(i).val('');
+//	      console.log("resp", data);
+//	  }, "json");
+//      });
+
+      setInterval(function() { $.post("/poll", toJson('poll'), function(d) {
+	  console.log("poll", d);
+      }); }, 5000);
+
+<% end %>
+      
 //log('app loaded.');
 });
 </script>
 </head><body>
 <form id='post' action='/' method='POST'></form>
-<form id='auth' action='/auth' method='POST'></form>
+    <form id='auth' action='/auth' method='POST'></form>
+    <form id='poll' action='/poll' method='POST'></form>
 <form id='form'>
   <% if @entity || params.has_key?(:entity) %>
   <input type='hidden' form='post' id='entity' name='entity' value='<%= params[:entity] || @entity.id %>'>

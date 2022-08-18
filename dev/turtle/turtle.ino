@@ -13,6 +13,7 @@
   The above copyright notice and this permission notice shall be included in all
   copies or substantial portions of the Software.
 *********/
+#define DEV "turtle"
 
 #include "esp_camera.h"
 #include "WiFi.h"
@@ -27,10 +28,14 @@
 #include "secrets.h"
 static volatile bool wifi_connected = false;
 
+String dev;
+String devId;
+String netId;
+String userId;
+
 String userid;
 String id;
-String addr4;
-String addr6;
+
 #define LED_BUILTIN 33
 
 WiFiClient espClient;
@@ -68,23 +73,23 @@ PubSubClient client(espClient);
 
 
 void mqttCallback(char* topic, byte* message, unsigned int length) {
-  String messageTemp;
+  String msg;
 
   for (int i = 0; i < length; i++) {
-    Serial.print((char)message[i]);
-    messageTemp += (char)message[i];
+    //Serial.print((char)message[i]);
+    msg += (char)message[i];
   }
-  Serial.printf("msg: %s", messageTemp);
-  Serial.println();
-  if(messageTemp[0] == '1'){
-    Serial.print("flash ");
+  //Serial.printf("msg: %s", msg);
+  //Serial.println();
+  if(msg[0] == '1') {
+    //Serial.print("flash ");
     digitalWrite(4, HIGH);
   } else {
     digitalWrite(4, LOW);
   }
     
-  if(messageTemp[1] == '1'){
-    Serial.print("led ");
+  if(msg[1] == '1') {
+    //Serial.print("led ");
     digitalWrite(LED_BUILTIN, LOW);
   } else {
     digitalWrite(LED_BUILTIN, HIGH);
@@ -100,7 +105,7 @@ void wifiOnConnect(){
 void wifiOnDisconnect(){
   Serial.println("STA Disconnected");
   delay(100);
-  WiFi.begin(ssid, password);
+  WiFi.reconnect();
 }
 
 void wifiConnectedLoop(){
@@ -120,8 +125,8 @@ void WiFiEvent(WiFiEvent_t event){
     break;
 
   case SYSTEM_EVENT_AP_STA_GOT_IP6:
-    Serial.print("GOT IPv6: ");
-    Serial.println(WiFi.localIPv6());
+//    Serial.print("GOT IPv6: ");
+//    Serial.println(WiFi.localIPv6());
     delay(2000);
     wifiOnConnect();
     wifi_connected = true;
@@ -220,30 +225,17 @@ void startCameraServer(){
   }
 }
 
-
 void mqttReconnect() {
-  // Loop until we're reconnected
   while (!client.connected()) {
-    Serial.print("Attempting MQTT connection...");
-    // Attempt to connect
     if (client.connect("ESP8266Client")) {
-      Serial.println("connected");
-      // Subscribe
-      client.subscribe(userid.c_str());
-      char o[127];
-      addr4 = WiFi.localIP().toString();
-      addr6 = WiFi.localIPv6().toString();
-      sprintf(o, "%s %s %s", id.c_str(), addr4.c_str(), addr6.c_str());
-      Serial.print(HUB);
-      Serial.print(" <-- ");
-      Serial.println(o);
+      Serial.println("### mqtt connected.");
+      client.subscribe(netId.c_str());
+      char o[32];
+      String addr = WiFi.localIP().toString();
+      sprintf(o, "%s %s", devId.c_str(), addr.c_str());
       client.publish(HUB, o);
-    } else {
-      Serial.print("failed, rc=");
-      Serial.print(client.state());
-      Serial.println(" try again in 5 seconds");
-      // Wait 5 seconds before retrying
-      delay(5000);
+      Serial.print("DEV: ");
+      Serial.println(o);
     }
   }
 }
@@ -253,9 +245,21 @@ void setupUserId() {
   for (int i = 0; i < 17; i = i + 8) {
     chipId |= ((ESP.getEfuseMac() >> (40 - i)) & 0xff) << i;
   }
-  char a[17];
-  sprintf(a , "%06X", chipId);
-  userid = String(a);
+  char x[17];
+  sprintf(x, "%06X", chipId);
+  dev = String(x);
+  // build device id
+  char a[20];
+  sprintf(a, "%s_%s", DEV, dev.c_str());
+  devId = String(a);
+  // build broker id
+  char aa[32];
+  sprintf(aa, "%s/%s", HUB, devId.c_str());
+  netId = String(aa);
+  // build user channel
+  char aaa[50];
+  sprintf(aaa, "%s/%s", HUB, BOX);
+  userId = String(aaa);
 }
 
 void setup() {
@@ -263,13 +267,11 @@ void setup() {
   Serial.begin(115200);
 
   setupUserId();
-  char idi[15];
-  sprintf(idi, "turtle-%s", userid.c_str());
-  id = String(idi);
+
   pinMode(4, OUTPUT);
   pinMode(LED_BUILTIN, OUTPUT);
 
-  Serial.println("INIT!");
+  Serial.println("\n\n\n\n\n\n\n\n\n\n\nINIT!");
   Serial.setDebugOutput(false);
 
   camera_config_t config;
@@ -293,17 +295,10 @@ void setup() {
   config.pin_reset = RESET_GPIO_NUM;
   config.xclk_freq_hz = 20000000;
   config.pixel_format = PIXFORMAT_JPEG; 
-
-  Serial.print("cam...");
-  if(psramFound()){
-    config.frame_size = FRAMESIZE_UXGA;
-    config.jpeg_quality = 10;
-    config.fb_count = 2;
-  } else {
-    config.frame_size = FRAMESIZE_SVGA;
-    config.jpeg_quality = 12;
-    config.fb_count = 1;
-  }
+  config.frame_size = FRAMESIZE_UXGA;
+  config.jpeg_quality = 40;
+  config.fb_count = 16;
+  
   esp_err_t err = esp_camera_init(&config);
   if (err != ESP_OK) {
     Serial.printf("Camera init failed with error 0x%x", err);
@@ -317,15 +312,15 @@ void setup() {
   WiFi.setHostname(id.c_str());
   WiFi.onEvent(WiFiEvent);
   WiFi.mode(WIFI_MODE_STA);
-  WiFi.begin(ssid, password);
+  WiFi.begin(WIFI, PASS);
   
   while (WiFi.status() != WL_CONNECTED) {
-    delay(500);
+    delay(50);
     Serial.print(".");
   }
   
   Serial.println("mqtt...");
-  client.setServer(broker, 1883);
+  client.setServer(BROKER, 1883);
   client.setCallback(mqttCallback);
   
   startCameraServer();
@@ -333,5 +328,5 @@ void setup() {
 
 void loop() {
   wifiConnectedLoop();
-  delay(1);
+  //delay(1);
 }

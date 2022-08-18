@@ -43,7 +43,9 @@ module Bivouac
         @id = m[0]
         d = Bivouac.dev(m[0])
         d.ip[:v4] = "#{m[1]}";
-        d.ip[:v6] = "#{m[2]}";
+        if m[2]
+          d.ip[:v6] = "#{m[2]}";
+        end
         DEVICES[d.id] = "location /#{d.id} { proxy_pass http://#{d.ip[:v4]}:80/; }"
         @output = "#{d.id}"
         @type = 'DEV'

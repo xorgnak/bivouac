@@ -23,6 +23,7 @@ module Bivouac
       end
     end
     configure do
+      set :sockets, []
       set :server, 'thin'
       set :views, %[#{Dir.pwd}/views]
       set :public_folder, %[#{Dir.pwd}/public]
@@ -58,6 +59,11 @@ module Bivouac
     get('/manifest.webmanifest') { erb :manifest, layout: false }
     get('/robots.txt') {}
     get('/info') { erb :info }
+    post('/poll') {
+      content_type 'application/json'
+      Redis.new.publish('/poll', "#{params}")
+      return params
+    }
     post('/chan') {
       content_type 'application/json'
       ret = Bivouac.broker.publish({
