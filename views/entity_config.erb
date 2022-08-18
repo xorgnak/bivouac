@@ -71,7 +71,7 @@
 <% end %>
 
 <p style='width: 100%; text-align: center; margin: 0;'>
-  <button type='button' class='material-icons' onclick='$(".box_config").hide(); $(".entity_config").toggle();'>psychology</button>
+  <button type='button' class='material-icons' class='config_menus' onclick='$(".box_config").hide(); $(".entity_config").toggle(); $(".config_menus").css("color", "black"); $().css("color", "orange");'>psychology</button>
 <% if @entity.stat[:class].to_i >= 7 %>
 <datalist id='sponsors'>
 <% @entity.boxes.members.each do |e| %>
@@ -79,7 +79,7 @@
 <% end %>
 </datalist>
 <% if @entity[@entity.attr[:box]].attr[:owner] == @entity.id %>
-  <button type='button' class='material-icons' onclick='$(".entity_config").hide(); $(".box_config").toggle();'>settings</button>
+  <button type='button' class='material-icons' class='config_menus' onclick='$(".entity_config").hide(); $(".box_config").toggle(); $(".config_menus").css("color", "black"); $().css("color", "orange");'>settings</button>
   <input form='post' name='box' list='sponsors' id='entity-config-box' placeholder='box' value='<%= @entity.attr[:box] %>' style='width: 30%;'>
 
 <% else %>
