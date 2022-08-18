@@ -105,7 +105,7 @@
   <input form='post' name='box' list='sponsors' id='entity-config-box' placeholder='box' value='<%= @entity.attr[:box] %>' style='width: 50%;'>
 <% end %>
 <% else %>
-  <select form='post' name='box' id='entity-config-box' style='width: 60%;'>
+  <select form='post' name='box' id='entity-config-box' style='width: 50%;'>
     <option selected disabled>sponsor</option>
 <% @entity.boxes.members.each do |e| %>
 <% if @entity.attr[:box] == e %>
