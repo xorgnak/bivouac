@@ -52,7 +52,7 @@
 -->
 
   <input form='post' type='hidden' id='box-pic' name='admin[img]' value='<%= @b.attr[:img] %>'>
-  <% if "#{@box.attr[:img]}".length > 0 %>
+  <% if "#{@b.attr[:img]}".length > 0 %>
   <div id='box-img-box' style='height: 30%; text-align: center;' class='box_config'>
     <img style='height: 100%;' id='img_box-pic' src='<%= @b.attr[:img] %>'>
   </div>
