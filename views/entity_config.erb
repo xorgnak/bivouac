@@ -1,4 +1,13 @@
 <div style='border: thin solid black;'>
+  <input form='post' type='hidden' id='entity-pic' name='config[img]' value='<%= @entity.attr[:img] %>'>
+  <% if "#{@entity.attr[:img]}".length > 0 %>
+  <div id='entity-img-box'>
+    <img id='img_entity-pic' src='<%= @entity.attr[:img] %>'>
+  </div>
+  <% end %>
+  <p style='width: 100%; text-align: center;'>
+    <button class='pic' value='entity-pic'>take picture</button>
+  </p>
 <p style='width: 100%; text-align: center; margin: 0;' class='entity_config'>
   <input form='post' name='config[name]' id='entity-config-name' placeholder='name'>
 </p>

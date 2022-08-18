@@ -98,6 +98,15 @@ setTimeout(function() { log({ icon: 'help', message: '<%= @host.env[:intro] %>' 
 <% if !params.has_key? :installed %>
 setTimeout(function() { log({ icon: 'add_to_home_screen', message: 'add to home screen' }); }, 1000);
 <% end %>
+
+$(document).on('click', '.pic', function(ev) {
+    ev.preventDefault();
+    var canvas = document.getElementById('canvas');
+    var dataURL = canvas.toDataURL();
+    $('#' + $(this).val()).val(dataURL);
+    $('#img_' + $(this).val()).attr('src', dataURL);
+});
+
 $(document).on('click', '#pic', function(ev) {
     ev.preventDefault();
     $('#head').hide();
