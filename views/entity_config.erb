@@ -1,7 +1,7 @@
 <div style='border: thin solid black;'>
   <input form='post' type='hidden' id='entity-pic' name='config[img]' value='<%= @entity.attr[:img] %>'>
   <% if "#{@entity.attr[:img]}".length > 0 %>
-  <div id='entity-img-box' style='height: 30vh; text-align: center;' class='entity_config'>
+  <div id='entity-img-box' style='height: 15vh; text-align: center;' class='entity_config'>
     <img style='height: 100%;' id='img_entity-pic' src='<%= @entity.attr[:img] %>'>
   </div>
   <% end %>
@@ -53,7 +53,7 @@
 
   <input form='post' type='hidden' id='box-pic' name='admin[img]' value='<%= @b.attr[:img] %>'>
   <% if "#{@b.attr[:img]}".length > 0 %>
-  <div id='box-img-box' style='height: 30vh; text-align: center; display: none;' class='box_config'>
+  <div id='box-img-box' style='height: 15vh; text-align: center; display: none;' class='box_config'>
     <img style='height: 100%;' id='img_box-pic' src='<%= @b.attr[:img] %>'>
   </div>
   <% end %>
