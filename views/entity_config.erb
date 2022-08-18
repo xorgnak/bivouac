@@ -45,7 +45,7 @@
 <p style='width: 100%; text-align: center; margin: 0; display: none;' class='box_config'>
 <label for='box-pay'><span class='material-icons'>toll</span>/scan</label><span style='width: 25%;'><input form='post' type='number' id='box-pay' name='boss[click]' maxlength='4' value='<%= @b.stat[:click].to_i %>' style='width: 25%;'></span></p>
 
-<p style='width: 100%; text-align: center; margin: 0;' class='box_config'>
+<p style='width: 100%; text-align: center; margin: 0; display: none;' class='box_config'>
   <select form='post' id='entity-config-contact' name='admin[contact]' style='width: min-content;'>
     <option value='none' selected>none</option>
     <option value='tel'>call</option>
@@ -71,6 +71,7 @@
 <% end %>
 
 <p style='width: 100%; text-align: center; margin: 0;'>
+  <button type='button' class='material-icons' onclick='$(".entity_config").toggle();'>settings</button>
 <% if @entity.stat[:class].to_i >= 7 %>
 <datalist id='sponsors'>
 <% @entity.boxes.members.each do |e| %>
@@ -78,11 +79,11 @@
 <% end %>
 </datalist>
 <% if @entity[@entity.attr[:box]].attr[:owner] == @entity.id %>
-  <button type='button' class='material-icons' onclick='$(".box_config").toggle(); $(".entity_config").toggle();'>settings</button>
-  <input form='post' name='box' list='sponsors' id='entity-config-box' placeholder='box' value='<%= @entity.attr[:box] %>' style='width: 40%;'>
+  <button type='button' class='material-icons' onclick='$(".box_config").toggle();'>settings</button>
+  <input form='post' name='box' list='sponsors' id='entity-config-box' placeholder='box' value='<%= @entity.attr[:box] %>' style='width: 30%;'>
 
 <% else %>
-  <input form='post' name='box' list='sponsors' id='entity-config-box' placeholder='box' value='<%= @entity.attr[:box] %>' style='width: 60%;'>
+  <input form='post' name='box' list='sponsors' id='entity-config-box' placeholder='box' value='<%= @entity.attr[:box] %>' style='width: 50%;'>
 <% end %>
 <% else %>
   <select form='post' name='box' id='entity-config-box' style='width: 60%;'>
