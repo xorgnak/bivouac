@@ -97,15 +97,19 @@
 <option value='<%= e %>'>
 <% end %>
 </datalist>
+<% if "#{@entity.attr[:box]}".length > 0 %>
 <% if @entity[@entity.attr[:box]].attr[:owner] == @entity.id %>
   <button type='button' class='material-icons' class='config_menus' onclick='$(".entity_config").hide(); $(".box_config").toggle();'>settings</button>
   <input form='post' name='box' list='sponsors' id='entity-config-box' placeholder='box' value='<%= @entity.attr[:box] %>' style='width: 30%;'>
 
 <% else %>
   <input form='post' name='box' list='sponsors' id='entity-config-box' placeholder='box' value='<%= @entity.attr[:box] %>' style='width: 50%;'>
+  <% end %>
+<% else %>
+<span>no groups...</span>
 <% end %>
 <% else %>
-  <select form='post' name='box' id='entity-config-box' style='width: 50%;'>
+  <select frm='post' name='box' id='entity-config-box' style='width: 50%;'>
     <option selected disabled>sponsor</option>
 <% @entity.boxes.members.each do |e| %>
 <% if @entity.attr[:box] == e %>
