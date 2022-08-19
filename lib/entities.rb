@@ -572,7 +572,6 @@ module Bivouac
           self.attr[:created] = Time.now.utc.to_i
           self.attr[:priv] = Base64.encode64(c.random_key)
           self.attr[:pub] = Base64.encode64(c.random_iv)
-          self.attr[:target] = @host.target(@id).id
           x, q = [], []
           16.times { x << rand(16).to_s(16); q << rand(16).to_s(16) }
           @host.ids[@id] = x.join('')
@@ -581,6 +580,9 @@ module Bivouac
           @host.qro[@id] = q.join('')
           self.attr[:id] = x.join('')
           self.attr[:qr] = q.join('')
+          t = Bivouac.target
+          t.attr[:goto] = %[#{self.attr[:qr]}?mark=#{t.id}]
+          self.attr[:target] = t.id
         end
       else
         log "nil user", :Error
