@@ -162,17 +162,18 @@ module Bivouac
       @id = i
     end
     def id; @id; end
-    def run h, e, *args
+    def run h, e,
       self.hosts << h
       self.visitors << e
       @host = Bivouac[h]
       @user = @host[u]
       @self = self
       self.instance_eval %[@x = lambda() { #{self.attr[:script]} }]
-      {
+      r = @x.call(@self, @user, args)
+      return {
         name: "#{self.attr[:name]}",
         desc: "#{self.attr[:desc]}",
-        result: "#{@x.call(@self, @user, args)}"
+        result: "#{r}"
       }
     end
   end
