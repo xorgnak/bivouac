@@ -22,7 +22,7 @@ function handler(scn) {
 	$('#q').show();
 	$('#q_name').text(d.name);
 	$('#q_name').text(d.desc);
-	$('#q_result').text(d.result);
+	$('#q_result').html(d.result);
 	$('#scan_tgt').attr('value', scn);
     });
     } else {

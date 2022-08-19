@@ -169,7 +169,7 @@ module Bivouac
       self.visitors << e
       @host = Bivouac[h]
       @user = @host[e]
-      "#{self.attr[:script]}".split('\n').each do |cmd|
+      "#{self.attr[:script]}".split("\n").each do |cmd|
         if "#{cmd}".length > 0
           words = cmd.split(' ')
           if /^PASS .*/.match(cmd)
