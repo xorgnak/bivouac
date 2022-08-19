@@ -94,7 +94,7 @@ module Bivouac
         end
       end
 
-      if @params.has_key? :target
+      if @params.has_key?(:target) && @params[:target] != @entity.id 
         @tgt = @host.target(@params[:target])
         if @params.has_key? :tgt
           @params[:tgt].each_pair { |k,v| @tgt.attr[k] = v }
