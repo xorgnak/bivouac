@@ -1,21 +1,28 @@
-<% if params.has_key? :entity %>
+<% "#{params[entity]}".length > 0 %>
   <button class='tog material-icons' value='focus' style='color: orange;'>center_focus_weak</button>
   <button class='tog material-icons' value='badge'>qr_code_2</button>
+
   <% if @entity.stat[:class] > 5 %>
   <button id='wand' class='tog material-icons' value='magic'>auto_fix_high</button>
   <% end %>
+
+  <% if "#{@entity.attr[:box]}".length > 0 %>
   <% if @entity[@entity.attr[:box]].attr[:owner] == @entity.id %>
   <button class='tog material-icons' value='bank'>account_balance</button>
   <% end %>
-  <% if "#{@entity.attr[:box]}".length > 0 %>
+  <% end %>
+  
   <button class='goto material-icons' value='<%= @qr.badge(@entity.id) %>'>gps_fixed</button>
-  <% end %>
-  <% if @host.app[:jobs] == 'on' %>
+
+<% if @host.app[:jobs] == 'on' %>
     <button id='pic' class='material-icons' style='background-color: green; color: black;'>camera</button>
-  <% end %>
-  <button class='tog material-icons' value='targets'>queue</button>
+<% end %>
+
+<button class='tog material-icons' value='targets'>queue</button>
 <% else %>
-  <% if !params.has_key?(:cha) && !params.has_key?(:set) %>
+
+<% if !params.has_key?(:cha) && !params.has_key?(:set) %>
      <button class='tog' value='login'>login</button>
-  <% end %>
+<% end %>
+
 <% end %>
