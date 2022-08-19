@@ -8,7 +8,7 @@
   <% @t = Bivouac.target(t) %>
   <% if @t.id != @entity.id && "#{@t.attr[:name]}".length > 0 %>
 <h3 style='width: 100%; text-align: center; margin: 1% 0 1% 0;'>
-<a href='<%= @host.pre %>://<%= @host.host %>/t?target=<%= @t.id %>' style='text-decoration: none; color: white; background-color: black;'><%= @t.attr[:name] %></a><a href='<%= @host.pre %>://<%= @host.host %>/t?entity=<%= @entity.id %>&box=<%= @entity.attr[:box] %>&tgt=<%= @t.id %>' class='material-icons'>edit</a>
+<a href='<%= @host.pre %>://<%= @host.host %>/t?target=<%= @t.id %>' style='text-decoration: none; color: white; background-color: black;'><%= @t.attr[:name] %></a><a href='<%= @host.pre %>://<%= @host.host %>/t?entity=<%= @entity.id %>&box=<%= @entity.attr[:box] %>&tgt=<%= @t.id %>' class='material-icons' style='text-decoration-none; color: orange; background-color: black;'>edit</a>
 </h3>
   <% end %>
   <% end %>
