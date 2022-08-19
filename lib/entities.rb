@@ -149,6 +149,7 @@ module Bivouac
   class Target
     include Redis::Objects
     hash_key :attr
+    hash_key :tickets 
     sorted_set :stat
     sorted_set :inv
     sorted_set :usage
@@ -163,16 +164,39 @@ module Bivouac
     end
     def id; @id; end
     def run h, e
+      r = []
       self.hosts << h
       self.visitors << e
       @host = Bivouac[h]
       @user = @host[e]
-      self.instance_eval %[@x = lambda() { |user| #{self.attr[:script] || 'Time.now.utc' } }]
-      r = @x.call(@user)
+      "#{self.attr[:script]}".split('\n').each do |cmd|
+        if "#{cmd}".length > 0
+          words = cmd.split(' ')
+          if /^PASS .*/.match(cmd)
+            if words[1]
+              d = Time.now.to_i + words[1].to_i
+              r << %[valid until #{Time.at(d)}]
+            else
+              d = 0
+              r << %[valid forever.]
+            end
+            @user.tickets[@id] = d
+          elsif /^GIVE .*/.match(cmd)
+            @user.stat.incr(:credits, words[1].to_i || 1)
+            r << %[got #{words[1]} credits.]
+          elsif /^TAKE .*/.match(cmd)
+            @user.stat.decr(:credits, words[1].to_i || 1)
+            r << %[gave #{words[1]} credits.]
+          end
+        end
+      end
+      rr = r.map {|e| "<li>#{e}</li>" }
+      #self.instance_eval %[@x = lambda() { |user| #{self.attr[:script] || 'Time.now.utc' } }]
+      #r = @x.call(@user)
       return {
         name: "#{self.attr[:name]}",
         desc: "#{self.attr[:desc]}",
-        result: "#{r}"
+        result: "<ul>#{r}</ul>"
       }
     end
   end
@@ -542,6 +566,8 @@ module Bivouac
     include Redis::Objects
     # content
     hash_key :attr
+    # target ticket exp
+    hash_key :tickets
     # db
     hash_key :stor
     # cb
