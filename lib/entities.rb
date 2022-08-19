@@ -162,7 +162,7 @@ module Bivouac
       @id = i
     end
     def id; @id; end
-    def run h, e,
+    def run h, e
       self.hosts << h
       self.visitors << e
       @host = Bivouac[h]
