@@ -175,18 +175,28 @@ module Bivouac
           if /^PASS .*/.match(cmd)
             if words[1]
               d = Time.now.to_i + words[1].to_i
-              r << %[valid until #{Time.at(d)}]
+              r << %[<span class='material-icons'>confirmation_number</span> valid until: #{Time.at(d).utc}]
             else
               d = 0
-              r << %[valid forever.]
+              r << %[<span class='material-icons'>confirmation_number</span> valid forever.]
             end
             @user.tickets[@id] = d
           elsif /^GIVE .*/.match(cmd)
             @user.stat.incr(:credits, words[1].to_i || 1)
-            r << %[got #{words[1]} credits.]
+            r << %[<span class='material-icons'>toll</span> +#{words[1]}]
           elsif /^TAKE .*/.match(cmd)
             @user.stat.decr(:credits, words[1].to_i || 1)
-            r << %[gave #{words[1]} credits.]
+            r << %[<span class='material-icons'>toll</span> -#{words[1]}]
+          elsif /^CLASS .*/.match(cmd)
+            if @user.stat[:class].to_i < words[1].to_i && words[1].to_i < 4
+              @user.stat[:class] = words[1].to_i
+              r << %[class: #{Bivouac.icons[words[1].to_i]} #{Bivouac.classes[words[1].to_i]}]
+            end
+          elsif /^RANK .*/.match(cmd)
+            if @user.stat[:rank].to_i < words[1].to_i && words[1].to_i <= 8
+              @user.stat.decr[:rank] = words[1].to_i
+              r << %[<span class='material-icons'>military_tech</span>#{words[1]}]
+            end
           end
         end
       end
