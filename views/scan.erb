@@ -15,11 +15,13 @@ function handler(scn) {
     h['entity'] = '<%= @entity.id %>';
     h['pic'] = dataURL;
     if ( qri == 'q' ) {
+        log({ icon: 'qr_code_2', h);
 	$.post('/tgt', h, function(d) {
+	log({ icon: 'qr_code_2', h);
 	$('.foot').hide();
 	$('#q').show();
 	$('#q_name').text(d.name);
-	$('#q_name').text(d.name);
+	$('#q_name').text(d.desc);
 	$('#q_result').text(d.result);
 	$('#scan_tgt').attr('value', scn);
     });
