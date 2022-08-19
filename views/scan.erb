@@ -13,7 +13,7 @@ function handler(scn) {
     var canvas = document.getElementById('canvas');
     var dataURL = canvas.toDataURL();
     h['entity'] = '<%= @entity.id %>';
-    h['pic'] = dataURL;
+//    h['pic'] = dataURL;
     if ( qri == 'q' ) {
         log({ icon: 'qr_code_2', message: JSON.stringify(h) });
 	$.post('/tgt', h, function(d) {
