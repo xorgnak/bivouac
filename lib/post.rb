@@ -95,7 +95,7 @@ module Bivouac
       end
 
       if @params.has_key?(:t)
-        @json = Bivouac.target(@host.target(@params[:t])).run(@host.id, @params[:entity])
+        @json = Bivouac.target(@params[:t]).run(@host.id, @params[:entity])
       end
       
       if @params.has_key?(:target) && @params[:target] != @entity.id 
