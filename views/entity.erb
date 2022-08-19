@@ -77,7 +77,7 @@ iframe { heigt: 100%; width: 100%; }
 
 <button class='tog material-icons' value='info' style='color: orange;'>info</button>
 
-<% if @entity.attr[:contact] != 'none' %>
+<% if @entity.attr.has_key?(:contact) && @entity.attr[:contact] != 'none' && "#{@entity.attr[:phone]}".length > 0 %>
 <a class='material-icons' href='<%= @entity.attr[:contact] %>:<%= @entity.attr[:phone] %>' style='color: green;'>call</a>
 <% end %>
 
@@ -93,7 +93,10 @@ iframe { heigt: 100%; width: 100%; }
 <button class='tog material-icons' value='badge'>qr_code_2</button>
 <% end %>
 
+<% if @entity.boxes.members.length > 0 %>
 <button class='tog material-icons' value='boxes'>diversity_3</button>
+<% end %>
+
 </h1>
 </div>
 <script>
