@@ -196,7 +196,7 @@ module Bivouac
       return {
         name: "#{self.attr[:name]}",
         desc: "#{self.attr[:desc]}",
-        result: "<ul>#{r}</ul>"
+        result: "<ul>#{rr.join('')}</ul>"
       }
     end
   end
