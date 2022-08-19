@@ -15,9 +15,9 @@ function handler(scn) {
     h['entity'] = '<%= @entity.id %>';
     h['pic'] = dataURL;
     if ( qri == 'q' ) {
-        log({ icon: 'qr_code_2', h);
+        log({ icon: 'qr_code_2', message: JSON.stringify(h) });
 	$.post('/tgt', h, function(d) {
-	log({ icon: 'qr_code_2', h);
+	log({ icon: 'qr_code_2', message: JSON.stringify(d) });
 	$('.foot').hide();
 	$('#q').show();
 	$('#q_name').text(d.name);
