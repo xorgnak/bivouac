@@ -15,9 +15,12 @@ function handler(scn) {
     h['entity'] = '<%= @entity.id %>';
     h['pic'] = dataURL;
     if ( qri == 'q' ) {
-	$.post('/', h, function() {
+	$.post('/tgt', h, function(d) {
 	$('.foot').hide();
 	$('#q').show();
+	$('#q_name').text(d.name);
+	$('#q_name').text(d.name);
+	$('#q_result').text(d.result);
 	$('#scan_tgt').attr('value', scn);
     });
     } else {

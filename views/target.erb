@@ -22,6 +22,9 @@ $('#qrcode').qrcode('<%= @host.pre %>://<%= @host.host %>/q?t=<%= @target.id %>'
 <h1 style='width: 100%; text-align: center; margin: 0;'>
 <input form='post' name='tgt[desc]' placeholder='desc'>
 </h1>
+
+<textarea form='post' name='tgt[script]' placeholder='script...'></textarea>
+
 <h1 style='width: 100%; text-align: center; margin: 0;'>
 <button form='post' type='submit' name='do' value='target'>save</button>
 </h1>

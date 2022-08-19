@@ -103,7 +103,14 @@ module Bivouac
       erb :app
     }
 
+
     post('/') { b = Bivouac::Post.new(request, params); redirect b.goto }
+
+    post('/tgt') {
+      content_type 'application/json'
+      b = Bivouac::Post.new(request, params);
+      return b.json
+    }
     
     post('/auth') { b = Bivouac::Auth.new(request, params); redirect b.goto }
 

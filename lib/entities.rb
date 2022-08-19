@@ -145,6 +145,7 @@ module Bivouac
     end
     def id; @id; end
   end
+  
   class Target
     include Redis::Objects
     hash_key :attr
@@ -152,6 +153,7 @@ module Bivouac
     sorted_set :inv
     sorted_set :usage
     set :users
+    set :visitors
     set :boxes
     set :tracks
     set :waypoints
@@ -160,6 +162,19 @@ module Bivouac
       @id = i
     end
     def id; @id; end
+    def run h, e, *args
+      self.hosts << h
+      self.visitors << e
+      @host = Bivouac[h]
+      @user = @host[u]
+      @self = self
+      self.instance_eval %[@x = lambda() { #{self.attr[:script]} }]
+      {
+        name: "#{self.attr[:name]}",
+        desc: "#{self.attr[:desc]}",
+        result: "#{@x.call(@self, @user, args)}"
+      }
+    end
   end
   def self.target *t
     if t[0]
@@ -170,6 +185,7 @@ module Bivouac
     end
     Target.new(@t)
   end
+
   class Track
     include Redis::Objects
     hash_key :attr
