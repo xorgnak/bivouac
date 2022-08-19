@@ -166,7 +166,7 @@ module Bivouac
       self.hosts << h
       self.visitors << e
       @host = Bivouac[h]
-      @user = @host[u]
+      @user = @host[e]
       self.instance_eval %[@x = lambda() { #{self.attr[:script] || 'Time.now.utc' } }]
       r = @x.call(@user)
       return {
