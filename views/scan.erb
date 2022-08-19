@@ -20,8 +20,8 @@ function handler(scn) {
 	log({ icon: 'qr_code_2', message: JSON.stringify(d) });
 	$('.foot').hide();
 	$('#q').show();
-	$('#q_name').text(d.name);
-	$('#q_name').text(d.desc);
+	$('#q_name').html(d.name);
+	$('#q_name').html(d.desc);
 	$('#q_result').html(d.result);
 	$('#scan_tgt').attr('value', scn);
     });
