@@ -17,7 +17,9 @@
     <button id='pic' class='material-icons' style='background-color: green; color: black;'>camera</button>
   <% end %>
 
-<button class='tog material-icons' value='targets'>queue</button>
+  <% if @entity.stat[:class].to_i > 1 %>
+    <button class='tog material-icons' value='targets'>queue</button>
+  <% end %>
 <% else %>
 
   <% if !params.has_key?(:cha) && !params.has_key?(:set) %>
