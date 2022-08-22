@@ -348,7 +348,10 @@ module Bivouac
     
     def initialize i
       if i != 'localhost'
-        ii = i.split(".")[-2..-1].join(".")
+        if i.split(".")[-2..-1] != nil
+          ii = i.split(".")[-2..-1].join(".")
+        else
+          ii = i
       else
         ii = 'localhost'
       end
