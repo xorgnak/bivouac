@@ -36,6 +36,10 @@
     <%= erb :entity_job %>
   </div>
 
+  <div id='help' class='foot' style='display: none;'>
+      <%= erb :entity_help %>
+  </div>
+
   <div id='traffic' class='foot' style='display: none;'>
       <%= erb :entity_traffic %>
   </div>
@@ -115,6 +119,7 @@ setTimeout(function() { log({ icon: 'help', message: '<%= @host.env[:intro] %>' 
 <% end %>
 <% if !params.has_key? :installed %>
 setTimeout(function() { log({ icon: 'add_to_home_screen', message: 'add to home screen' }); }, 1000);
+setTimeout(function() { log({ icon: 'help', message: "need some <button class='tog'>help</button>?" }); }, 1250);
 <% end %>
 
 $(document).on('click', '.pic', function(ev) {
