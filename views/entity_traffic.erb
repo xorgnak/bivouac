@@ -1,8 +1,23 @@
 
+
+<% @entity.browser.members(with_scores: true).to_h.each_pair do |k,v| %>
+<p style='margin: 1% 0 1% 0;'>
+<span style='padding: 0 2% 0 2%; border: thin solid black; border-radius: 50px;'><%= v %></span><span><%= k %></span>
+</p>
+<% end %>
+
+<% if @box != nil %>
+<% @box.browser.members(with_scores: true).to_h.each_pair do |k,v| %>
+<p style='margin: 1% 0 1% 0;'>
+<span style='padding: 0 2% 0 2%; border: thin solid black; border-radius: 50px;'><%= v %></span><span><%= k %></span>
+</p>
+<% end %>
+<% end %>
+
 <% if @box != nil %>
 <% @box.traffic.members(with_scores: true).to_h.each_pair  do |k,v| %>
 <p style='margin: 1% 0 1% 0;'>
-<span><%= k %></span><span><%= v %></span>
+<span style='padding: 0 2% 0 2%; border: thin solid black; border-radius: 50px;'><%= v %></span><span><%= k %></span>
 </p>
 <% end %>
 <% end %>

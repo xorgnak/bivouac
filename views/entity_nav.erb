@@ -16,7 +16,6 @@
     <% if @entity[@entity.attr[:box]].attr[:owner] == @entity.id %>
       <button class='tog material-icons' value='bank'>account_balance</button>
       <button class='tog material-icons' value='traffic'>traffic</button>
-      <button class='tog material-icons' value='fingerprints'>ads_click</button>
     <% end %>
     <% if @host.app[:team] %>
     <button class='goto material-icons' value='<%= @qr.badge(@entity.id) %>'>gps_fixed</button>
