@@ -1,5 +1,8 @@
+
+<% if @box != nil %>
 <% @box.traffic.members(with_scores: true).to_h.each_pair  do |k,v| %>
 <p style='margin: 1% 0 1% 0;'>
 <span><%= k %></span><span><%= v %></span>
 </p>
+<% end %>
 <% end %>
