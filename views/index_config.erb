@@ -25,17 +25,29 @@
     <label for='has_members'><span class='material-icons'>people</span>users</label>
   </span>
   <span class='pill'>
+    <input form='post' id='has_teams' type='checkbox' name='app[teams]' checked>
+    <label for='has_teams'><span class='material-icons'>groups</span>teamss</label>
+  </span>
+  <span class='pill'>
     <input form='post' id='has_merit' type='checkbox' name='app[merit]' checked>
     <label for='type_scan'><span class='material-icons'>military_tech</span>ranks</label>
   </span>
   <span class='pill'>
     <input form='post' id='has_brand' type='checkbox' name='app[jobs]' checked>
-    <label for='has_brand'><span class='material-icons'>follow_the_signs</span>jobs</label>
+    <label for='has_brand'><span class='material-icons'>camera</span>camera</label>
+  </span>
+  <span class='pill'>
+    <input form='post' id='has_app_jobs' type='checkbox' name='app[app_jobs]'>
+    <label for='has_app_jobs'><span class='material-icons' style='color: blue;'>camera</span>..for visitors</label>
+  </span>
+  <span class='pill'>
+    <input form='post' id='has_app_scan' type='checkbox' name='app[app_scan]'>
+    <label for='has_app_scan'><span class='material-icons'>qr_code</span>scanner</label>
   </span>
   </p>
-  <textarea form='post' name='app[index]' placeholder='landing form...'><%= @host.app[:index] %></textarea>
-  <textarea form='post' name='app[entity]' placeholder='profile form...'><%= @host.app[:entity] %></textarea>
-  <textarea form='post' name='app[box]' placeholder='group form...'><%= @host.app[:box] %></textarea>
+  <textarea form='post' name='app[index]' placeholder='landing html...'><%= @host.app[:index] %></textarea>
+  <textarea form='post' name='app[entity]' placeholder='profile html...'><%= @host.app[:entity] %></textarea>
+  <textarea form='post' name='app[box]' placeholder='group html...'><%= @host.app[:box] %></textarea>
 </div>
 
 <!-- lock and save -->

@@ -85,16 +85,21 @@ module Bivouac
       redirect %[#{@host.pre}://#{@host.host}/#{@tgt.attr[:goto]}]
     }
     get('/:qri') {
+      @browser = Browser.new(:ua => request.user_agent, :accept_language => "en-us")
       @entity = @host[@host.qri[params[:qri]]];
+      @entity.browser.incr(@browser.to_s)
       @visitor = visitor(@entity.id);
       @map = @host.map[@entity.id]
       @entity.stat.incr(:xp)
       erb :entity
     }
     get('/:qri/:box') {
+      @browser = Browser.new(:ua => request.user_agent, :accept_language => "en-us")
       @entity = @host[@host.qri[params[:qri]]];
+      @entity.browser.incr(@browser.to_s)
       @visitor = visitor(@entity.id);
       @box = @host[@host.qri[params[:qri]]][params[:box]];
+      @box.browser.incr(@browser.to_s)
       @map = @host.map[@entity.id][@box.id]
       @entity.karma.incr(@box.id)
       @box.bank.give user: @entity.id, type: :credits, amt: @box.stat[:click]
@@ -102,7 +107,6 @@ module Bivouac
       @box.traffic.incr(@entity.id);
       erb :app
     }
-
 
     post('/') { b = Bivouac::Post.new(request, params); redirect b.goto }
 

@@ -6,6 +6,7 @@
   'sinatra/base',
   'paho-mqtt',
   'cinch',
-  'mqtt'
+  'mqtt',
+  'browser'
 #  'twilio-ruby'
 ].each { |lib| require lib }

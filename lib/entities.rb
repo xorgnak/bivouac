@@ -54,6 +54,29 @@ module Bivouac
       Redis::Set.new('HOSTS') << k
       Host.new(k)
   end
+
+
+  class Interests
+    include Redis::Objects
+    sorted_set :interests
+    def initialize host
+      @id = host
+    end
+    def [] k
+      self.interests << k
+      Interest.new("#{@id}:#{k}")
+    end
+  end
+  class Interest
+    include Redis::Objects
+    sorted_set :interests
+    sorted_set :users
+    def initialize i
+      @id = i
+    end
+  end
+
+  
   class Bank
     include Redis::Objects
     sorted_set :stat
@@ -324,14 +347,19 @@ module Bivouac
     set :targets
     
     def initialize i
-      @auths = Bivouac.auths(i)
+      if i != 'localhost'
+        ii = i.split(".")[-2..-1].join(".")
+      else
+        ii = 'localhost'
+      end
+      @auths = Bivouac.auths(ii)
       @pre = 'http'
-      @host = i
+      @host = ii
       @id = 'localhost'
       @is = Hash.new {|h,k| h[k] = false }
       if /\d+.\d+.\d+.\d+/.match(i)
         @is[:local] = true
-      elsif /.onion/.match(i)
+      elsif /.onion/.match(ii)
         @is[:local] = true
         @is[:onion] = true
       elsif i == 'localhost'
@@ -348,6 +376,9 @@ module Bivouac
     end
     def is
       @is
+    end
+    def interests
+      Interests.new(@host)
     end
     def badges
     {
@@ -538,6 +569,8 @@ module Bivouac
     sorted_set :awards
     # commodity: amt
     sorted_set :stat
+    # browser: score
+    sorted_set :browser
     # box 
     set :webs
     set :targets
@@ -606,6 +639,8 @@ module Bivouac
     sorted_set :stat
     # box
     set :boxes
+    # browser: score
+    sorted_set :browser
     # iv
     set :ivs
     # visitors

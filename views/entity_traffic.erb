@@ -1,0 +1,6 @@
+
+<% @box.traffic.members(with_scores: true).to_h.each_pair |k,v| %>
+<p style='margin: 1% 0 1% 0;'>
+<span><%= k %></span><span><%= v %></span>
+</p>
+<% end %>
