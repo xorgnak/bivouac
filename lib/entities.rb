@@ -352,6 +352,7 @@ module Bivouac
           ii = i.split(".")[-2..-1].join(".")
         else
           ii = i
+        end
       else
         ii = 'localhost'
       end
