@@ -139,7 +139,7 @@ module Bivouac
         end
       end
       if @request.path_info == '/box' && "#{@params[:goto]}".length > 0
-        p = []; @params[:box].each_pair { |k,v| p << %[#{k}=#{v}] }
+        p = []; @params.each_pair { |k,v| p << %[#{k}=#{v}] }
         @goto = %[#{@goto}?#{p.join('&')}]
       end
     end
