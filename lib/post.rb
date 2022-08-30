@@ -140,7 +140,7 @@ module Bivouac
       end
       if @request.path_info == '/box' && "#{@params[:goto]}".length > 0
         p = []; @params.each_pair { |k,v| p << %[#{k}=#{v}] }
-        @goto = %[#{@goto}?#{p.join('&')}]
+        @json[:goto] = %[#{@goto}?#{p.join('&')}]
       end
     end
     def check u
