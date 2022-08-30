@@ -11,6 +11,7 @@
   function showPosition(position) {
     h['gps'] = position.coords.latitude + "," + position.coords.longitude;
     $("#log").append("<p>gps: " + h['gps'] + "</p>");
+    $.post('/box', h);
   }
   
   if (navigator.geolocation) {
@@ -19,6 +20,4 @@
     $("#log").append("<p>Geolocation is not supported by this browser.</p>");
   }
 
-  $("#log").append("<p>done!</p>");
-  $.post('/box', h);
 </script>
