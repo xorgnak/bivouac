@@ -121,7 +121,7 @@ module Bivouac
 
     post('/box') { b = Bivouac::Post.new(request, params);
       Redis.new.publish "POST", "#{b}" 
-      #redirect b.goto
+      redirect b.goto
     }
 
     post('/:qri') {
