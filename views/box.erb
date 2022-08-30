@@ -1,8 +1,8 @@
 <p style='width: 100%; text-align: center;'>
 <span><%= @host.host %></span>
 </p>
-<div id='log'>
-<p>running...</p>
+<div id='log' style='font-size: small;'>
+<p style='width: 100%; text-align: center;'>running...</p>
 </div>
 <script>
      <% @h = {} %>
@@ -13,9 +13,7 @@
     console.log(h);
     $.post('/box', h, function(d){
       console.log(d);
-      j = JSON.parse(d.data);
-      $("#log").append("<p>gps: " + h['gps'] + "</p>");
-      window.location = j.goto;
+      window.location = d.goto;
     });
   }
   
