@@ -119,7 +119,10 @@ module Bivouac
     
     post('/auth') { b = Bivouac::Auth.new(request, params); redirect b.goto }
 
-    post('/box') { b = Bivouac::Post.new(request, params); redirect b.goto }
+    post('/box') { b = Bivouac::Post.new(request, params);
+      Redis.new.publish "POST", "#{b}" 
+      #redirect b.goto
+    }
 
     post('/:qri') {
       content_type 'application/json'
