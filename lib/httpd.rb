@@ -60,7 +60,7 @@ module Bivouac
     get('/robots.txt') {}
     get('/info') { erb :info }
     get('/box') {
-      b = Bivouac::Remote.new(@path, request, params);
+      b = Bivouac::Post.new(request, params);
       redirect b.goto
     }
     post('/poll') {
@@ -122,7 +122,7 @@ module Bivouac
     
     post('/auth') { b = Bivouac::Auth.new(request, params); redirect b.goto }
 
-    post('/box') { b = Bivouac::Remote.new(@path, request, params); redirect b.goto }
+    post('/box') { b = Bivouac::Post.new(request, params); redirect b.goto }
 
     post('/:qri') {
       content_type 'application/json'
