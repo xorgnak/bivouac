@@ -59,10 +59,7 @@ module Bivouac
     get('/manifest.webmanifest') { erb :manifest, layout: false }
     get('/robots.txt') {}
     get('/info') { erb :info }
-    get('/box') {
-      b = Bivouac::Post.new(request, params);
-      redirect b.goto
-    }
+    get('/box') { @entity = @host[@host.qri[params[:qri]]]; erb :box }
     post('/poll') {
       content_type 'application/json'
       Redis.new.publish('/poll', "#{params}")

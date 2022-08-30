@@ -3,15 +3,21 @@ module Bivouac
     def initialize request, params
       log "#{request.fullpath} #{params}", :Post
       @request, @params = request, params
-      @path = request.host
+      
+      if "#{@params[:goto]}".length > 0
+        @path = @params[:goto]
+      else
+        @path = request.host
+      end
       @json = {}
 
       # interaction redirect path
-      if /\d+.\d+.\d+.\d+/.match(request.host) || request.host == 'localhost' || /.onion/.match(request.host)
+      if /\d+.\d+.\d+.\d+/.match(@path) || @path == 'localhost' || /.onion/.match(@path)
         @goto = "http://#{@path}"
       else
         @goto = "https://#{@path}"
       end
+      
       @host = Bivouac[@path]
       
       # config interaction
@@ -131,6 +137,10 @@ module Bivouac
         elsif @params[:do] == 'target'
           @goto = "#{@goto}/t?target=#{@params[:target]}"
         end
+      end
+      if @request.path_info == '/box' && "#{@params[:goto]}".length > 0
+        p = []; @params[:box].each_pair { |k,v| p << %[#{k}=#{v}] }
+        @goto = %[#{@goto}?#{p.join('&')}]
       end
     end
     def check u
