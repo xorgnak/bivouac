@@ -10,8 +10,13 @@
   
   function showPosition(position) {
     h['gps'] = position.coords.latitude + "," + position.coords.longitude;
-    $("#log").append("<p>gps: " + h['gps'] + "</p>");
-    $.post('/box', h);
+    console.log(h);
+    $.post('/box', h, function(d){
+      console.log(d);
+      j = JSON.parse(d.data);
+      $("#log").append("<p>gps: " + h['gps'] + "</p>");
+      window.location = j.goto;
+    });
   }
   
   if (navigator.geolocation) {
