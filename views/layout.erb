@@ -83,11 +83,11 @@ a { text-decoration: none; background-color: black; border: thin outset grey; }
 //	      console.log("resp", data);
 //	  }, "json");
 //      });
-
+	  <% if !params.has_key? :goto %>
       setInterval(function() { $.post("/poll", toJson('poll'), function(d) {
 	  console.log("poll", d);
       }); }, 5000);
-
+      <% end %>
 <% end %>
       
 //log('app loaded.');
